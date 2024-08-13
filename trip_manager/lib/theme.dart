@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 final ThemeData tripManagerTheme = ThemeData(
   scaffoldBackgroundColor: Colors.white,
   fontFamily: "Pretendard",
+  appBarTheme: const AppBarTheme(
+    //앱 바의 테마 설정
+    backgroundColor: Colors.white,
+  ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     backgroundColor: Colors.white,
     type: BottomNavigationBarType.fixed,
