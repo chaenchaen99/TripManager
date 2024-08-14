@@ -1,40 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:trip_manager/strings.dart';
+import 'package:trip_manager/const/constants.dart';
 import 'package:trip_manager/theme.dart';
+
+import '../../mockup/mockup_datas.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<String> imagePaths = [
-      'assets/images/test/test_img_1.png',
-      'assets/images/test/test_img_2.png',
-      'assets/images/test/test_img_3.png',
-    ];
-    final List<Map<String, String>> areaList = [
-      {
-        'imageUrl': 'assets/images/test/city_test_1.png',
-        'name': '강남·서초',
-      },
-      {
-        'imageUrl': 'assets/images/test/city_test_2.png',
-        'name': '홍대·신촌',
-      },
-      {
-        'imageUrl': 'assets/images/test/city_test_3.png',
-        'name': '망원·합정',
-      },
-      {
-        'imageUrl': 'assets/images/test/city_test_4.png',
-        'name': '압구정·청담',
-      },
-      {
-        'imageUrl': 'assets/images/test/city_test_1.png',
-        'name': '구로·가산',
-      },
-    ];
     final double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -57,13 +32,49 @@ class HomePage extends ConsumerWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // PageView의 높이를 동적으로 설정
-            MainPageView(screenWidth: screenWidth, imagePaths: imagePaths),
+            MainPageView(screenWidth: screenWidth),
             const SizedBox(height: 36), // PageView와 추가 콘텐츠 사이의 간격
-            AreaListView(areaList: areaList),
+            const AreaListView(),
+            const SizedBox(height: 52),
+            const DisplayListView(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MainPageView extends StatelessWidget {
+  const MainPageView({
+    super.key,
+    required this.screenWidth,
+  });
+
+  final double screenWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: screenWidth,
+      height: 449, // 화면의 절반을 PageView로 사용
+      child: PageView(
+        children: imagePaths.map((path) {
+          return Container(
+            width: screenWidth,
+            color: Colors.black,
+            child: Center(
+              child: Image.asset(
+                path,
+                width: screenWidth,
+                height: 449,
+                fit: BoxFit.cover,
+              ),
+            ),
+          );
+        }).toList(),
       ),
     );
   }
@@ -72,11 +83,7 @@ class HomePage extends ConsumerWidget {
 class AreaListView extends StatelessWidget {
   const AreaListView({
     super.key,
-    required this.areaList,
   });
-
-  final List<Map<String, String>> areaList;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -126,36 +133,83 @@ class AreaListView extends StatelessWidget {
   }
 }
 
-class MainPageView extends StatelessWidget {
-  const MainPageView({
+class DisplayListView extends StatelessWidget {
+  const DisplayListView({
     super.key,
-    required this.screenWidth,
-    required this.imagePaths,
   });
-
-  final double screenWidth;
-  final List<String> imagePaths;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: screenWidth,
-      height: 449, // 화면의 절반을 PageView로 사용
-      child: PageView(
-        children: imagePaths.map((path) {
-          return Container(
-            width: screenWidth,
-            color: Colors.black,
-            child: Center(
-              child: Image.asset(
-                path,
-                width: screenWidth,
-                height: 449,
-                fit: BoxFit.cover,
-              ),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            '최신 전시/팝업 스토어를 소개합니다.',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          SizedBox(
+            height: 300,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: displayList.length,
+              itemBuilder: (context, index) {
+                final displayItem = displayList[index];
+                final displayName = displayItem['name'] ?? '';
+                final period = displayItem['peroid'] ?? '';
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(4.0),
+                      child: Image.asset(
+                        displayItem['imageUrl'] ?? '',
+                        height: 200,
+                        width: 160,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: SizedBox(
+                        width: 140,
+                        child: Text(
+                          displayName,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: SizedBox(
+                        width: 140,
+                        child: Text(
+                          period,
+                          style: const TextStyle(
+                            color: AppColors.darkColor_3,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 12,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    )
+                  ],
+                );
+              },
             ),
-          );
-        }).toList(),
+          ),
+        ],
       ),
     );
   }
