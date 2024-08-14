@@ -13,6 +13,19 @@ final ThemeData tripManagerTheme = ThemeData(
     selectedItemColor: Colors.black,
     unselectedItemColor: Colors.black,
   ),
+  inputDecorationTheme: InputDecorationTheme(
+    border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30), borderSide: BorderSide.none),
+    filled: true,
+    fillColor: AppColors.lightColor_1,
+    hintStyle: const TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: 14,
+      color: AppColors.darkColor_3,
+    ),
+    contentPadding:
+        const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+  ),
 );
 
 class AppColors extends Color {
@@ -26,7 +39,7 @@ class AppColors extends Color {
   static const Color darkColor_3 = Color(0xff848893);
   static const Color lightColor_1 = Color(0xffF3F5FA);
   static const Color lightColor_2 = Color(0xffEFEFEF);
-  static const Color lightColor_3 = Color(0xffEFEFEF);
+  static const Color lightColor_3 = Color(0xffFFFFFF);
   // static const MaterialColor wabizGray =
   //     MaterialColor(grayPrimaryValue, <int, Color>{
   //   50: Color(0xffffebee),
