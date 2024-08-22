@@ -16,8 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ChatModel {
-  String get sender => throw _privateConstructorUsedError;
-  String get response => throw _privateConstructorUsedError;
+  Sender get sender => throw _privateConstructorUsedError;
+  List<ResponseModel> get response => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatModelCopyWith<ChatModel> get copyWith =>
@@ -29,7 +29,7 @@ abstract class $ChatModelCopyWith<$Res> {
   factory $ChatModelCopyWith(ChatModel value, $Res Function(ChatModel) then) =
       _$ChatModelCopyWithImpl<$Res, ChatModel>;
   @useResult
-  $Res call({String sender, String response});
+  $Res call({Sender sender, List<ResponseModel> response});
 }
 
 /// @nodoc
@@ -52,11 +52,11 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
       sender: null == sender
           ? _value.sender
           : sender // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Sender,
       response: null == response
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
-              as String,
+              as List<ResponseModel>,
     ) as $Val);
   }
 }
@@ -69,7 +69,7 @@ abstract class _$$ChatModelImplCopyWith<$Res>
       __$$ChatModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String sender, String response});
+  $Res call({Sender sender, List<ResponseModel> response});
 }
 
 /// @nodoc
@@ -90,11 +90,11 @@ class __$$ChatModelImplCopyWithImpl<$Res>
       sender: null == sender
           ? _value.sender
           : sender // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Sender,
       response: null == response
-          ? _value.response
+          ? _value._response
           : response // ignore: cast_nullable_to_non_nullable
-              as String,
+              as List<ResponseModel>,
     ));
   }
 }
@@ -102,12 +102,20 @@ class __$$ChatModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ChatModelImpl implements _ChatModel {
-  const _$ChatModelImpl({required this.sender, required this.response});
+  const _$ChatModelImpl(
+      {this.sender = Sender.user, required final List<ResponseModel> response})
+      : _response = response;
 
   @override
-  final String sender;
+  @JsonKey()
+  final Sender sender;
+  final List<ResponseModel> _response;
   @override
-  final String response;
+  List<ResponseModel> get response {
+    if (_response is EqualUnmodifiableListView) return _response;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_response);
+  }
 
   @override
   String toString() {
@@ -120,12 +128,12 @@ class _$ChatModelImpl implements _ChatModel {
         (other.runtimeType == runtimeType &&
             other is _$ChatModelImpl &&
             (identical(other.sender, sender) || other.sender == sender) &&
-            (identical(other.response, response) ||
-                other.response == response));
+            const DeepCollectionEquality().equals(other._response, _response));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, sender, response);
+  int get hashCode => Object.hash(
+      runtimeType, sender, const DeepCollectionEquality().hash(_response));
 
   @JsonKey(ignore: true)
   @override
@@ -136,13 +144,13 @@ class _$ChatModelImpl implements _ChatModel {
 
 abstract class _ChatModel implements ChatModel {
   const factory _ChatModel(
-      {required final String sender,
-      required final String response}) = _$ChatModelImpl;
+      {final Sender sender,
+      required final List<ResponseModel> response}) = _$ChatModelImpl;
 
   @override
-  String get sender;
+  Sender get sender;
   @override
-  String get response;
+  List<ResponseModel> get response;
   @override
   @JsonKey(ignore: true)
   _$$ChatModelImplCopyWith<_$ChatModelImpl> get copyWith =>

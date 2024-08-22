@@ -4,4 +4,5 @@ class RouteNames {
   static const feed = 'feed';
   static const bookmark = 'bookmark';
   static const my = 'my';
+  static const aiDetail = 'aiDetail';
 }

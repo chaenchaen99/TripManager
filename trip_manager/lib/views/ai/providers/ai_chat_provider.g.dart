@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'router_provider.dart';
+part of 'ai_chat_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$routeHash() => r'6a8a927127c4bad906d7dd45ff65cc48b8518579';
+String _$aiChatHash() => r'bb81e75d6ba673c92f5c826f071bfbca9e50792f';
 
-/// See also [route].
-@ProviderFor(route)
-final routeProvider = AutoDisposeProvider<GoRouter>.internal(
-  route,
-  name: r'routeProvider',
+/// See also [AiChat].
+@ProviderFor(AiChat)
+final aiChatProvider = AutoDisposeNotifierProvider<AiChat, ChatState>.internal(
+  AiChat.new,
+  name: r'aiChatProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$routeHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$aiChatHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef RouteRef = AutoDisposeProviderRef<GoRouter>;
+typedef _$AiChat = AutoDisposeNotifier<ChatState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

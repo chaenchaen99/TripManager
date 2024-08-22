@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:trip_manager/const/constants.dart';
 import 'package:trip_manager/theme.dart';
 
 import '../../mockup/mockup_datas.dart';
