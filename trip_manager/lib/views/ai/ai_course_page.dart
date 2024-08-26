@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:trip_manager/const/constants.dart';
 import 'package:trip_manager/models/ai/response_model.dart';
+import 'package:trip_manager/shared/ai_resposne_header.dart';
 import 'package:trip_manager/shared/custom_divider.dart';
 import 'package:trip_manager/theme.dart';
 import 'package:trip_manager/views/ai/providers/ai_chat_provider.dart';
@@ -49,8 +50,10 @@ class _AiCoursePageState extends ConsumerState<AiCoursePage> {
                     error: (error, stack) => Center(
                       child: ErrorWidget(error: error),
                     ),
-                    loading: () => const Center(
-                      child: AiLoadingPage(),
+                    loading: () => Center(
+                      child: AiLoadingPage(
+                          sendMessage:
+                              ref.watch(aiChatProvider).loadingMessage ?? ''),
                     ),
                   ),
             ),
@@ -75,11 +78,16 @@ class ErrorWidget extends StatelessWidget {
   }
 }
 
-class LoadingWidget extends StatelessWidget {
+class LoadingWidget extends StatefulWidget {
   const LoadingWidget({
     super.key,
   });
 
+  @override
+  State<LoadingWidget> createState() => _LoadingWidgetState();
+}
+
+class _LoadingWidgetState extends State<LoadingWidget> {
   @override
   Widget build(BuildContext context) {
     return const Text('AI가 답변을 입력 중입니다...');
@@ -112,11 +120,6 @@ class BottomInputWidget extends StatelessWidget {
                 decoration: const InputDecoration(
                   hintText: '메시지를 입력하세요.',
                 ),
-                onChanged: (text) {
-                  // setState(() {
-                  //   _isTyping = text.isNotEmpty;
-                  // });
-                },
                 onSubmitted: (text) {
                   if (text.isEmpty) return;
                   _controller.clear();
@@ -201,20 +204,21 @@ class AiChatListView extends StatelessWidget {
       itemBuilder: (context, index) {
         final chatItem = chatItems[index];
 
-        // Check if the message is from AI
         if (chatItem.sender == Sender.ai) {
-          // Filter for AiResponse items
           final aiResponses = chatItem.response
               .whereType<AiResponse>()
               .cast<AiResponse>()
               .toList();
 
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: aiResponses.map((courseItem) {
-              return AiChatItem(courseItem: courseItem);
-            }).toList(),
-          );
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const AIResponseHeader(),
+                const SizedBox(height: 8),
+                ...aiResponses.map((courseItem) {
+                  return AiChatItem(courseItem: courseItem);
+                }).toList(),
+              ]);
         } else if (chatItem.sender == Sender.user) {
           // Handle UserResponse items
           final userResponses = chatItem.response
@@ -226,7 +230,14 @@ class AiChatListView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: userResponses.map((userResponse) {
               return ListTile(
-                title: Text(userResponse.sendMessage),
+                title: Text(
+                  userResponse.sendMessage,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: AppColors.darkColor_3,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               );
             }).toList(),
           );

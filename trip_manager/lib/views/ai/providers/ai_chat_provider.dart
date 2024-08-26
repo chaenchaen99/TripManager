@@ -13,6 +13,7 @@ class ChatState with _$ChatState {
     @Default([]) List<ChatModel> messages,
     @Default(AsyncValue<List<ChatModel>>.data([])) // Default to empty list
     AsyncValue<List<ChatModel>> chatState,
+    String? loadingMessage,
     String? error,
   }) = _ChatState;
 }
@@ -25,17 +26,18 @@ class AiChat extends _$AiChat {
   }
 
   Future<void> sendMessage(String message) async {
-    state = state.copyWith(chatState: const AsyncValue.loading());
+    state = state.copyWith(
+      chatState: const AsyncValue.loading(),
+      loadingMessage: message,
+    );
 
     try {
       // Simulate sending message and receiving response
       await Future.delayed(const Duration(seconds: 2));
 
-      const response = 'AI가 추천하는 서울 1박2일 일정은 다음과 같습니다...';
-
-      const newMessage = ChatModel(
+      final newMessage = ChatModel(
           sender: Sender.user,
-          response: [ResponseModel.userResponse(sendMessage: response)]);
+          response: [ResponseModel.userResponse(sendMessage: message)]);
 
       const aiResponse = ChatModel(sender: Sender.ai, response: [
         ResponseModel.aiResponse(

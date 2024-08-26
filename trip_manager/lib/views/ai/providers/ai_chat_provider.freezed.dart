@@ -19,6 +19,7 @@ mixin _$ChatState {
   List<ChatModel> get messages => throw _privateConstructorUsedError;
   AsyncValue<List<ChatModel>> get chatState =>
       throw _privateConstructorUsedError;
+  String? get loadingMessage => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -34,6 +35,7 @@ abstract class $ChatStateCopyWith<$Res> {
   $Res call(
       {List<ChatModel> messages,
       AsyncValue<List<ChatModel>> chatState,
+      String? loadingMessage,
       String? error});
 }
 
@@ -52,6 +54,7 @@ class _$ChatStateCopyWithImpl<$Res, $Val extends ChatState>
   $Res call({
     Object? messages = null,
     Object? chatState = null,
+    Object? loadingMessage = freezed,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
@@ -63,6 +66,10 @@ class _$ChatStateCopyWithImpl<$Res, $Val extends ChatState>
           ? _value.chatState
           : chatState // ignore: cast_nullable_to_non_nullable
               as AsyncValue<List<ChatModel>>,
+      loadingMessage: freezed == loadingMessage
+          ? _value.loadingMessage
+          : loadingMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -82,6 +89,7 @@ abstract class _$$ChatStateImplCopyWith<$Res>
   $Res call(
       {List<ChatModel> messages,
       AsyncValue<List<ChatModel>> chatState,
+      String? loadingMessage,
       String? error});
 }
 
@@ -98,6 +106,7 @@ class __$$ChatStateImplCopyWithImpl<$Res>
   $Res call({
     Object? messages = null,
     Object? chatState = null,
+    Object? loadingMessage = freezed,
     Object? error = freezed,
   }) {
     return _then(_$ChatStateImpl(
@@ -109,6 +118,10 @@ class __$$ChatStateImplCopyWithImpl<$Res>
           ? _value.chatState
           : chatState // ignore: cast_nullable_to_non_nullable
               as AsyncValue<List<ChatModel>>,
+      loadingMessage: freezed == loadingMessage
+          ? _value.loadingMessage
+          : loadingMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -123,6 +136,7 @@ class _$ChatStateImpl implements _ChatState {
   const _$ChatStateImpl(
       {final List<ChatModel> messages = const [],
       this.chatState = const AsyncValue<List<ChatModel>>.data([]),
+      this.loadingMessage,
       this.error})
       : _messages = messages;
 
@@ -139,11 +153,13 @@ class _$ChatStateImpl implements _ChatState {
   @JsonKey()
   final AsyncValue<List<ChatModel>> chatState;
   @override
+  final String? loadingMessage;
+  @override
   final String? error;
 
   @override
   String toString() {
-    return 'ChatState(messages: $messages, chatState: $chatState, error: $error)';
+    return 'ChatState(messages: $messages, chatState: $chatState, loadingMessage: $loadingMessage, error: $error)';
   }
 
   @override
@@ -154,12 +170,18 @@ class _$ChatStateImpl implements _ChatState {
             const DeepCollectionEquality().equals(other._messages, _messages) &&
             (identical(other.chatState, chatState) ||
                 other.chatState == chatState) &&
+            (identical(other.loadingMessage, loadingMessage) ||
+                other.loadingMessage == loadingMessage) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_messages), chatState, error);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_messages),
+      chatState,
+      loadingMessage,
+      error);
 
   @JsonKey(ignore: true)
   @override
@@ -172,12 +194,15 @@ abstract class _ChatState implements ChatState {
   const factory _ChatState(
       {final List<ChatModel> messages,
       final AsyncValue<List<ChatModel>> chatState,
+      final String? loadingMessage,
       final String? error}) = _$ChatStateImpl;
 
   @override
   List<ChatModel> get messages;
   @override
   AsyncValue<List<ChatModel>> get chatState;
+  @override
+  String? get loadingMessage;
   @override
   String? get error;
   @override

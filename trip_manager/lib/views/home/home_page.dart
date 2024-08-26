@@ -56,25 +56,101 @@ class MainPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: screenWidth,
-      height: 449, // 화면의 절반을 PageView로 사용
-      child: PageView(
-        children: imagePaths.map((path) {
-          return Container(
-            width: screenWidth,
-            color: Colors.black,
-            child: Center(
-              child: Image.asset(
-                path,
+    return Stack(
+      children: [
+        SizedBox(
+          width: screenWidth,
+          height: 449, // 화면의 절반을 PageView로 사용
+          child: PageView(
+            children: imagePaths.map((path) {
+              return Container(
                 width: screenWidth,
-                height: 449,
-                fit: BoxFit.cover,
+                color: Colors.black,
+                child: Center(
+                  child: Image.asset(
+                    path,
+                    width: screenWidth,
+                    height: 449,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '최근 가장 핫한 장소 10곳',
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
+                ),
               ),
-            ),
-          );
-        }).toList(),
-      ),
+              Text(
+                'jshyun_',
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Positioned(
+          bottom: 16.0, // Container 하단에서 16.0 픽셀 위에 위치
+          left: 16.0,
+          right: 16.0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Image.asset(
+                    'assets/icons/location_on.png',
+                    width: 10,
+                    height: 12,
+                  ),
+                  const SizedBox(width: 2),
+                  const Text(
+                    '서울 광진구',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '뚝섬 한강 유원지',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  ),
+                  Text(
+                    '1/10',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

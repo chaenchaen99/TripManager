@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:trip_manager/theme.dart';
+
+import '../../../shared/ai_resposne_header.dart';
 
 const _shimmerGradient = LinearGradient(
   colors: [
@@ -19,9 +22,11 @@ const _shimmerGradient = LinearGradient(
 class AiLoadingPage extends StatelessWidget {
   const AiLoadingPage({
     super.key,
+    required this.sendMessage,
   });
 
   final bool _isLoading = true;
+  final String sendMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +36,19 @@ class AiLoadingPage extends StatelessWidget {
         child: ListView(
           physics: _isLoading ? const NeverScrollableScrollPhysics() : null,
           children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 18.0, right: 18, top: 28),
+              child: Text(
+                sendMessage,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: AppColors.darkColor_3,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
             const SizedBox(height: 16),
+            const AIResponseHeader(),
             _buildListItem(),
           ],
         ),

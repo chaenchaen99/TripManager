@@ -6,7 +6,7 @@ import 'package:trip_manager/models/ai/chat_model.dart';
 import 'package:trip_manager/models/ai/response_model.dart';
 import 'package:trip_manager/theme.dart';
 
-class AiCourseDetailPage extends StatelessWidget {
+class AiCourseDetailPage extends StatefulWidget {
   final AiResponse courseItem;
   const AiCourseDetailPage({
     super.key,
@@ -14,15 +14,20 @@ class AiCourseDetailPage extends StatelessWidget {
   });
 
   @override
+  State<AiCourseDetailPage> createState() => _AiCourseDetailPageState();
+}
+
+class _AiCourseDetailPageState extends State<AiCourseDetailPage> {
+  late GoogleMapController mapController;
+
+  final LatLng center = const LatLng(45.521563, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final Completer<GoogleMapController> mapController =
-        Completer<GoogleMapController>();
-
-    const CameraPosition kGooglePlex = CameraPosition(
-      target: LatLng(37.42796133580664, -122.085749655962),
-      zoom: 14.4746,
-    );
-
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -52,9 +57,12 @@ class AiCourseDetailPage extends StatelessWidget {
         body: Stack(
           children: [
             Expanded(
-              child: Container(
-                color: Colors.black,
-              ),
+              child: GoogleMap(
+                  onMapCreated: _onMapCreated,
+                  initialCameraPosition: CameraPosition(
+                    target: center,
+                    zoom: 11.0,
+                  )),
             ),
             DraggableScrollableSheet(
               // Add DraggableScrollableSheet here
