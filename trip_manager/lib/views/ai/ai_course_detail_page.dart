@@ -7,6 +7,7 @@ import 'package:trip_manager/models/ai/chat_model.dart';
 import 'package:trip_manager/models/ai/response_model.dart';
 import 'package:trip_manager/theme.dart';
 import 'package:trip_manager/views/ai/widgets/ai_timeline_item.dart';
+import 'package:trip_manager/views/ai/widgets/timeline_widget.dart';
 
 class AiCourseDetailPage extends StatefulWidget {
   final AiResponse courseItem;
@@ -80,27 +81,55 @@ class BottomCourseTimeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
-      // Add DraggableScrollableSheet here
       builder: (BuildContext context, scrollController) {
         return Container(
-          clipBehavior: Clip.hardEdge,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25),
-              topRight: Radius.circular(25),
-            ),
-          ),
-          child: TimelineTile(
-            alignment: TimelineAlign.start,
-            endChild: Container(
-              constraints: const BoxConstraints(
-                minHeight: 60,
+            clipBehavior: Clip.hardEdge,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
               ),
-              color: Colors.lightGreenAccent,
             ),
-          ),
-        );
+            child: Column(
+              children: [
+                Container(
+                  width: 58,
+                  height: 4,
+                  color: AppColors.lightColor_2,
+                  margin: const EdgeInsets.only(top: 7), // 손잡이의 상하 여백
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 40.0),
+                    child: ListView.builder(
+                        itemCount: 4,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 18.0),
+                            child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  TimelineWidget(number: index + 1),
+                                  const SizedBox(width: 8),
+                                  const Padding(
+                                    padding: EdgeInsets.only(top: 4.0),
+                                    child: AiTimelineItem(
+                                        courseItem: AiResponse(
+                                            imageUrl:
+                                                'assets/images/test/test_img_1.png',
+                                            title: '코스 1',
+                                            subTitle: '1번코스 | 2번코스| 3번 코스')),
+                                  ),
+                                ]),
+                          );
+                        }),
+                  ),
+                ),
+              ],
+            ));
       },
     );
   }
