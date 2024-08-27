@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:timeline_tile_nic/timeline_tile.dart';
 import 'package:trip_manager/models/ai/chat_model.dart';
 import 'package:trip_manager/models/ai/response_model.dart';
 import 'package:trip_manager/theme.dart';
+import 'package:trip_manager/views/ai/widgets/ai_timeline_item.dart';
 
 class AiCourseDetailPage extends StatefulWidget {
   final AiResponse courseItem;
@@ -64,39 +66,42 @@ class _AiCourseDetailPageState extends State<AiCourseDetailPage> {
                     zoom: 11.0,
                   )),
             ),
-            DraggableScrollableSheet(
-              // Add DraggableScrollableSheet here
-              builder: (BuildContext context, scrollController) {
-                return Container(
-                  clipBehavior: Clip.hardEdge,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25),
-                    ),
-                  ),
-                  child: CustomScrollView(
-                    controller: scrollController,
-                    slivers: [
-                      SliverList.list(children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 180),
-                          child: Container(
-                            height: 3,
-                            color: AppColors.lightColor_2,
-                          ),
-                        ),
-                        const ListTile(title: Text('코스1...')),
-                        const ListTile(title: Text('코스2...')),
-                      ])
-                    ],
-                  ),
-                );
-              },
-            ),
+            const BottomCourseTimeline(),
           ],
         ));
+  }
+}
+
+class BottomCourseTimeline extends StatelessWidget {
+  const BottomCourseTimeline({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return DraggableScrollableSheet(
+      // Add DraggableScrollableSheet here
+      builder: (BuildContext context, scrollController) {
+        return Container(
+          clipBehavior: Clip.hardEdge,
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25),
+              topRight: Radius.circular(25),
+            ),
+          ),
+          child: TimelineTile(
+            alignment: TimelineAlign.start,
+            endChild: Container(
+              constraints: const BoxConstraints(
+                minHeight: 60,
+              ),
+              color: Colors.lightGreenAccent,
+            ),
+          ),
+        );
+      },
+    );
   }
 }
