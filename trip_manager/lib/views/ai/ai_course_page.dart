@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:trip_manager/const/constants.dart';
 import 'package:trip_manager/models/ai/response_model.dart';
 import 'package:trip_manager/shared/ai_resposne_header.dart';
@@ -19,7 +20,15 @@ class AiCoursePage extends ConsumerStatefulWidget {
 }
 
 class _AiCoursePageState extends ConsumerState<AiCoursePage> {
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _inputController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _inputController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +47,25 @@ class _AiCoursePageState extends ConsumerState<AiCoursePage> {
           children: [
             const CustomDivider(color: AppColors.lightColor_2),
             Expanded(
-              // child: AiLoadingPage(),
               child: ref.watch(aiChatProvider).chatState.when(
                     data: (messages) {
                       if (messages.isEmpty) {
                         return const EmptyWidget();
                       } else {
-                        return AiChatListView(chatItems: messages);
+                        // 메시지를 전송한 후 스크롤을 맨 아래로 이동
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          if (_scrollController.hasClients) {
+                            _scrollController.animateTo(
+                              _scrollController.position.maxScrollExtent,
+                              duration: const Duration(milliseconds: 100),
+                              curve: Curves.easeOut,
+                            );
+                          }
+                        });
+                        return AiChatListView(
+                          chatItems: messages,
+                          scrollController: _scrollController,
+                        );
                       }
                     },
                     error: (error, stack) => Center(
@@ -57,9 +78,13 @@ class _AiCoursePageState extends ConsumerState<AiCoursePage> {
                     ),
                   ),
             ),
+            const SizedBox(height: 80),
           ],
         ),
-        BottomInputWidget(controller: _controller, ref: ref),
+        BottomInputWidget(
+          inputController: _inputController,
+          ref: ref,
+        ),
       ]),
     );
   }
@@ -95,14 +120,14 @@ class _LoadingWidgetState extends State<LoadingWidget> {
 }
 
 class BottomInputWidget extends StatelessWidget {
+  final TextEditingController inputController;
+  final WidgetRef ref;
+
   const BottomInputWidget({
     super.key,
-    required TextEditingController controller,
+    required this.inputController,
     required this.ref,
-  }) : _controller = controller;
-
-  final TextEditingController _controller;
-  final WidgetRef ref;
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -110,44 +135,47 @@ class BottomInputWidget extends StatelessWidget {
       bottom: 0,
       left: 0,
       right: 0,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Expanded(
-              child: TextField(
-                controller: _controller,
-                decoration: const InputDecoration(
-                  hintText: '메시지를 입력하세요.',
-                ),
-                onSubmitted: (text) {
-                  if (text.isEmpty) return;
-                  _controller.clear();
-                  ref.watch(aiChatProvider.notifier).sendMessage(text);
-                },
-              ),
-            ),
-            const SizedBox(width: 8),
-            Container(
-              width: 52,
-              height: 52,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25.0), // 동그란 버튼
-                border: Border.all(
-                  color: AppColors.lightColor_2, // 테두리 색상
-                  width: 1, // 테두리 두께
+      child: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: inputController,
+                  decoration: const InputDecoration(
+                    hintText: '메시지를 입력하세요.',
+                  ),
+                  onSubmitted: (text) {
+                    if (text.isEmpty) return;
+                    inputController.clear();
+                    ref.watch(aiChatProvider.notifier).sendMessage(text);
+                  },
                 ),
               ),
-              child: IconButton(
-                icon: Image.asset(
-                  'assets/icons/icon_submit.png',
-                  height: 15,
-                  width: 18,
+              const SizedBox(width: 8),
+              Container(
+                width: 52,
+                height: 52,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25.0), // 동그란 버튼
+                  border: Border.all(
+                    color: AppColors.lightColor_2, // 테두리 색상
+                    width: 1, // 테두리 두께
+                  ),
                 ),
-                onPressed: () {}, // 메시지 전송
+                child: IconButton(
+                  icon: Image.asset(
+                    'assets/icons/icon_submit.png',
+                    height: 15,
+                    width: 18,
+                  ),
+                  onPressed: () {}, // 메시지 전송
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -191,15 +219,18 @@ class EmptyWidget extends StatelessWidget {
 
 class AiChatListView extends StatelessWidget {
   final List<ChatModel> chatItems;
+  final ScrollController scrollController;
 
   const AiChatListView({
     super.key,
     required this.chatItems,
+    required this.scrollController,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      controller: scrollController,
       itemCount: chatItems.length,
       itemBuilder: (context, index) {
         final chatItem = chatItems[index];

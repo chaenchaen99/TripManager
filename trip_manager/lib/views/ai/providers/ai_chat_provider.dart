@@ -35,7 +35,7 @@ class AiChat extends _$AiChat {
       // Simulate sending message and receiving response
       await Future.delayed(const Duration(seconds: 2));
 
-      final newMessage = ChatModel(
+      final userMessage = ChatModel(
           sender: Sender.user,
           response: [ResponseModel.userResponse(sendMessage: message)]);
 
@@ -58,12 +58,15 @@ class AiChat extends _$AiChat {
             subTitle: '1번코스 | 2번코스| 3번 코스')
       ]);
 
+      final updatedMessages = [
+        ...state.messages, // 기존 메시지
+        userMessage, // 새로 추가된 사용자 메시지
+        aiResponse, // AI 응답
+      ];
+
       state = state.copyWith(
-        chatState: AsyncValue.data([
-          ...state.messages,
-          newMessage,
-          aiResponse,
-        ]),
+        messages: updatedMessages,
+        chatState: AsyncValue.data(updatedMessages),
       );
     } catch (e, stackTrace) {
       state = state.copyWith(
