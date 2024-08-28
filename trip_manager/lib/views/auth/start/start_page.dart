@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:trip_manager/const/constants.dart';
 import 'package:trip_manager/theme.dart';
-import 'package:trip_manager/views/auth/start/widgets/sso_button.dart';
+import 'package:trip_manager/views/auth/start/widgets/custom_button.dart';
 
 class StartPage extends StatelessWidget {
   const StartPage({super.key});
@@ -73,55 +73,58 @@ class SSOLoginWidgets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SSOButton(
-            icon: Image.asset(
-              'assets/icons/kakao_logo.png',
-              width: 20,
-              height: 20,
-            ),
-            text: '카카오로 로그인',
-            backgroundColor: AppColors.kakaoMainColor,
-            fontColor: Colors.black,
-            onPressed: () {}),
-        const SizedBox(height: 12),
-        SSOButton(
-            icon: Image.asset(
-              'assets/icons/naver_logo.png',
-              width: 20,
-              height: 20,
-            ),
-            text: '네이버로 로그인',
-            backgroundColor: AppColors.naverMainColor,
-            fontColor: Colors.white,
-            onPressed: () {}),
-        const SizedBox(height: 12),
-        SSOButton(
-            icon: Image.asset(
-              'assets/icons/apple_logo.png',
-              width: 20,
-              height: 20,
-            ),
-            text: 'Apple로 로그인',
-            backgroundColor: AppColors.appleMainColor,
-            fontColor: Colors.white,
-            onPressed: () {}),
-        const SizedBox(height: 12),
-        SSOButton(
-            icon: Image.asset(
-              'assets/icons/mail_logo.png',
-              width: 20,
-              height: 20,
-            ),
-            text: '이메일로 로그인',
-            backgroundColor: Colors.white,
-            outlineColor: AppColors.emailOutlineCOlor,
-            fontColor: Colors.black,
-            onPressed: () {
-              context.go('/signin');
-            }),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 35.0),
+      child: Column(
+        children: [
+          CustomButton(
+              icon: Image.asset(
+                'assets/icons/kakao_logo.png',
+                width: 20,
+                height: 20,
+              ),
+              text: '카카오로 로그인',
+              backgroundColor: AppColors.kakaoMainColor,
+              fontColor: Colors.black,
+              onPressed: () {}),
+          const SizedBox(height: 12),
+          CustomButton(
+              icon: Image.asset(
+                'assets/icons/naver_logo.png',
+                width: 20,
+                height: 20,
+              ),
+              text: '네이버로 로그인',
+              backgroundColor: AppColors.naverMainColor,
+              fontColor: Colors.white,
+              onPressed: () {}),
+          const SizedBox(height: 12),
+          CustomButton(
+              icon: Image.asset(
+                'assets/icons/apple_logo.png',
+                width: 20,
+                height: 20,
+              ),
+              text: 'Apple로 로그인',
+              backgroundColor: AppColors.appleMainColor,
+              fontColor: Colors.white,
+              onPressed: () {}),
+          const SizedBox(height: 12),
+          CustomButton(
+              icon: Image.asset(
+                'assets/icons/mail_logo.png',
+                width: 20,
+                height: 20,
+              ),
+              text: '이메일로 로그인',
+              backgroundColor: Colors.white,
+              outlineColor: AppColors.emailOutlineColor,
+              fontColor: Colors.black,
+              onPressed: () {
+                context.go('/signin');
+              }),
+        ],
+      ),
     );
   }
 }

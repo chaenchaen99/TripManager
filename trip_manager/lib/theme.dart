@@ -40,10 +40,11 @@ class AppColors extends Color {
   static const Color lightColor_1 = Color(0xffF3F5FA);
   static const Color lightColor_2 = Color(0xffEFEFEF);
   static const Color lightColor_3 = Color(0xffFFFFFF);
+  static const Color lightColor_4 = Color(0xffBBBEC7);
   static const Color kakaoMainColor = Color(0xffFFE300);
   static const Color naverMainColor = Color(0xff03C75A);
   static const Color appleMainColor = Color(0xff1D1D1F);
-  static const Color emailOutlineCOlor = Color(0xffBBBEC7);
+  static const Color emailOutlineColor = Color(0xffBBBEC7);
 }
   // static const MaterialColor wabizGray =
   //     MaterialColor(grayPrimaryValue, <int, Color>{
