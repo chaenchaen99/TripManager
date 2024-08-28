@@ -6,6 +6,7 @@ import 'package:trip_manager/config/router/scaffold_with_nav_bar.dart';
 import 'package:trip_manager/models/ai/response_model.dart';
 import 'package:trip_manager/views/ai/ai_course_detail_page.dart';
 import 'package:trip_manager/views/ai/ai_course_page.dart';
+import 'package:trip_manager/views/auth/signin/signin_page.dart';
 import 'package:trip_manager/views/bookmark/bookmark_page.dart';
 import 'package:trip_manager/views/feed/feed_page.dart';
 import 'package:trip_manager/views/home/home_page.dart';
@@ -13,6 +14,7 @@ import 'package:trip_manager/views/my/my_page.dart';
 import 'package:trip_manager/views/page_not_found.dart';
 
 import '../../models/ai/chat_model.dart';
+import '../../views/auth/start/start_page.dart';
 
 part 'router_provider.g.dart';
 
@@ -25,8 +27,18 @@ final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 GoRouter route(RouteRef ref) {
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: '/home',
+    initialLocation: '/start',
     routes: [
+      GoRoute(
+        path: '/start',
+        name: RouteNames.start,
+        builder: (context, state) => const StartPage(),
+      ),
+      GoRoute(
+        path: '/signin',
+        name: RouteNames.signin,
+        builder: (context, state) => const SigninPage(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return ScaffoldWithNavBar(
@@ -46,9 +58,7 @@ GoRouter route(RouteRef ref) {
               path: '/ai',
               name: RouteNames.ai,
               builder: (context, state) => const AiCoursePage(),
-            )
-          ]),
-          StatefulShellBranch(routes: [
+            ),
             GoRoute(
                 path: '/aiDetail',
                 name: RouteNames.aiDetail,
@@ -56,7 +66,7 @@ GoRouter route(RouteRef ref) {
                   // `extra`를 통해 전달된 데이터 가져오기
                   final AiResponse courseItem = state.extra as AiResponse;
                   return AiCourseDetailPage(courseItem: courseItem);
-                })
+                }),
           ]),
           StatefulShellBranch(routes: [
             GoRoute(

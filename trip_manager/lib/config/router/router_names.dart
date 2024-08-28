@@ -1,4 +1,8 @@
 class RouteNames {
+  static const splash = 'splash';
+  static const start = 'start';
+  static const signin = 'signin';
+  static const signup = 'signup';
   static const home = 'home';
   static const ai = 'ai';
   static const feed = 'feed';
