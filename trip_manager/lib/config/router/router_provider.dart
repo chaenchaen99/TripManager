@@ -14,6 +14,7 @@ import 'package:trip_manager/views/my/my_page.dart';
 import 'package:trip_manager/views/page_not_found.dart';
 
 import '../../models/ai/chat_model.dart';
+import '../../views/auth/signup/signup_page.dart';
 import '../../views/auth/start/start_page.dart';
 
 part 'router_provider.g.dart';
@@ -38,6 +39,11 @@ GoRouter route(RouteRef ref) {
         path: '/signin',
         name: RouteNames.signin,
         builder: (context, state) => const SigninPage(),
+      ),
+      GoRoute(
+        path: '/signup',
+        name: RouteNames.signup,
+        builder: (context, state) => const SignupPage(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

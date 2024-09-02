@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:trip_manager/shared/toast.dart';
 import 'package:trip_manager/views/auth/start/widgets/custom_button.dart';
 
+import '../../../config/router/router_names.dart';
 import '../../../theme.dart';
 import 'widgets/custom_textformfield.dart';
 
@@ -51,7 +52,8 @@ class _SigninPageState extends State<SigninPage> {
             child: Icon(Icons.arrow_back),
           ),
           onPressed: () {
-            context.go('/start');
+            FocusScope.of(context).unfocus();
+            context.goNamed(RouteNames.start);
           },
         ),
       ),

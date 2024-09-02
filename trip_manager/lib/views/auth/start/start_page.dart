@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:trip_manager/const/constants.dart';
 import 'package:trip_manager/theme.dart';
 import 'package:trip_manager/views/auth/start/widgets/custom_button.dart';
+
+import '../../../config/router/router_names.dart';
+import '../../../shared/text_widgets.dart';
 
 class StartPage extends StatelessWidget {
   const StartPage({super.key});
@@ -36,15 +38,8 @@ class AccountWidgets extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextButton(
-          onPressed: () {},
-          child: const Text(
-            '회원가입',
-            style: TextStyle(
-              fontWeight: FontWeight.w400,
-              color: Colors.black,
-              fontSize: 14,
-            ),
-          ),
+          onPressed: () => context.pushNamed(RouteNames.signup),
+          child: text14Normal(text: "이메일 회원가입"),
         ),
         const Text(
           '|',
@@ -52,14 +47,7 @@ class AccountWidgets extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {},
-          child: const Text(
-            '회원가입',
-            style: TextStyle(
-              fontWeight: FontWeight.w400,
-              color: Colors.black,
-              fontSize: 14,
-            ),
-          ),
+          child: text14Normal(text: "계정변경"),
         ),
       ],
     );
@@ -121,7 +109,7 @@ class SSOLoginWidgets extends StatelessWidget {
               outlineColor: AppColors.emailOutlineColor,
               fontColor: Colors.black,
               onPressed: () {
-                context.go('/signin');
+                context.pushNamed(RouteNames.signin);
               }),
         ],
       ),
