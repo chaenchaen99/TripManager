@@ -39,4 +39,11 @@ class CheckboxNotifiger extends _$CheckboxNotifiger {
   void togglePrivacy() {
     state = state.copyWith(isPrivacyAccepted: !state.isPrivacyAccepted);
   }
+
+  void toggleAll(bool value) {
+    state = state.copyWith(
+      isTermsAccepted: value,
+      isPrivacyAccepted: value,
+    );
+  }
 }

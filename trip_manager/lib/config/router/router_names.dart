@@ -9,4 +9,5 @@ class RouteNames {
   static const bookmark = 'bookmark';
   static const my = 'my';
   static const aiDetail = 'aiDetail';
+  static const email = 'email';
 }

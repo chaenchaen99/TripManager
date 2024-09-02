@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../theme.dart';
+
 class CustomButton extends StatelessWidget {
   final Widget? icon; // 아이콘을 위한 매개변수
   final String text; // 버튼의 텍스트
@@ -14,8 +16,8 @@ class CustomButton extends StatelessWidget {
     this.icon,
     this.outlineColor,
     required this.text,
-    required this.backgroundColor,
-    required this.fontColor,
+    this.backgroundColor = AppColors.mainColor,
+    this.fontColor = Colors.white,
     required this.onPressed,
     this.isEnabled = true,
   });

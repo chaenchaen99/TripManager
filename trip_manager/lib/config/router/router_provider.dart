@@ -7,6 +7,7 @@ import 'package:trip_manager/models/ai/response_model.dart';
 import 'package:trip_manager/views/ai/ai_course_detail_page.dart';
 import 'package:trip_manager/views/ai/ai_course_page.dart';
 import 'package:trip_manager/views/auth/signin/signin_page.dart';
+import 'package:trip_manager/views/auth/signup/signup_email_page.dart';
 import 'package:trip_manager/views/bookmark/bookmark_page.dart';
 import 'package:trip_manager/views/feed/feed_page.dart';
 import 'package:trip_manager/views/home/home_page.dart';
@@ -44,6 +45,13 @@ GoRouter route(RouteRef ref) {
         path: '/signup',
         name: RouteNames.signup,
         builder: (context, state) => const SignupPage(),
+        routes: [
+          GoRoute(
+            path: 'email',
+            name: RouteNames.email,
+            builder: (context, state) => const SignupEmailPage(),
+          ),
+        ],
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

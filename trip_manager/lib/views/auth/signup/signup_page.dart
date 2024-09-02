@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:trip_manager/config/router/router_names.dart';
+import 'package:trip_manager/shared/custom_divider.dart';
 import 'package:trip_manager/shared/custom_widgets.dart';
 import 'package:trip_manager/views/auth/signup/providers/checkbox_notifiger.dart';
 import 'package:trip_manager/views/auth/signup/providers/term_checkbox.dart';
+import 'package:trip_manager/views/auth/start/widgets/custom_button.dart';
 
 import '../../../theme.dart';
 import 'widgets/custom_checkbox.dart';
@@ -12,6 +16,10 @@ class SignupPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final checkBoxState = ref.watch(checkboxNotifigerProvider);
+    final isAllAccepted =
+        checkBoxState.isTermsAccepted && checkBoxState.isPrivacyAccepted;
+
     return Scaffold(
       backgroundColor: Colors.green,
       body: SizedBox(
@@ -49,25 +57,61 @@ class SignupPage extends ConsumerWidget {
                           toggleCallback: ref
                               .read(checkboxNotifigerProvider.notifier)
                               .toggleTerms,
-                          isChecked: ref
-                              .watch(checkboxNotifigerProvider)
-                              .isTermsAccepted,
+                          isChecked: checkBoxState.isTermsAccepted,
                         ),
                         TermsOfUseCheckBox(
                           contents: '(필수) 개인정보 수집 및 이용동의',
                           toggleCallback: ref
                               .read(checkboxNotifigerProvider.notifier)
                               .togglePrivacy,
-                          isChecked: ref
-                              .watch(checkboxNotifigerProvider)
-                              .isPrivacyAccepted,
+                          isChecked: checkBoxState.isPrivacyAccepted,
+                        ),
+                        const SizedBox(height: 12),
+                        const CustomDivider(
+                          color: AppColors.lightColor_2,
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          children: [
+                            CustomCheckbox(
+                                isChecked: isAllAccepted,
+                                toggleCallback: () {
+                                  bool newValue = !(isAllAccepted);
+                                  ref
+                                      .read(checkboxNotifigerProvider.notifier)
+                                      .toggleAll(newValue);
+                                }),
+                            const SizedBox(width: 12),
+                            const Text(
+                              '전체동의',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ),
                 );
               },
-            )
+            ),
+            Positioned(
+                bottom: 1,
+                left: 0,
+                right: 0,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 18.0, right: 18.0, bottom: 35.0),
+                  child: CustomButton(
+                      text: '다음',
+                      onPressed: isAllAccepted
+                          ? () {
+                              context.pushNamed(RouteNames.email);
+                            }
+                          : null),
+                )),
           ],
         ),
       ),
