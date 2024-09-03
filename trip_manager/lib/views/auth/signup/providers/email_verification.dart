@@ -14,6 +14,7 @@ class EmailVerificationState with _$EmailVerificationState {
     required String countdown,
     String? emailErrorMsg,
     String? codeErrorMsg,
+    String? verifyBtnText,
   }) = _EmailVerificationState;
 
   factory EmailVerificationState.initial() => const EmailVerificationState(
@@ -22,6 +23,7 @@ class EmailVerificationState with _$EmailVerificationState {
         countdown: '',
         emailErrorMsg: null,
         codeErrorMsg: null,
+        verifyBtnText: '인증받기',
       );
 }
 
@@ -50,7 +52,10 @@ class EmailVerification extends _$EmailVerification {
 
   //인증번호 유효성 검사
   void codeValidator(String? code) {
-    if (code == null || code.isEmpty) {
+    print(state.countdown);
+    if (state.verifyBtnText == '재인증') {
+      state = state.copyWith(codeErrorMsg: '인증시간이 만료되었습니다. 재인증해주세요.');
+    } else if (code == null || code.isEmpty) {
       state = state.copyWith(codeErrorMsg: '인증번호를 입력해주세요.');
     } else if (code.trim().length != 6) {
       state = state.copyWith(codeErrorMsg: '인증번호는 6자리입니다.');
@@ -59,12 +64,19 @@ class EmailVerification extends _$EmailVerification {
     }
   }
 
+  bool formValidator() {
+    return (state.emailErrorMsg == null && state.codeErrorMsg == null) &&
+        (state.email != '' && state.verificationCode != '') &&
+        (state.countdown != '');
+  }
+
   //이메일 인증 API 호출
   Future<void> sendVerificationEmail() async {
     state = state.copyWith(emailErrorMsg: null);
     try {
       //TODO: 이메일 인증 API 호출 코드 추가
       startCountdown();
+      state = state.copyWith(codeErrorMsg: '인증번호를 입력해주세요.');
     } catch (error) {
       state = state.copyWith(emailErrorMsg: '이메일 전송 실패');
     }
@@ -85,17 +97,24 @@ class EmailVerification extends _$EmailVerification {
   void startCountdown() {
     _timer?.cancel();
 
-    int countdownSeconds = 180;
+    int countdownSeconds = 10;
     // String formattedTime = formatTime(countdownSeconds);
 
     // state = state.copyWith(countdown: formattedTime);
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (countdownSeconds > 0) {
+        state = state.copyWith(
+          countdown: formatTime(countdownSeconds),
+          verifyBtnText: '인증받기',
+        );
         countdownSeconds--;
-        state = state.copyWith(countdown: formatTime(countdownSeconds));
       } else {
         timer.cancel();
-        state = state.copyWith(codeErrorMsg: '인증 시간이 만료되었습니다.');
+        state = state.copyWith(
+          codeErrorMsg: '인증시간이 만료되었습니다. 재인증해주세요.',
+          verifyBtnText: '재인증',
+          countdown: '',
+        );
       }
     });
   }

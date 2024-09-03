@@ -3,9 +3,8 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:trip_manager/views/auth/signup/providers/email_verification.dart';
 import 'package:trip_manager/views/auth/signup/widgets/custom_email_textformfield.dart';
-
+import '../../../shared/toast.dart';
 import '../../../theme.dart';
-import '../signin/widgets/custom_textformfield.dart';
 import '../start/widgets/custom_button.dart';
 import 'widgets/custom_code_textformfield.dart';
 
@@ -92,9 +91,13 @@ class _SignupEmailPageState extends ConsumerState<SignupEmailPage> {
                 isButtonEnabled: _emailVerificationState.emailErrorMsg == null
                     ? true
                     : false,
-                verifiBtnText: '인증받기',
+                verifiBtnText: _emailVerificationState.verifyBtnText,
                 verifiBtnClicked: () {
                   _emailVerificationNotifier.sendVerificationEmail();
+                  toast(
+                    context,
+                    '인증 메일이 전송되었습니다.',
+                  );
                 }),
             const SizedBox(height: 40),
             CustomCodeTextFormField(
@@ -118,10 +121,7 @@ class _SignupEmailPageState extends ConsumerState<SignupEmailPage> {
           text: '다음',
           backgroundColor: AppColors.mainColor,
           fontColor: Colors.white,
-          isEnabled: (_emailVerificationState.emailErrorMsg == null &&
-                  _emailVerificationState.codeErrorMsg == null) &&
-              (_emailVerificationState.email != '' &&
-                  _emailVerificationState.verificationCode != ''),
+          isEnabled: _emailVerificationNotifier.formValidator(),
           onPressed: () {},
         ),
       ),

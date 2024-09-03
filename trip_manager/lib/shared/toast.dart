@@ -27,7 +27,7 @@ void toast(context, text) {
           alignment: Alignment.topCenter,
           children: [
             Positioned(
-              top: 40,
+              top: 60,
               child: child,
             ),
           ],

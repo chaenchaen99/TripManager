@@ -21,8 +21,11 @@ mixin _$EmailVerificationState {
   String get countdown => throw _privateConstructorUsedError;
   String? get emailErrorMsg => throw _privateConstructorUsedError;
   String? get codeErrorMsg => throw _privateConstructorUsedError;
+  String? get verifyBtnText => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EmailVerificationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $EmailVerificationStateCopyWith<EmailVerificationState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -38,7 +41,8 @@ abstract class $EmailVerificationStateCopyWith<$Res> {
       String verificationCode,
       String countdown,
       String? emailErrorMsg,
-      String? codeErrorMsg});
+      String? codeErrorMsg,
+      String? verifyBtnText});
 }
 
 /// @nodoc
@@ -52,6 +56,8 @@ class _$EmailVerificationStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of EmailVerificationState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -60,6 +66,7 @@ class _$EmailVerificationStateCopyWithImpl<$Res,
     Object? countdown = null,
     Object? emailErrorMsg = freezed,
     Object? codeErrorMsg = freezed,
+    Object? verifyBtnText = freezed,
   }) {
     return _then(_value.copyWith(
       email: null == email
@@ -82,6 +89,10 @@ class _$EmailVerificationStateCopyWithImpl<$Res,
           ? _value.codeErrorMsg
           : codeErrorMsg // ignore: cast_nullable_to_non_nullable
               as String?,
+      verifyBtnText: freezed == verifyBtnText
+          ? _value.verifyBtnText
+          : verifyBtnText // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -100,7 +111,8 @@ abstract class _$$EmailVerificationStateImplCopyWith<$Res>
       String verificationCode,
       String countdown,
       String? emailErrorMsg,
-      String? codeErrorMsg});
+      String? codeErrorMsg,
+      String? verifyBtnText});
 }
 
 /// @nodoc
@@ -113,6 +125,8 @@ class __$$EmailVerificationStateImplCopyWithImpl<$Res>
       $Res Function(_$EmailVerificationStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of EmailVerificationState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -121,6 +135,7 @@ class __$$EmailVerificationStateImplCopyWithImpl<$Res>
     Object? countdown = null,
     Object? emailErrorMsg = freezed,
     Object? codeErrorMsg = freezed,
+    Object? verifyBtnText = freezed,
   }) {
     return _then(_$EmailVerificationStateImpl(
       email: null == email
@@ -143,6 +158,10 @@ class __$$EmailVerificationStateImplCopyWithImpl<$Res>
           ? _value.codeErrorMsg
           : codeErrorMsg // ignore: cast_nullable_to_non_nullable
               as String?,
+      verifyBtnText: freezed == verifyBtnText
+          ? _value.verifyBtnText
+          : verifyBtnText // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -155,7 +174,8 @@ class _$EmailVerificationStateImpl implements _EmailVerificationState {
       required this.verificationCode,
       required this.countdown,
       this.emailErrorMsg,
-      this.codeErrorMsg});
+      this.codeErrorMsg,
+      this.verifyBtnText});
 
   @override
   final String email;
@@ -167,10 +187,12 @@ class _$EmailVerificationStateImpl implements _EmailVerificationState {
   final String? emailErrorMsg;
   @override
   final String? codeErrorMsg;
+  @override
+  final String? verifyBtnText;
 
   @override
   String toString() {
-    return 'EmailVerificationState(email: $email, verificationCode: $verificationCode, countdown: $countdown, emailErrorMsg: $emailErrorMsg, codeErrorMsg: $codeErrorMsg)';
+    return 'EmailVerificationState(email: $email, verificationCode: $verificationCode, countdown: $countdown, emailErrorMsg: $emailErrorMsg, codeErrorMsg: $codeErrorMsg, verifyBtnText: $verifyBtnText)';
   }
 
   @override
@@ -186,14 +208,18 @@ class _$EmailVerificationStateImpl implements _EmailVerificationState {
             (identical(other.emailErrorMsg, emailErrorMsg) ||
                 other.emailErrorMsg == emailErrorMsg) &&
             (identical(other.codeErrorMsg, codeErrorMsg) ||
-                other.codeErrorMsg == codeErrorMsg));
+                other.codeErrorMsg == codeErrorMsg) &&
+            (identical(other.verifyBtnText, verifyBtnText) ||
+                other.verifyBtnText == verifyBtnText));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, email, verificationCode,
-      countdown, emailErrorMsg, codeErrorMsg);
+      countdown, emailErrorMsg, codeErrorMsg, verifyBtnText);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EmailVerificationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$EmailVerificationStateImplCopyWith<_$EmailVerificationStateImpl>
@@ -207,7 +233,8 @@ abstract class _EmailVerificationState implements EmailVerificationState {
       required final String verificationCode,
       required final String countdown,
       final String? emailErrorMsg,
-      final String? codeErrorMsg}) = _$EmailVerificationStateImpl;
+      final String? codeErrorMsg,
+      final String? verifyBtnText}) = _$EmailVerificationStateImpl;
 
   @override
   String get email;
@@ -220,7 +247,12 @@ abstract class _EmailVerificationState implements EmailVerificationState {
   @override
   String? get codeErrorMsg;
   @override
-  @JsonKey(ignore: true)
+  String? get verifyBtnText;
+
+  /// Create a copy of EmailVerificationState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$EmailVerificationStateImplCopyWith<_$EmailVerificationStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
