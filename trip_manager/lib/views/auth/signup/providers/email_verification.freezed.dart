@@ -18,8 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$EmailVerificationState {
   String get email => throw _privateConstructorUsedError;
   String get verificationCode => throw _privateConstructorUsedError;
-  bool get isLoading => throw _privateConstructorUsedError;
-  String? get errorMessage => throw _privateConstructorUsedError;
+  int get countdown => throw _privateConstructorUsedError;
+  String? get emailErrorMsg => throw _privateConstructorUsedError;
+  String? get codeErrorMsg => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $EmailVerificationStateCopyWith<EmailVerificationState> get copyWith =>
@@ -35,8 +36,9 @@ abstract class $EmailVerificationStateCopyWith<$Res> {
   $Res call(
       {String email,
       String verificationCode,
-      bool isLoading,
-      String? errorMessage});
+      int countdown,
+      String? emailErrorMsg,
+      String? codeErrorMsg});
 }
 
 /// @nodoc
@@ -55,8 +57,9 @@ class _$EmailVerificationStateCopyWithImpl<$Res,
   $Res call({
     Object? email = null,
     Object? verificationCode = null,
-    Object? isLoading = null,
-    Object? errorMessage = freezed,
+    Object? countdown = null,
+    Object? emailErrorMsg = freezed,
+    Object? codeErrorMsg = freezed,
   }) {
     return _then(_value.copyWith(
       email: null == email
@@ -67,13 +70,17 @@ class _$EmailVerificationStateCopyWithImpl<$Res,
           ? _value.verificationCode
           : verificationCode // ignore: cast_nullable_to_non_nullable
               as String,
-      isLoading: null == isLoading
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      errorMessage: freezed == errorMessage
-          ? _value.errorMessage
-          : errorMessage // ignore: cast_nullable_to_non_nullable
+      countdown: null == countdown
+          ? _value.countdown
+          : countdown // ignore: cast_nullable_to_non_nullable
+              as int,
+      emailErrorMsg: freezed == emailErrorMsg
+          ? _value.emailErrorMsg
+          : emailErrorMsg // ignore: cast_nullable_to_non_nullable
+              as String?,
+      codeErrorMsg: freezed == codeErrorMsg
+          ? _value.codeErrorMsg
+          : codeErrorMsg // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -91,8 +98,9 @@ abstract class _$$EmailVerificationStateImplCopyWith<$Res>
   $Res call(
       {String email,
       String verificationCode,
-      bool isLoading,
-      String? errorMessage});
+      int countdown,
+      String? emailErrorMsg,
+      String? codeErrorMsg});
 }
 
 /// @nodoc
@@ -110,8 +118,9 @@ class __$$EmailVerificationStateImplCopyWithImpl<$Res>
   $Res call({
     Object? email = null,
     Object? verificationCode = null,
-    Object? isLoading = null,
-    Object? errorMessage = freezed,
+    Object? countdown = null,
+    Object? emailErrorMsg = freezed,
+    Object? codeErrorMsg = freezed,
   }) {
     return _then(_$EmailVerificationStateImpl(
       email: null == email
@@ -122,13 +131,17 @@ class __$$EmailVerificationStateImplCopyWithImpl<$Res>
           ? _value.verificationCode
           : verificationCode // ignore: cast_nullable_to_non_nullable
               as String,
-      isLoading: null == isLoading
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      errorMessage: freezed == errorMessage
-          ? _value.errorMessage
-          : errorMessage // ignore: cast_nullable_to_non_nullable
+      countdown: null == countdown
+          ? _value.countdown
+          : countdown // ignore: cast_nullable_to_non_nullable
+              as int,
+      emailErrorMsg: freezed == emailErrorMsg
+          ? _value.emailErrorMsg
+          : emailErrorMsg // ignore: cast_nullable_to_non_nullable
+              as String?,
+      codeErrorMsg: freezed == codeErrorMsg
+          ? _value.codeErrorMsg
+          : codeErrorMsg // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -140,21 +153,24 @@ class _$EmailVerificationStateImpl implements _EmailVerificationState {
   const _$EmailVerificationStateImpl(
       {required this.email,
       required this.verificationCode,
-      required this.isLoading,
-      this.errorMessage});
+      required this.countdown,
+      this.emailErrorMsg,
+      this.codeErrorMsg});
 
   @override
   final String email;
   @override
   final String verificationCode;
   @override
-  final bool isLoading;
+  final int countdown;
   @override
-  final String? errorMessage;
+  final String? emailErrorMsg;
+  @override
+  final String? codeErrorMsg;
 
   @override
   String toString() {
-    return 'EmailVerificationState(email: $email, verificationCode: $verificationCode, isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'EmailVerificationState(email: $email, verificationCode: $verificationCode, countdown: $countdown, emailErrorMsg: $emailErrorMsg, codeErrorMsg: $codeErrorMsg)';
   }
 
   @override
@@ -165,15 +181,17 @@ class _$EmailVerificationStateImpl implements _EmailVerificationState {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.verificationCode, verificationCode) ||
                 other.verificationCode == verificationCode) &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
-            (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+            (identical(other.countdown, countdown) ||
+                other.countdown == countdown) &&
+            (identical(other.emailErrorMsg, emailErrorMsg) ||
+                other.emailErrorMsg == emailErrorMsg) &&
+            (identical(other.codeErrorMsg, codeErrorMsg) ||
+                other.codeErrorMsg == codeErrorMsg));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, email, verificationCode, isLoading, errorMessage);
+  int get hashCode => Object.hash(runtimeType, email, verificationCode,
+      countdown, emailErrorMsg, codeErrorMsg);
 
   @JsonKey(ignore: true)
   @override
@@ -187,17 +205,20 @@ abstract class _EmailVerificationState implements EmailVerificationState {
   const factory _EmailVerificationState(
       {required final String email,
       required final String verificationCode,
-      required final bool isLoading,
-      final String? errorMessage}) = _$EmailVerificationStateImpl;
+      required final int countdown,
+      final String? emailErrorMsg,
+      final String? codeErrorMsg}) = _$EmailVerificationStateImpl;
 
   @override
   String get email;
   @override
   String get verificationCode;
   @override
-  bool get isLoading;
+  int get countdown;
   @override
-  String? get errorMessage;
+  String? get emailErrorMsg;
+  @override
+  String? get codeErrorMsg;
   @override
   @JsonKey(ignore: true)
   _$$EmailVerificationStateImplCopyWith<_$EmailVerificationStateImpl>

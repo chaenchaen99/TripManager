@@ -6,6 +6,7 @@ class CustomTextFormField extends StatefulWidget {
   final String? title;
   final String? hintText;
   final void Function(String)? onChanged;
+  final String? errorMsg;
 
   const CustomTextFormField({
     super.key,
@@ -13,6 +14,7 @@ class CustomTextFormField extends StatefulWidget {
     this.title,
     this.hintText,
     this.onChanged,
+    this.errorMsg,
   });
 
   @override
@@ -68,6 +70,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               color: Colors.grey,
               fontWeight: FontWeight.w600,
             ),
+            errorText: widget.errorMsg,
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
             enabledBorder: const UnderlineInputBorder(

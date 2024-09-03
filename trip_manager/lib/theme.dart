@@ -26,6 +26,7 @@ final ThemeData tripManagerTheme = ThemeData(
     contentPadding:
         const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
   ),
+  bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.white),
 );
 
 class AppColors extends Color {

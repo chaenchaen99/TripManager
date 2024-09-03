@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:trip_manager/theme.dart';
+import 'package:trip_manager/views/auth/signup/providers/email_verification.dart';
 
-class CustomVerifiTextFormField extends StatefulWidget {
+class CustomVerifiTextFormField extends ConsumerStatefulWidget {
   final TextEditingController controller;
   final String? title;
   final String? hintText;
   final void Function(String)? onChanged;
   final String? verifiBtnText;
+  final FocusNode? focusNode;
   final void Function()? verifiBtnClicked;
   final bool isButtonEnabled;
-  final String? Function(String?)? verifyValidator;
 
   const CustomVerifiTextFormField({
     super.key,
@@ -18,29 +20,32 @@ class CustomVerifiTextFormField extends StatefulWidget {
     this.hintText,
     this.onChanged,
     this.verifiBtnText,
+    this.focusNode,
     this.verifiBtnClicked,
-    this.isButtonEnabled = false,
-    required this.verifyValidator,
+    required this.isButtonEnabled,
   });
 
   @override
   _CustomTextFormFieldState createState() => _CustomTextFormFieldState();
 }
 
-class _CustomTextFormFieldState extends State<CustomVerifiTextFormField> {
+class _CustomTextFormFieldState
+    extends ConsumerState<CustomVerifiTextFormField> {
   late FocusNode _focusNode;
   bool _isFocused = false;
 
   @override
   void initState() {
     super.initState();
-    _focusNode = FocusNode();
+    _focusNode = widget.focusNode ?? FocusNode();
     _focusNode.addListener(_onFocusChange);
   }
 
   @override
   void dispose() {
-    _focusNode.dispose();
+    if (widget.focusNode == null) {
+      _focusNode.dispose();
+    }
     super.dispose();
   }
 
@@ -68,7 +73,7 @@ class _CustomTextFormFieldState extends State<CustomVerifiTextFormField> {
         Stack(children: [
           TextFormField(
             controller: widget.controller,
-            focusNode: _focusNode, // Attach the focus node here
+            focusNode: _focusNode,
             decoration: InputDecoration(
               hintText: widget.hintText ?? '',
               fillColor: Colors.transparent,
@@ -77,6 +82,7 @@ class _CustomTextFormFieldState extends State<CustomVerifiTextFormField> {
                 color: Colors.grey,
                 fontWeight: FontWeight.w600,
               ),
+              errorText: ref.read(emailVerificationProvider).emailErrorMsg,
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
               enabledBorder: const UnderlineInputBorder(
@@ -92,7 +98,6 @@ class _CustomTextFormFieldState extends State<CustomVerifiTextFormField> {
                 ),
               ),
             ),
-            validator: widget.verifyValidator,
             onChanged: widget.onChanged,
           ),
           Positioned(
