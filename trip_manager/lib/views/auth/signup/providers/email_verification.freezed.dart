@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$EmailVerificationState {
   String get email => throw _privateConstructorUsedError;
   String get verificationCode => throw _privateConstructorUsedError;
-  int get countdown => throw _privateConstructorUsedError;
+  String get countdown => throw _privateConstructorUsedError;
   String? get emailErrorMsg => throw _privateConstructorUsedError;
   String? get codeErrorMsg => throw _privateConstructorUsedError;
 
@@ -36,7 +36,7 @@ abstract class $EmailVerificationStateCopyWith<$Res> {
   $Res call(
       {String email,
       String verificationCode,
-      int countdown,
+      String countdown,
       String? emailErrorMsg,
       String? codeErrorMsg});
 }
@@ -73,7 +73,7 @@ class _$EmailVerificationStateCopyWithImpl<$Res,
       countdown: null == countdown
           ? _value.countdown
           : countdown // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       emailErrorMsg: freezed == emailErrorMsg
           ? _value.emailErrorMsg
           : emailErrorMsg // ignore: cast_nullable_to_non_nullable
@@ -98,7 +98,7 @@ abstract class _$$EmailVerificationStateImplCopyWith<$Res>
   $Res call(
       {String email,
       String verificationCode,
-      int countdown,
+      String countdown,
       String? emailErrorMsg,
       String? codeErrorMsg});
 }
@@ -134,7 +134,7 @@ class __$$EmailVerificationStateImplCopyWithImpl<$Res>
       countdown: null == countdown
           ? _value.countdown
           : countdown // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       emailErrorMsg: freezed == emailErrorMsg
           ? _value.emailErrorMsg
           : emailErrorMsg // ignore: cast_nullable_to_non_nullable
@@ -162,7 +162,7 @@ class _$EmailVerificationStateImpl implements _EmailVerificationState {
   @override
   final String verificationCode;
   @override
-  final int countdown;
+  final String countdown;
   @override
   final String? emailErrorMsg;
   @override
@@ -205,7 +205,7 @@ abstract class _EmailVerificationState implements EmailVerificationState {
   const factory _EmailVerificationState(
       {required final String email,
       required final String verificationCode,
-      required final int countdown,
+      required final String countdown,
       final String? emailErrorMsg,
       final String? codeErrorMsg}) = _$EmailVerificationStateImpl;
 
@@ -214,7 +214,7 @@ abstract class _EmailVerificationState implements EmailVerificationState {
   @override
   String get verificationCode;
   @override
-  int get countdown;
+  String get countdown;
   @override
   String? get emailErrorMsg;
   @override

@@ -23,8 +23,25 @@ final ThemeData tripManagerTheme = ThemeData(
       fontSize: 14,
       color: AppColors.darkColor_3,
     ),
+    errorBorder: const UnderlineInputBorder(
+      borderSide: BorderSide(
+        color: Colors.red, // 오류 시 언더라인 색상
+        width: 1.0,
+      ),
+    ),
+    errorStyle: const TextStyle(
+      color: Colors.red,
+      fontSize: 12, // 원하는 폰트 크기
+      fontWeight: FontWeight.w400, // 원하는 폰트 두께
+    ),
+    focusedErrorBorder: const UnderlineInputBorder(
+      borderSide: BorderSide(
+        color: Colors.red, // 오류 시 포커스된 상태의 언더라인 색상
+        width: 1.0,
+      ),
+    ),
     contentPadding:
-        const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+        const EdgeInsets.symmetric(vertical: 10.0, horizontal: 36.0),
   ),
   bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.white),
 );

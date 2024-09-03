@@ -1,25 +1,25 @@
 import 'dart:async';
-
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:trip_manager/shared/utils.dart';
 
 part 'email_verification.freezed.dart';
 part 'email_verification.g.dart';
 
 @freezed
 class EmailVerificationState with _$EmailVerificationState {
-  const factory EmailVerificationState(
-      {required String email,
-      required String verificationCode,
-      required int countdown,
-      String? emailErrorMsg,
-      String? codeErrorMsg}) = _EmailVerificationState;
+  const factory EmailVerificationState({
+    required String email,
+    required String verificationCode,
+    required String countdown,
+    String? emailErrorMsg,
+    String? codeErrorMsg,
+  }) = _EmailVerificationState;
 
   factory EmailVerificationState.initial() => const EmailVerificationState(
         email: '',
         verificationCode: '',
-        countdown: 0,
+        countdown: '',
         emailErrorMsg: null,
         codeErrorMsg: null,
       );
@@ -44,26 +44,19 @@ class EmailVerification extends _$EmailVerification {
     } else if (!emailRegex.hasMatch(email)) {
       state = state.copyWith(emailErrorMsg: '이메일 형식에 맞지 않습니다');
     } else {
-      state = state.copyWith(emailErrorMsg: null);
-      setEmail(email);
+      state = state.copyWith(email: email, emailErrorMsg: null);
     }
   }
 
   //인증번호 유효성 검사
   void codeValidator(String? code) {
-    startCountdown();
-
     if (code == null || code.isEmpty) {
       state = state.copyWith(codeErrorMsg: '인증번호를 입력해주세요.');
     } else if (code.trim().length != 6) {
       state = state.copyWith(codeErrorMsg: '인증번호는 6자리입니다.');
     } else {
-      state = state.copyWith(codeErrorMsg: null);
+      state = state.copyWith(verificationCode: code, codeErrorMsg: null);
     }
-  }
-
-  void setEmail(String email) {
-    state = state.copyWith(email: email);
   }
 
   //이메일 인증 API 호출
@@ -71,6 +64,7 @@ class EmailVerification extends _$EmailVerification {
     state = state.copyWith(emailErrorMsg: null);
     try {
       //TODO: 이메일 인증 API 호출 코드 추가
+      startCountdown();
     } catch (error) {
       state = state.copyWith(emailErrorMsg: '이메일 전송 실패');
     }
@@ -91,13 +85,17 @@ class EmailVerification extends _$EmailVerification {
   void startCountdown() {
     _timer?.cancel();
 
-    state = state.copyWith(countdown: 180);
+    int countdownSeconds = 180;
+    // String formattedTime = formatTime(countdownSeconds);
+
+    // state = state.copyWith(countdown: formattedTime);
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (state.countdown > 0) {
-        state = state.copyWith(countdown: state.countdown - 1);
+      if (countdownSeconds > 0) {
+        countdownSeconds--;
+        state = state.copyWith(countdown: formatTime(countdownSeconds));
       } else {
         timer.cancel();
-        state = state.copyWith(emailErrorMsg: '인증 시간이 만료되었습니다.');
+        state = state.copyWith(codeErrorMsg: '인증 시간이 만료되었습니다.');
       }
     });
   }

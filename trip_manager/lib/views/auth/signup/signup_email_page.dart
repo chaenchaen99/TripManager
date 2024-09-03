@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:trip_manager/views/auth/signup/providers/email_verification.dart';
-import 'package:trip_manager/views/auth/signup/widgets/custom_verifi_textformfield.dart';
+import 'package:trip_manager/views/auth/signup/widgets/custom_email_textformfield.dart';
 
 import '../../../theme.dart';
 import '../signin/widgets/custom_textformfield.dart';
 import '../start/widgets/custom_button.dart';
+import 'widgets/custom_code_textformfield.dart';
 
 class SignupEmailPage extends ConsumerStatefulWidget {
   const SignupEmailPage({super.key});
@@ -80,7 +81,7 @@ class _SignupEmailPageState extends ConsumerState<SignupEmailPage> {
               ),
             ),
             const SizedBox(height: 40),
-            CustomVerifiTextFormField(
+            CustomEmailTextFormField(
                 controller: _emailController,
                 title: '이메일',
                 focusNode: _emailFocusNode,
@@ -92,9 +93,11 @@ class _SignupEmailPageState extends ConsumerState<SignupEmailPage> {
                     ? true
                     : false,
                 verifiBtnText: '인증받기',
-                verifiBtnClicked: () {}),
+                verifiBtnClicked: () {
+                  _emailVerificationNotifier.sendVerificationEmail();
+                }),
             const SizedBox(height: 40),
-            CustomTextFormField(
+            CustomCodeTextFormField(
               controller: _verifiCodelController,
               title: '인증번호',
               hintText: '인증번호 6자리',
@@ -102,6 +105,7 @@ class _SignupEmailPageState extends ConsumerState<SignupEmailPage> {
               onChanged: (value) {
                 _emailVerificationNotifier.codeValidator(value);
               },
+              isTimerRunning: _emailVerificationState.countdown != 0,
             ),
           ],
         ),
@@ -114,8 +118,10 @@ class _SignupEmailPageState extends ConsumerState<SignupEmailPage> {
           text: '다음',
           backgroundColor: AppColors.mainColor,
           fontColor: Colors.white,
-          isEnabled: _emailVerificationState.emailErrorMsg == null &&
-              _emailVerificationState.codeErrorMsg == null,
+          isEnabled: (_emailVerificationState.emailErrorMsg == null &&
+                  _emailVerificationState.codeErrorMsg == null) &&
+              (_emailVerificationState.email != '' &&
+                  _emailVerificationState.verificationCode != ''),
           onPressed: () {},
         ),
       ),
