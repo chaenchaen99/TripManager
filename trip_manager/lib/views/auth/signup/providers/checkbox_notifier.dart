@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'checkbox_notifiger.g.dart';
+part 'checkbox_notifier.g.dart';
 
 class CheckboxState {
   final bool isTermsAccepted;

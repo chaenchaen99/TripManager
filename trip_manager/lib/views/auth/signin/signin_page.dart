@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:trip_manager/shared/toast.dart';
 import 'package:trip_manager/views/auth/start/widgets/custom_button.dart';

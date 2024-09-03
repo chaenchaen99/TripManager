@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'checkbox_notifiger.dart';
+part of 'checkbox_notifier.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$checkboxNotifigerHash() => r'ebf16dc7dcf9628599af2989e7120055f1f6413b';
+String _$checkboxNotifigerHash() => r'62e5d6d39bbfe35029b593cae5084d38ec255e3a';
 
 /// See also [CheckboxNotifiger].
 @ProviderFor(CheckboxNotifiger)

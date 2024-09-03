@@ -4,8 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:trip_manager/config/router/router_names.dart';
 import 'package:trip_manager/shared/custom_divider.dart';
 import 'package:trip_manager/shared/custom_widgets.dart';
-import 'package:trip_manager/views/auth/signup/providers/checkbox_notifiger.dart';
-import 'package:trip_manager/views/auth/signup/providers/term_checkbox.dart';
+import 'package:trip_manager/views/auth/signup/providers/checkbox_notifier.dart';
 import 'package:trip_manager/views/auth/start/widgets/custom_button.dart';
 
 import '../../../theme.dart';
