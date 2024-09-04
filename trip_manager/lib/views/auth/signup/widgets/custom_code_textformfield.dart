@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:trip_manager/theme.dart';
-import 'package:trip_manager/views/auth/signup/providers/email_verification.dart';
+import 'package:trip_manager/views/auth/signup/providers/second_step_signup.dart';
 
 class CustomCodeTextFormField extends ConsumerStatefulWidget {
   final TextEditingController controller;
@@ -98,7 +97,7 @@ class _CustomTextFormFieldState extends ConsumerState<CustomCodeTextFormField> {
             right: 0,
             top: 15,
             child: Text(
-              ref.read(emailVerificationProvider).countdown.toString(),
+              ref.read(secondStepSignupProvider).countdown.toString(),
               style: TextStyle(
                 color: AppColors.mainColor,
               ),

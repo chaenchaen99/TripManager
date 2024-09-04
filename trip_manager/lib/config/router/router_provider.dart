@@ -7,14 +7,14 @@ import 'package:trip_manager/models/ai/response_model.dart';
 import 'package:trip_manager/views/ai/ai_course_detail_page.dart';
 import 'package:trip_manager/views/ai/ai_course_page.dart';
 import 'package:trip_manager/views/auth/signin/signin_page.dart';
-import 'package:trip_manager/views/auth/signup/second_signup_page.dart';
+import 'package:trip_manager/views/auth/signup/second_step_signup_page.dart';
 import 'package:trip_manager/views/bookmark/bookmark_page.dart';
 import 'package:trip_manager/views/feed/feed_page.dart';
 import 'package:trip_manager/views/home/home_page.dart';
 import 'package:trip_manager/views/my/my_page.dart';
 import 'package:trip_manager/views/page_not_found.dart';
-import '../../views/auth/signup/third_signup_page.dart';
-import '../../views/auth/signup/first_signup_page.dart';
+import '../../views/auth/signup/third_step_signup_page.dart';
+import '../../views/auth/signup/first_step_signup_page.dart';
 import '../../views/auth/start/start_page.dart';
 
 part 'router_provider.g.dart';
@@ -43,17 +43,17 @@ GoRouter route(RouteRef ref) {
       GoRoute(
         path: '/signup',
         name: RouteNames.signup,
-        builder: (context, state) => const FirstSignupPage(),
+        builder: (context, state) => const FirstStepSignupPage(),
         routes: [
           GoRoute(
               path: 'email',
               name: RouteNames.email,
-              builder: (context, state) => const SecondSignupPage(),
+              builder: (context, state) => const SecondStepSignupPage(),
               routes: [
                 GoRoute(
                   path: 'password',
                   name: RouteNames.passsword,
-                  builder: (context, state) => const ThirdSignupPage(),
+                  builder: (context, state) => const ThirdStepSignupPage(),
                 ),
               ]),
         ],

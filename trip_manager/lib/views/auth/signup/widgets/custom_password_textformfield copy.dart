@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:trip_manager/theme.dart';
-import 'package:trip_manager/views/auth/signup/providers/email_verification.dart';
-
+import 'package:trip_manager/views/auth/signup/providers/second_step_signup.dart';
 import 'check_validation_text.dart';
 
 class CustomPasswordTextFormField extends ConsumerStatefulWidget {
@@ -91,7 +90,7 @@ class _CustomTextFormFieldState
                     color: Colors.grey,
                     fontWeight: FontWeight.w600,
                   ),
-                  errorText: ref.read(emailVerificationProvider).emailErrorMsg,
+                  errorText: ref.read(secondStepSignupProvider).emailErrorMsg,
                   contentPadding: const EdgeInsets.only(right: 90),
                   enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(
