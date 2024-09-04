@@ -15,6 +15,7 @@ class CheckValidationIcon extends StatelessWidget {
     return Icon(
       Icons.check,
       color: isValid ? AppColors.mainColor : Colors.grey,
+      size: 16.0,
     );
   }
 }

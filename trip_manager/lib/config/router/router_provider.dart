@@ -7,6 +7,7 @@ import 'package:trip_manager/models/ai/response_model.dart';
 import 'package:trip_manager/views/ai/ai_course_detail_page.dart';
 import 'package:trip_manager/views/ai/ai_course_page.dart';
 import 'package:trip_manager/views/auth/signin/signin_page.dart';
+import 'package:trip_manager/views/auth/signup/fourth_step_signup_page.dart';
 import 'package:trip_manager/views/auth/signup/second_step_signup_page.dart';
 import 'package:trip_manager/views/bookmark/bookmark_page.dart';
 import 'package:trip_manager/views/feed/feed_page.dart';
@@ -51,10 +52,17 @@ GoRouter route(RouteRef ref) {
               builder: (context, state) => const SecondStepSignupPage(),
               routes: [
                 GoRoute(
-                  path: 'password',
-                  name: RouteNames.passsword,
-                  builder: (context, state) => const ThirdStepSignupPage(),
-                ),
+                    path: 'password',
+                    name: RouteNames.passsword,
+                    builder: (context, state) => const ThirdStepSignupPage(),
+                    routes: [
+                      GoRoute(
+                        path: 'makeProfile',
+                        name: RouteNames.makeProfile,
+                        builder: (context, state) =>
+                            const FourthStepSignupPage(),
+                      ),
+                    ]),
               ]),
         ],
       ),

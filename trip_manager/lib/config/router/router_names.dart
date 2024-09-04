@@ -11,4 +11,5 @@ class RouteNames {
   static const aiDetail = 'aiDetail';
   static const email = 'email';
   static const passsword = 'password';
+  static const makeProfile = 'makeProfile';
 }

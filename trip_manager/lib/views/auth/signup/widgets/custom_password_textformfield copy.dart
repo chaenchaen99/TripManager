@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:trip_manager/theme.dart';
 import 'package:trip_manager/views/auth/signup/providers/second_step_signup.dart';
+import 'package:trip_manager/views/auth/signup/providers/third_step_signup.dart';
 import 'check_validation_text.dart';
 
 class CustomPasswordTextFormField extends ConsumerStatefulWidget {
@@ -39,6 +40,7 @@ class _CustomTextFormFieldState
     extends ConsumerState<CustomPasswordTextFormField> {
   late FocusNode _focusNode;
   bool _isFocused = false;
+  bool _isVisibleState = false;
 
   @override
   void initState() {
@@ -58,6 +60,12 @@ class _CustomTextFormFieldState
   void _onFocusChange() {
     setState(() {
       _isFocused = _focusNode.hasFocus;
+    });
+  }
+
+  void _toggleVisibleState() {
+    setState(() {
+      _isVisibleState = !_isVisibleState;
     });
   }
 
@@ -82,6 +90,7 @@ class _CustomTextFormFieldState
                 focusNode: _focusNode,
                 maxLines: 1,
                 onChanged: widget.onChanged,
+                obscureText: _isVisibleState ? false : true,
                 decoration: InputDecoration(
                   hintText: widget.hintText ?? '',
                   fillColor: Colors.transparent,
@@ -115,6 +124,7 @@ class _CustomTextFormFieldState
                       children: [
                         CheckValidationIcon(
                             isValid: widget.validationItems[0].isValid),
+                        SizedBox(width: 4),
                         CheckValidationText(
                           text: widget.validationItems[0].text,
                           isValid: widget.validationItems[0].isValid,
@@ -128,6 +138,7 @@ class _CustomTextFormFieldState
                         children: [
                           CheckValidationIcon(
                               isValid: widget.validationItems[1].isValid),
+                          SizedBox(width: 4),
                           CheckValidationText(
                             text: widget.validationItems[1].text,
                             isValid: widget.validationItems[1].isValid,
@@ -140,12 +151,17 @@ class _CustomTextFormFieldState
           ),
           Positioned(
             right: 0,
-            child: IconButton(
-              onPressed: widget.visibilityBtnClicked,
-              icon: Image.asset(
-                'assets/icons/visibility.png',
-                width: 20,
-                height: 20,
+            child: GestureDetector(
+              onTap: () {
+                _toggleVisibleState();
+              },
+              child: IconButton(
+                onPressed: widget.visibilityBtnClicked,
+                icon: Image.asset(
+                  'assets/icons/visibility.png',
+                  width: 20,
+                  height: 20,
+                ),
               ),
             ),
           ),
