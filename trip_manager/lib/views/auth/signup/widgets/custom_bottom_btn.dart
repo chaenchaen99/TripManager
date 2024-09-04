@@ -7,10 +7,12 @@ class CustomBottomBtn extends StatelessWidget {
     super.key,
     required this.isKeyboardVisible,
     this.isEnabled = false,
+    required this.onPressed,
   });
 
   final bool isKeyboardVisible;
   final bool isEnabled;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class CustomBottomBtn extends StatelessWidget {
         backgroundColor: AppColors.mainColor,
         fontColor: Colors.white,
         isEnabled: isEnabled,
-        onPressed: () {},
+        onPressed: onPressed,
       ),
     );
   }

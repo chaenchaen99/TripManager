@@ -119,6 +119,7 @@ class _SecondSignupPageState extends ConsumerState<SecondSignupPage> {
       bottomSheet: CustomBottomBtn(
         isKeyboardVisible: isKeyboardVisible,
         isEnabled: _emailVerificationNotifier.formValidator(),
+        onPressed: () => context.pushNamed(RouteNames.passsword),
       ),
     );
   }

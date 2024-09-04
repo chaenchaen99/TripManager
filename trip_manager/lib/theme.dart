@@ -6,6 +6,8 @@ final ThemeData tripManagerTheme = ThemeData(
   appBarTheme: const AppBarTheme(
     //앱 바의 테마 설정
     backgroundColor: Colors.white,
+    //스크롤시 앱바 색 변경되는 부분 수정
+    scrolledUnderElevation: 0,
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     backgroundColor: Colors.white,
