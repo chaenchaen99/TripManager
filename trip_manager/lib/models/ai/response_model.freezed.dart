@@ -70,8 +70,6 @@ mixin _$ResponseModel {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
-
-  /// Serializes this ResponseModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 }
 
@@ -91,9 +89,6 @@ class _$ResponseModelCopyWithImpl<$Res, $Val extends ResponseModel>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of ResponseModel
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -113,8 +108,6 @@ class __$$AiResponseImplCopyWithImpl<$Res>
       _$AiResponseImpl _value, $Res Function(_$AiResponseImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ResponseModel
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -179,13 +172,11 @@ class _$AiResponseImpl implements AiResponse {
                 other.subTitle == subTitle));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, imageUrl, title, subTitle);
 
-  /// Create a copy of ResponseModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$AiResponseImplCopyWith<_$AiResponseImpl> get copyWith =>
@@ -276,10 +267,7 @@ abstract class AiResponse implements ResponseModel {
   String get imageUrl;
   String get title;
   String get subTitle;
-
-  /// Create a copy of ResponseModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$AiResponseImplCopyWith<_$AiResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -301,8 +289,6 @@ class __$$UserResponseImplCopyWithImpl<$Res>
       _$UserResponseImpl _value, $Res Function(_$UserResponseImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ResponseModel
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -346,13 +332,11 @@ class _$UserResponseImpl implements UserResponse {
                 other.sendMessage == sendMessage));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, sendMessage);
 
-  /// Create a copy of ResponseModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$UserResponseImplCopyWith<_$UserResponseImpl> get copyWith =>
@@ -439,10 +423,7 @@ abstract class UserResponse implements ResponseModel {
       _$UserResponseImpl.fromJson;
 
   String get sendMessage;
-
-  /// Create a copy of ResponseModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$UserResponseImplCopyWith<_$UserResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

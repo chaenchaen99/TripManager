@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:trip_manager/config/router/router_names.dart';
 import 'package:trip_manager/views/auth/signup/providers/email_verification.dart';
-import 'package:trip_manager/views/auth/signup/widgets/custom_email_textformfield.dart';
+import 'package:trip_manager/views/auth/signup/widgets/custom_bottom_btn.dart';
 import '../../../shared/toast.dart';
 import '../../../theme.dart';
 import '../start/widgets/custom_button.dart';
+import 'widgets/custom_email_textformfield.dart';
 import 'widgets/custom_code_textformfield.dart';
 
-class SignupEmailPage extends ConsumerStatefulWidget {
-  const SignupEmailPage({super.key});
+class SecondSignupPage extends ConsumerStatefulWidget {
+  const SecondSignupPage({super.key});
 
   @override
-  ConsumerState<SignupEmailPage> createState() => _SignupEmailPageState();
+  ConsumerState<SecondSignupPage> createState() => _SecondSignupPageState();
 }
 
-class _SignupEmailPageState extends ConsumerState<SignupEmailPage> {
+class _SecondSignupPageState extends ConsumerState<SecondSignupPage> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _verifiCodelController = TextEditingController();
   late FocusNode _emailFocusNode;
@@ -23,11 +26,11 @@ class _SignupEmailPageState extends ConsumerState<SignupEmailPage> {
   @override
   void initState() {
     super.initState();
-    final emailVerificationState = ref.read(emailVerificationProvider);
+    final _emailVerificationState = ref.read(emailVerificationProvider);
     _emailController =
-        TextEditingController(text: emailVerificationState.email);
+        TextEditingController(text: _emailVerificationState.email);
     _verifiCodelController =
-        TextEditingController(text: emailVerificationState.verificationCode);
+        TextEditingController(text: _emailVerificationState.verificationCode);
     _emailFocusNode = FocusNode();
 
     // 화면이 로드될 때 첫 번째 텍스트 필드에 포커스를 설정
@@ -113,17 +116,9 @@ class _SignupEmailPageState extends ConsumerState<SignupEmailPage> {
           ],
         ),
       ),
-      bottomSheet: Container(
-        margin: EdgeInsets.only(
-            left: 18, right: 18, bottom: isKeyboardVisible ? 12 : 48),
-        color: Colors.white, // BottomSheet 색상 변경
-        child: CustomButton(
-          text: '다음',
-          backgroundColor: AppColors.mainColor,
-          fontColor: Colors.white,
-          isEnabled: _emailVerificationNotifier.formValidator(),
-          onPressed: () {},
-        ),
+      bottomSheet: CustomBottomBtn(
+        isKeyboardVisible: isKeyboardVisible,
+        isEnabled: _emailVerificationNotifier.formValidator(),
       ),
     );
   }

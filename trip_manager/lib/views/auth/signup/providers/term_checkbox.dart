@@ -1,21 +1,21 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'checkbox_notifier.g.dart';
+part 'term_checkbox.g.dart';
 
-class CheckboxState {
+class TermCheckboxState {
   final bool isTermsAccepted;
   final bool isPrivacyAccepted;
 
-  CheckboxState({
+  TermCheckboxState({
     required this.isTermsAccepted,
     required this.isPrivacyAccepted,
   });
 
-  CheckboxState copyWith({
+  TermCheckboxState copyWith({
     bool? isTermsAccepted,
     bool? isPrivacyAccepted,
   }) {
-    return CheckboxState(
+    return TermCheckboxState(
       isTermsAccepted: isTermsAccepted ?? this.isTermsAccepted,
       isPrivacyAccepted: isPrivacyAccepted ?? this.isPrivacyAccepted,
     );
@@ -23,10 +23,10 @@ class CheckboxState {
 }
 
 @riverpod
-class CheckboxNotifiger extends _$CheckboxNotifiger {
+class TermCheckbox extends _$TermCheckbox {
   @override
-  CheckboxState build() {
-    return CheckboxState(
+  TermCheckboxState build() {
+    return TermCheckboxState(
       isTermsAccepted: false,
       isPrivacyAccepted: false,
     );

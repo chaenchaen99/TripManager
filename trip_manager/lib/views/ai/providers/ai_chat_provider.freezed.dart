@@ -22,9 +22,7 @@ mixin _$ChatState {
   String? get loadingMessage => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
-  /// Create a copy of ChatState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $ChatStateCopyWith<ChatState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -51,8 +49,6 @@ class _$ChatStateCopyWithImpl<$Res, $Val extends ChatState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ChatState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -105,8 +101,6 @@ class __$$ChatStateImplCopyWithImpl<$Res>
       _$ChatStateImpl _value, $Res Function(_$ChatStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ChatState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -189,9 +183,7 @@ class _$ChatStateImpl implements _ChatState {
       loadingMessage,
       error);
 
-  /// Create a copy of ChatState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ChatStateImplCopyWith<_$ChatStateImpl> get copyWith =>
@@ -213,11 +205,8 @@ abstract class _ChatState implements ChatState {
   String? get loadingMessage;
   @override
   String? get error;
-
-  /// Create a copy of ChatState
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ChatStateImplCopyWith<_$ChatStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

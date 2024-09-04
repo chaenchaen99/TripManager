@@ -7,15 +7,14 @@ import 'package:trip_manager/models/ai/response_model.dart';
 import 'package:trip_manager/views/ai/ai_course_detail_page.dart';
 import 'package:trip_manager/views/ai/ai_course_page.dart';
 import 'package:trip_manager/views/auth/signin/signin_page.dart';
-import 'package:trip_manager/views/auth/signup/signup_email_page.dart';
+import 'package:trip_manager/views/auth/signup/second_signup_page.dart';
 import 'package:trip_manager/views/bookmark/bookmark_page.dart';
 import 'package:trip_manager/views/feed/feed_page.dart';
 import 'package:trip_manager/views/home/home_page.dart';
 import 'package:trip_manager/views/my/my_page.dart';
 import 'package:trip_manager/views/page_not_found.dart';
-
-import '../../models/ai/chat_model.dart';
-import '../../views/auth/signup/signup_page.dart';
+import '../../views/auth/signup/third_signup_page.dart';
+import '../../views/auth/signup/first_signup_page.dart';
 import '../../views/auth/start/start_page.dart';
 
 part 'router_provider.g.dart';
@@ -44,13 +43,19 @@ GoRouter route(RouteRef ref) {
       GoRoute(
         path: '/signup',
         name: RouteNames.signup,
-        builder: (context, state) => const SignupPage(),
+        builder: (context, state) => const FirstSignupPage(),
         routes: [
           GoRoute(
-            path: 'email',
-            name: RouteNames.email,
-            builder: (context, state) => const SignupEmailPage(),
-          ),
+              path: 'email',
+              name: RouteNames.email,
+              builder: (context, state) => const SecondSignupPage(),
+              routes: [
+                GoRoute(
+                  path: 'password',
+                  name: RouteNames.passsword,
+                  builder: (context, state) => const ThirdSignupPage(),
+                ),
+              ]),
         ],
       ),
       StatefulShellRoute.indexedStack(

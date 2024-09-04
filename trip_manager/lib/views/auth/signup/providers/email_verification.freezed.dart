@@ -23,9 +23,7 @@ mixin _$EmailVerificationState {
   String? get codeErrorMsg => throw _privateConstructorUsedError;
   String? get verifyBtnText => throw _privateConstructorUsedError;
 
-  /// Create a copy of EmailVerificationState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $EmailVerificationStateCopyWith<EmailVerificationState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -56,8 +54,6 @@ class _$EmailVerificationStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of EmailVerificationState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -125,8 +121,6 @@ class __$$EmailVerificationStateImplCopyWithImpl<$Res>
       $Res Function(_$EmailVerificationStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of EmailVerificationState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -217,9 +211,7 @@ class _$EmailVerificationStateImpl implements _EmailVerificationState {
   int get hashCode => Object.hash(runtimeType, email, verificationCode,
       countdown, emailErrorMsg, codeErrorMsg, verifyBtnText);
 
-  /// Create a copy of EmailVerificationState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$EmailVerificationStateImplCopyWith<_$EmailVerificationStateImpl>
@@ -248,11 +240,8 @@ abstract class _EmailVerificationState implements EmailVerificationState {
   String? get codeErrorMsg;
   @override
   String? get verifyBtnText;
-
-  /// Create a copy of EmailVerificationState
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$EmailVerificationStateImplCopyWith<_$EmailVerificationStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

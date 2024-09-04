@@ -10,4 +10,5 @@ class RouteNames {
   static const my = 'my';
   static const aiDetail = 'aiDetail';
   static const email = 'email';
+  static const passsword = 'password';
 }

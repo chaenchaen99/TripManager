@@ -4,18 +4,18 @@ import 'package:go_router/go_router.dart';
 import 'package:trip_manager/config/router/router_names.dart';
 import 'package:trip_manager/shared/custom_divider.dart';
 import 'package:trip_manager/shared/custom_widgets.dart';
-import 'package:trip_manager/views/auth/signup/providers/checkbox_notifier.dart';
+import 'package:trip_manager/views/auth/signup/providers/term_checkbox.dart';
 import 'package:trip_manager/views/auth/start/widgets/custom_button.dart';
 
 import '../../../theme.dart';
 import 'widgets/custom_checkbox.dart';
 
-class SignupPage extends ConsumerWidget {
-  const SignupPage({super.key});
+class FirstSignupPage extends ConsumerWidget {
+  const FirstSignupPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final checkBoxState = ref.watch(checkboxNotifigerProvider);
+    final checkBoxState = ref.watch(termCheckboxProvider);
     final isAllAccepted =
         checkBoxState.isTermsAccepted && checkBoxState.isPrivacyAccepted;
 
@@ -54,14 +54,14 @@ class SignupPage extends ConsumerWidget {
                         TermsOfUseCheckBox(
                           contents: '(필수) 이용약관',
                           toggleCallback: ref
-                              .read(checkboxNotifigerProvider.notifier)
+                              .read(termCheckboxProvider.notifier)
                               .toggleTerms,
                           isChecked: checkBoxState.isTermsAccepted,
                         ),
                         TermsOfUseCheckBox(
                           contents: '(필수) 개인정보 수집 및 이용동의',
                           toggleCallback: ref
-                              .read(checkboxNotifigerProvider.notifier)
+                              .read(termCheckboxProvider.notifier)
                               .togglePrivacy,
                           isChecked: checkBoxState.isPrivacyAccepted,
                         ),
@@ -77,7 +77,7 @@ class SignupPage extends ConsumerWidget {
                                 toggleCallback: () {
                                   bool newValue = !(isAllAccepted);
                                   ref
-                                      .read(checkboxNotifigerProvider.notifier)
+                                      .read(termCheckboxProvider.notifier)
                                       .toggleAll(newValue);
                                 }),
                             const SizedBox(width: 12),

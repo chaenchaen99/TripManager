@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:trip_manager/theme.dart';
 import 'package:trip_manager/views/auth/signup/providers/email_verification.dart';

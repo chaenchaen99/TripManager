@@ -16,17 +16,17 @@ Widget text14Normal({
   );
 }
 
-Widget text16Normal({
-  String text = "",
-  Color color = AppColors.darkColor_1,
-}) {
+Widget text16Normal(
+    {String text = "",
+    Color color = AppColors.darkColor_1,
+    FontWeight weight = FontWeight.w400}) {
   return Text(
     text,
     textAlign: TextAlign.center,
     style: TextStyle(
       color: color,
       fontSize: 16,
-      fontWeight: FontWeight.w400,
+      fontWeight: weight,
     ),
   );
 }

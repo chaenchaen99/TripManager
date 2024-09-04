@@ -19,9 +19,7 @@ mixin _$ChatModel {
   Sender get sender => throw _privateConstructorUsedError;
   List<ResponseModel> get response => throw _privateConstructorUsedError;
 
-  /// Create a copy of ChatModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $ChatModelCopyWith<ChatModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -44,8 +42,6 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ChatModel
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -84,8 +80,6 @@ class __$$ChatModelImplCopyWithImpl<$Res>
       _$ChatModelImpl _value, $Res Function(_$ChatModelImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ChatModel
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -141,9 +135,7 @@ class _$ChatModelImpl implements _ChatModel {
   int get hashCode => Object.hash(
       runtimeType, sender, const DeepCollectionEquality().hash(_response));
 
-  /// Create a copy of ChatModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ChatModelImplCopyWith<_$ChatModelImpl> get copyWith =>
@@ -159,11 +151,8 @@ abstract class _ChatModel implements ChatModel {
   Sender get sender;
   @override
   List<ResponseModel> get response;
-
-  /// Create a copy of ChatModel
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ChatModelImplCopyWith<_$ChatModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
