@@ -4,6 +4,7 @@ class RouteNames {
   static const signin = 'signin';
   static const signup = 'signup';
   static const home = 'home';
+  static const search = 'search';
   static const ai = 'ai';
   static const feed = 'feed';
   static const bookmark = 'bookmark';

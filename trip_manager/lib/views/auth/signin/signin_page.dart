@@ -97,10 +97,11 @@ class _SigninPageState extends State<SigninPage> {
                   ? () {
                       // Handle login logic
                       //틀린 계정이라면
-                      toast(
-                        context,
-                        '가입되지 않은 계정입니다.',
-                      );
+                      // toast(
+                      //   context,
+                      //   '가입되지 않은 계정입니다.',
+                      // );
+                      context.goNamed(RouteNames.home);
                     }
                   : null,
             ),

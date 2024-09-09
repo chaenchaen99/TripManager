@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:trip_manager/config/router/router_names.dart';
 import 'package:trip_manager/theme.dart';
 
 import '../../mockup/mockup_datas.dart';
@@ -21,10 +23,15 @@ class HomePage extends ConsumerWidget {
               width: 148,
               height: 25,
             ),
-            Image.asset(
-              'assets/icons/search.png',
-              width: 28,
-              height: 28,
+            GestureDetector(
+              onTap: () {
+                context.pushNamed(RouteNames.search);
+              },
+              child: Image.asset(
+                'assets/icons/search.png',
+                width: 28,
+                height: 28,
+              ),
             ),
           ],
         ),
