@@ -72,6 +72,20 @@ class _SearchPageState extends ConsumerState<SearchPage>
                   Tab(text: '카페'),
                   Tab(text: '공간'),
                 ],
+                // 탭 및 텍스트 색상 설정
+                labelColor: AppColors.mainColor,
+                unselectedLabelColor: AppColors.lightColor_4,
+
+                // 하단 바 디자인 설정
+                indicator: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: AppColors.mainColor,
+                      width: 3.0, // 하단 바 두께
+                    ),
+                  ),
+                ),
+                indicatorSize: TabBarIndicatorSize.tab, // 양 끝까지 다 붙게 설정
               ),
             ),
             Expanded(
@@ -182,47 +196,109 @@ class _SearchPageState extends ConsumerState<SearchPage>
   }
 
   Widget buildFilteredResultsView(List<FilterResult> results) {
-    return ListView.builder(
+    // Initialize a map to group results by SpaceType with a limit of 5 items each
+    final Map<SpaceType, List<FilterResult>> groupedResults = {
+      SpaceType.region: [],
+      SpaceType.restaurant: [],
+      SpaceType.cafe: [],
+      SpaceType.space: [],
+    };
+
+    // Populate the map with results, limiting each category to 5 items
+    for (var item in results) {
+      if (groupedResults[item.spaceType]!.length < 5) {
+        groupedResults[item.spaceType]!.add(item);
+      }
+    }
+
+    return ListView(
       padding: EdgeInsets.zero,
-      itemCount: results.length,
-      itemBuilder: (context, index) {
-        final item = results[index];
-        return ListTile(
-          contentPadding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 18.0),
-          dense: true,
-          title: Row(
-            children: [
-              Image.asset(
-                'assets/icons/schedule.png',
-                width: 20,
-                height: 20,
-              ),
-              SizedBox(width: 12),
-              Text(
-                item.name,
-                style: TextStyle(fontSize: 16),
-              ),
-              Spacer(),
-              GestureDetector(
-                onTap: () {
-                  ref
-                      .read(searchHistoryProvider.notifier)
-                      .clearSearchHistory(item.name);
-                },
-                child: Container(
-                  padding: EdgeInsets.all(9),
-                  child: Image.asset(
-                    'assets/icons/close.png',
-                    width: 11,
-                    height: 11,
-                  ),
-                ),
-              ),
-            ],
+      children: [
+        if (groupedResults[SpaceType.region]!.isNotEmpty) ...[
+          buildSection('지역', groupedResults[SpaceType.region]!),
+        ],
+        if (groupedResults[SpaceType.restaurant]!.isNotEmpty) ...[
+          buildSection('음식', groupedResults[SpaceType.restaurant]!),
+        ],
+        if (groupedResults[SpaceType.cafe]!.isNotEmpty) ...[
+          buildSection('카페', groupedResults[SpaceType.cafe]!),
+        ],
+        if (groupedResults[SpaceType.space]!.isNotEmpty) ...[
+          buildSection('공간', groupedResults[SpaceType.space]!),
+        ],
+      ],
+    );
+  }
+
+  Widget buildSection(String title, List<FilterResult> results) {
+    final displayResults = results.take(5).toList();
+    final showMore = results.length > 5;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 16.0, left: 18.0),
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-          onTap: () {},
-        );
-      },
+        ),
+        ...displayResults.map((item) => buildResultTile(item)).toList(),
+        if (showMore) ...[
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 18.0),
+            child: TextButton(
+              onPressed: () {
+                // TODO: 전체보기 버튼 클릭 시 전체 리스트 보기
+              },
+              child: Text('전체보기'),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget buildResultTile(FilterResult item) {
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 18.0),
+      dense: true,
+      title: Row(
+        children: [
+          Image.asset(
+            'assets/icons/schedule.png',
+            width: 20,
+            height: 20,
+          ),
+          SizedBox(width: 12),
+          Text(
+            item.name,
+            style: TextStyle(fontSize: 16),
+          ),
+          Spacer(),
+          GestureDetector(
+            onTap: () {
+              ref
+                  .read(searchHistoryProvider.notifier)
+                  .clearSearchHistory(item.name);
+            },
+            child: Container(
+              padding: EdgeInsets.all(9),
+              child: Image.asset(
+                'assets/icons/close.png',
+                width: 11,
+                height: 11,
+              ),
+            ),
+          ),
+        ],
+      ),
+      onTap: () {},
     );
   }
 }
