@@ -36,9 +36,8 @@ class SearchHistory extends _$SearchHistory {
 
   // 검색어 업데이트
   Future<void> updateQuery(String query) async {
-    state = state.copyWith(query: '가');
-    final _result = await getFilteredResults(state.query);
-    state = state.copyWith(filteredResults: _result);
+    state = state.copyWith(query: query);
+    await getFilteredResults(state.query);
   }
 
   // SharedPreferences에서 검색 기록 불러오기
@@ -79,15 +78,25 @@ class SearchHistory extends _$SearchHistory {
   }
 
   // 검색어 필터링
-  Future<List<FilterResult>> getFilteredResults(String query) async {
+  Future<void> getFilteredResults(String query) async {
     // Call the asynchronous method to filter search history
-    await _getFilteredResultsFromServer(query);
-    return state.filteredResults;
+    final _result = await _getFilteredResultsFromServer(query);
+    state = state.copyWith(filteredResults: _result);
   }
 
-  Future<List<FilterResult>> _getFilteredResultsFromServer(String query) async {
-    // TODO: 서버 요청 로직 작성
+  // 문자열을 정규화하는 함수
+  String normalize(String text) {
+    return text.toLowerCase().replaceAll(RegExp(r'\s+'), ''); // 소문자 변환 및 공백 제거
+  }
 
+// 검색어가 항목의 이름에 포함되어 있는지 확인
+  bool containsKeyword(String name, String query) {
+    String normalizedName = normalize(name);
+    return normalizedName.contains(query); // 부분 문자열을 찾음
+  }
+
+  // 검색어 필터링 메서드
+  Future<List<FilterResult>> _getFilteredResultsFromServer(String query) async {
     List<FilterResult> data = [
       FilterResult(spaceType: SpaceType.region, name: "강남구", subInfo: "서울"),
       FilterResult(
@@ -116,31 +125,14 @@ class SearchHistory extends _$SearchHistory {
           subInfo: "서울 강남구 · 음식점"),
       FilterResult(
           spaceType: SpaceType.restaurant,
-          name: "치&강 압구정로데오역점2",
+          name: "치&산 압구정로데오역점2",
           subInfo: "서울 강남구 · 음식점"),
     ];
-
-    // state = state.copyWith(filteredResults: data);
-
-    // 문자열을 정규화하는 함수
-    String normalize(String text) {
-      return text
-          .toLowerCase()
-          .replaceAll(RegExp(r'\s+'), ''); // 소문자 변환 및 공백 제거
-    }
 
     // 쿼리 정규화
     String normalizedQuery = normalize(query);
 
-    // 검색어가 항목의 이름의 단어 중 하나와 일치하는지 확인
-    bool containsKeyword(String name, String query) {
-      String normalizedName = normalize(name);
-
-      // 단어 단위로 분리하여 비교
-      List<String> nameWords = normalizedName.split(RegExp(r'\s+'));
-      return nameWords.contains(normalizedQuery);
-    }
-
+    // 부분 문자열을 기준으로 필터링
     return data
         .where((filterResult) =>
             containsKeyword(filterResult.name, normalizedQuery))

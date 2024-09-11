@@ -59,7 +59,6 @@ class _SearchPageState extends ConsumerState<SearchPage>
           if (searchHistory.query.isNotEmpty) ...[
             // Tabs for filtering
             Container(
-              color: Colors.grey[200],
               child: TabBar(
                 controller: tabController,
                 onTap: (index) {
@@ -81,16 +80,16 @@ class _SearchPageState extends ConsumerState<SearchPage>
                 children: [
                   buildFilteredResultsView(searchHistory.filteredResults),
                   buildFilteredResultsView(searchHistory.filteredResults
-                      .where((item) => item.spaceType == '지역')
+                      .where((item) => item.spaceType == SpaceType.region)
                       .toList()),
                   buildFilteredResultsView(searchHistory.filteredResults
-                      .where((item) => item.spaceType == '음식')
+                      .where((item) => item.spaceType == SpaceType.restaurant)
                       .toList()),
                   buildFilteredResultsView(searchHistory.filteredResults
-                      .where((item) => item.spaceType == '카페')
+                      .where((item) => item.spaceType == SpaceType.cafe)
                       .toList()),
                   buildFilteredResultsView(searchHistory.filteredResults
-                      .where((item) => item.spaceType == '공간')
+                      .where((item) => item.spaceType == SpaceType.space)
                       .toList()),
                 ],
               ),
