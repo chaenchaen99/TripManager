@@ -6,7 +6,7 @@ part of 'search_history.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$searchHistoryHash() => r'3b2ecc261da7887aa30d7b5d8bfd7f8750fa5661';
+String _$searchHistoryHash() => r'daea724afa4829b17c194fa44d0f7531d4ef7dbc';
 
 /// See also [SearchHistory].
 @ProviderFor(SearchHistory)

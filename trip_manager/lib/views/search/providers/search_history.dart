@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trip_manager/models/search/filter_result.dart';
 
 part 'search_history.g.dart';
 part 'search_history.freezed.dart';
@@ -10,8 +10,9 @@ part 'search_history.freezed.dart';
 class SearchHistoryState with _$SearchHistoryState {
   const factory SearchHistoryState({
     required List<String> history,
-    required List<String> filteredResults,
+    required List<FilterResult> filteredResults,
     required String query,
+    required String selectedTab,
   }) = _SearchHistoryState;
 }
 
@@ -20,13 +21,24 @@ class SearchHistory extends _$SearchHistory {
   @override
   SearchHistoryState build() {
     _loadSearchHistory();
-    return SearchHistoryState(history: [], filteredResults: [], query: '');
+    return SearchHistoryState(
+      history: [],
+      filteredResults: [],
+      query: '',
+      selectedTab: '전체',
+    );
+  }
+
+  //탭 선택 상태 관리
+  void selectTab(String tab) {
+    state = state.copyWith(selectedTab: tab);
   }
 
   // 검색어 업데이트
   Future<void> updateQuery(String query) async {
-    state = state.copyWith(query: query);
-    await filterSearchHistory(query);
+    state = state.copyWith(query: '가');
+    final _result = await getFilteredResults(state.query);
+    state = state.copyWith(filteredResults: _result);
   }
 
   // SharedPreferences에서 검색 기록 불러오기
@@ -58,7 +70,7 @@ class SearchHistory extends _$SearchHistory {
   }
 
   // 특정 검색 기록 삭제
-  Future<void> clearSearchHistory(String item) async {
+  Future<void> clearSearchHistory(Object item) async {
     final updatedHistory = [...state.history]..remove(item);
     state = state.copyWith(history: updatedHistory);
 
@@ -67,34 +79,48 @@ class SearchHistory extends _$SearchHistory {
   }
 
   // 검색어 필터링
-  Future<List<String>> filterSearchHistory(String query) async {
-    if (query.isEmpty) {
-      return state.history;
-    }
-
+  Future<List<FilterResult>> getFilteredResults(String query) async {
     // Call the asynchronous method to filter search history
-    await _filterSearchHistory(query);
+    await _getFilteredResultsFromServer(query);
     return state.filteredResults;
   }
 
-  //검색어 필터링
-  Future<void> _filterSearchHistory(String query) async {
-    List<String> serverResults = await _fetchFilteredResultsFromServer(query);
-    state = state.copyWith(filteredResults: serverResults);
-  }
-
-  Future<List<String>> _fetchFilteredResultsFromServer(String query) async {
+  Future<List<FilterResult>> _getFilteredResultsFromServer(String query) async {
     // TODO: 서버 요청 로직 작성
 
-    List<String> data = [
-      '강남구',
-      '가마솥통닭',
-      '가산 카페',
-      '가산 호텔',
-      '가산 백화점',
-      '가산 경찰서',
-      '가산 소방서',
+    List<FilterResult> data = [
+      FilterResult(spaceType: SpaceType.region, name: "강남구", subInfo: "서울"),
+      FilterResult(
+          spaceType: SpaceType.region, name: "한강", subInfo: "서울 영등포구 · 관광명소"),
+      FilterResult(
+          spaceType: SpaceType.region,
+          name: "뚝섬 한강 공원 수영장",
+          subInfo: "서울 서초구 · 테마/체험"),
+      FilterResult(
+          spaceType: SpaceType.region,
+          name: "무신사 스탠다드 강남",
+          subInfo: "서울 강남구 · 쇼핑"),
+      FilterResult(
+          spaceType: SpaceType.cafe, name: "강남 붕어빵1", subInfo: "서울 서초구 · 카페"),
+      FilterResult(
+          spaceType: SpaceType.cafe, name: "강남 붕어빵2", subInfo: "서울 서초구 · 카페"),
+      FilterResult(
+          spaceType: SpaceType.cafe, name: "강남 붕어빵3", subInfo: "서울 서초구 · 카페"),
+      FilterResult(
+          spaceType: SpaceType.cafe, name: "강남 붕어빵4", subInfo: "서울 서초구 · 카페"),
+      FilterResult(
+          spaceType: SpaceType.cafe, name: "강남 붕어빵5", subInfo: "서울 서초구 · 카페"),
+      FilterResult(
+          spaceType: SpaceType.restaurant,
+          name: "치&강 압구정로데오역점1",
+          subInfo: "서울 강남구 · 음식점"),
+      FilterResult(
+          spaceType: SpaceType.restaurant,
+          name: "치&강 압구정로데오역점2",
+          subInfo: "서울 강남구 · 음식점"),
     ];
+
+    // state = state.copyWith(filteredResults: data);
 
     // 문자열을 정규화하는 함수
     String normalize(String text) {
@@ -103,16 +129,21 @@ class SearchHistory extends _$SearchHistory {
           .replaceAll(RegExp(r'\s+'), ''); // 소문자 변환 및 공백 제거
     }
 
+    // 쿼리 정규화
     String normalizedQuery = normalize(query);
 
-    // 검색어가 항목의 부분 문자열로 포함되어 있는지 확인
-    bool containsSubstring(String text, String query) {
-      String normalizedText = normalize(text);
-      return normalizedText.contains(query);
+    // 검색어가 항목의 이름의 단어 중 하나와 일치하는지 확인
+    bool containsKeyword(String name, String query) {
+      String normalizedName = normalize(name);
+
+      // 단어 단위로 분리하여 비교
+      List<String> nameWords = normalizedName.split(RegExp(r'\s+'));
+      return nameWords.contains(normalizedQuery);
     }
 
     return data
-        .where((term) => containsSubstring(term, normalizedQuery))
+        .where((filterResult) =>
+            containsKeyword(filterResult.name, normalizedQuery))
         .toList();
   }
 }

@@ -17,8 +17,9 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SearchHistoryState {
   List<String> get history => throw _privateConstructorUsedError;
-  List<String> get filteredResults => throw _privateConstructorUsedError;
+  List<FilterResult> get filteredResults => throw _privateConstructorUsedError;
   String get query => throw _privateConstructorUsedError;
+  String get selectedTab => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SearchHistoryStateCopyWith<SearchHistoryState> get copyWith =>
@@ -31,7 +32,11 @@ abstract class $SearchHistoryStateCopyWith<$Res> {
           SearchHistoryState value, $Res Function(SearchHistoryState) then) =
       _$SearchHistoryStateCopyWithImpl<$Res, SearchHistoryState>;
   @useResult
-  $Res call({List<String> history, List<String> filteredResults, String query});
+  $Res call(
+      {List<String> history,
+      List<FilterResult> filteredResults,
+      String query,
+      String selectedTab});
 }
 
 /// @nodoc
@@ -50,6 +55,7 @@ class _$SearchHistoryStateCopyWithImpl<$Res, $Val extends SearchHistoryState>
     Object? history = null,
     Object? filteredResults = null,
     Object? query = null,
+    Object? selectedTab = null,
   }) {
     return _then(_value.copyWith(
       history: null == history
@@ -59,10 +65,14 @@ class _$SearchHistoryStateCopyWithImpl<$Res, $Val extends SearchHistoryState>
       filteredResults: null == filteredResults
           ? _value.filteredResults
           : filteredResults // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<FilterResult>,
       query: null == query
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectedTab: null == selectedTab
+          ? _value.selectedTab
+          : selectedTab // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -76,7 +86,11 @@ abstract class _$$SearchHistoryStateImplCopyWith<$Res>
       __$$SearchHistoryStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<String> history, List<String> filteredResults, String query});
+  $Res call(
+      {List<String> history,
+      List<FilterResult> filteredResults,
+      String query,
+      String selectedTab});
 }
 
 /// @nodoc
@@ -93,6 +107,7 @@ class __$$SearchHistoryStateImplCopyWithImpl<$Res>
     Object? history = null,
     Object? filteredResults = null,
     Object? query = null,
+    Object? selectedTab = null,
   }) {
     return _then(_$SearchHistoryStateImpl(
       history: null == history
@@ -102,10 +117,14 @@ class __$$SearchHistoryStateImplCopyWithImpl<$Res>
       filteredResults: null == filteredResults
           ? _value._filteredResults
           : filteredResults // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<FilterResult>,
       query: null == query
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectedTab: null == selectedTab
+          ? _value.selectedTab
+          : selectedTab // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -116,8 +135,9 @@ class __$$SearchHistoryStateImplCopyWithImpl<$Res>
 class _$SearchHistoryStateImpl implements _SearchHistoryState {
   const _$SearchHistoryStateImpl(
       {required final List<String> history,
-      required final List<String> filteredResults,
-      required this.query})
+      required final List<FilterResult> filteredResults,
+      required this.query,
+      required this.selectedTab})
       : _history = history,
         _filteredResults = filteredResults;
 
@@ -129,9 +149,9 @@ class _$SearchHistoryStateImpl implements _SearchHistoryState {
     return EqualUnmodifiableListView(_history);
   }
 
-  final List<String> _filteredResults;
+  final List<FilterResult> _filteredResults;
   @override
-  List<String> get filteredResults {
+  List<FilterResult> get filteredResults {
     if (_filteredResults is EqualUnmodifiableListView) return _filteredResults;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_filteredResults);
@@ -139,10 +159,12 @@ class _$SearchHistoryStateImpl implements _SearchHistoryState {
 
   @override
   final String query;
+  @override
+  final String selectedTab;
 
   @override
   String toString() {
-    return 'SearchHistoryState(history: $history, filteredResults: $filteredResults, query: $query)';
+    return 'SearchHistoryState(history: $history, filteredResults: $filteredResults, query: $query, selectedTab: $selectedTab)';
   }
 
   @override
@@ -153,7 +175,9 @@ class _$SearchHistoryStateImpl implements _SearchHistoryState {
             const DeepCollectionEquality().equals(other._history, _history) &&
             const DeepCollectionEquality()
                 .equals(other._filteredResults, _filteredResults) &&
-            (identical(other.query, query) || other.query == query));
+            (identical(other.query, query) || other.query == query) &&
+            (identical(other.selectedTab, selectedTab) ||
+                other.selectedTab == selectedTab));
   }
 
   @override
@@ -161,7 +185,8 @@ class _$SearchHistoryStateImpl implements _SearchHistoryState {
       runtimeType,
       const DeepCollectionEquality().hash(_history),
       const DeepCollectionEquality().hash(_filteredResults),
-      query);
+      query,
+      selectedTab);
 
   @JsonKey(ignore: true)
   @override
@@ -174,15 +199,18 @@ class _$SearchHistoryStateImpl implements _SearchHistoryState {
 abstract class _SearchHistoryState implements SearchHistoryState {
   const factory _SearchHistoryState(
       {required final List<String> history,
-      required final List<String> filteredResults,
-      required final String query}) = _$SearchHistoryStateImpl;
+      required final List<FilterResult> filteredResults,
+      required final String query,
+      required final String selectedTab}) = _$SearchHistoryStateImpl;
 
   @override
   List<String> get history;
   @override
-  List<String> get filteredResults;
+  List<FilterResult> get filteredResults;
   @override
   String get query;
+  @override
+  String get selectedTab;
   @override
   @JsonKey(ignore: true)
   _$$SearchHistoryStateImplCopyWith<_$SearchHistoryStateImpl> get copyWith =>

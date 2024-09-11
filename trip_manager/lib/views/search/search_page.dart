@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:trip_manager/models/search/filter_result.dart';
 import 'package:trip_manager/theme.dart';
 import 'package:trip_manager/views/search/providers/search_history.dart';
 
@@ -11,12 +12,16 @@ class SearchPage extends ConsumerStatefulWidget {
   ConsumerState<SearchPage> createState() => _SearchPageState();
 }
 
-class _SearchPageState extends ConsumerState<SearchPage> {
+class _SearchPageState extends ConsumerState<SearchPage>
+    with SingleTickerProviderStateMixin {
   late final TextEditingController searchInputController;
+  late final TabController tabController;
 
+  @override
   void initState() {
     super.initState();
     searchInputController = TextEditingController();
+    tabController = TabController(length: 5, vsync: this);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(searchHistoryProvider.notifier).updateQuery('');
@@ -26,6 +31,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
   @override
   void dispose() {
     searchInputController.dispose();
+    tabController.dispose();
     super.dispose();
   }
 
@@ -38,108 +44,186 @@ class _SearchPageState extends ConsumerState<SearchPage> {
       body: Column(
         children: [
           SearchInputBar(
-              searchInputController: searchInputController,
-              onChanged: (value) {
-                searchHistoryNotifier.updateQuery(value);
-              },
-              onSubmitted: () async {
-                final searchTerm = searchHistory.query;
+            searchInputController: searchInputController,
+            onChanged: (value) {
+              searchHistoryNotifier.updateQuery(value);
+            },
+            onSubmitted: () async {
+              final searchTerm = searchHistory.query;
 
-                if (searchTerm.isNotEmpty) {
-                  await searchHistoryNotifier.addSearchTerm(searchTerm);
-                }
-              }),
-          Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              itemCount: searchHistory.query.isEmpty
-                  ? searchHistory.history.length
-                  : searchHistory.filteredResults.length,
-              itemBuilder: (context, index) {
-                final items = searchHistory.query.isEmpty
-                    ? searchHistory.history
-                    : searchHistory.filteredResults;
-                final item = items[index];
-                if (index == 0) {
-                  // 헤더 부분
-                  return Padding(
-                    padding: const EdgeInsets.only(
-                      top: 28.0,
-                      bottom: 10.0,
-                      left: 18.0,
-                      right: 18.0,
+              if (searchTerm.isNotEmpty) {
+                await searchHistoryNotifier.addSearchTerm(searchTerm);
+              }
+            },
+          ),
+          if (searchHistory.query.isNotEmpty) ...[
+            // Tabs for filtering
+            Container(
+              color: Colors.grey[200],
+              child: TabBar(
+                controller: tabController,
+                onTap: (index) {
+                  final tab = ['전체', '지역', '음식', '카페', '공간'][index];
+                  searchHistoryNotifier.selectTab(tab);
+                },
+                tabs: [
+                  Tab(text: '전체'),
+                  Tab(text: '지역'),
+                  Tab(text: '음식'),
+                  Tab(text: '카페'),
+                  Tab(text: '공간'),
+                ],
+              ),
+            ),
+            Expanded(
+              child: TabBarView(
+                controller: tabController,
+                children: [
+                  buildFilteredResultsView(searchHistory.filteredResults),
+                  buildFilteredResultsView(searchHistory.filteredResults
+                      .where((item) => item.spaceType == '지역')
+                      .toList()),
+                  buildFilteredResultsView(searchHistory.filteredResults
+                      .where((item) => item.spaceType == '음식')
+                      .toList()),
+                  buildFilteredResultsView(searchHistory.filteredResults
+                      .where((item) => item.spaceType == '카페')
+                      .toList()),
+                  buildFilteredResultsView(searchHistory.filteredResults
+                      .where((item) => item.spaceType == '공간')
+                      .toList()),
+                ],
+              ),
+            ),
+          ] else ...[
+            // Display search history when query is empty
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 28.0,
+                bottom: 10.0,
+                left: 18.0,
+                right: 18.0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '최근 검색',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      ref
+                          .read(searchHistoryProvider.notifier)
+                          .clearAllSearchHistory();
+                    },
+                    child: Text(
+                      '전체 삭제',
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.darkColor_3),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: searchHistory.history.length,
+                itemBuilder: (context, index) {
+                  final item = searchHistory.history[index];
+                  return ListTile(
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 0.0, horizontal: 18.0),
+                    dense: true,
+                    title: Row(
                       children: [
-                        Text(
-                          '최근 검색',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        Image.asset(
+                          'assets/icons/schedule.png',
+                          width: 20,
+                          height: 20,
                         ),
+                        SizedBox(width: 12),
+                        Text(
+                          item,
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        Spacer(),
                         GestureDetector(
                           onTap: () {
                             ref
                                 .read(searchHistoryProvider.notifier)
-                                .clearAllSearchHistory();
+                                .clearSearchHistory(item);
                           },
-                          child: Text(
-                            '전체 삭제',
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.darkColor_3),
+                          child: Container(
+                            padding: EdgeInsets.all(9),
+                            child: Image.asset(
+                              'assets/icons/close.png',
+                              width: 11,
+                              height: 11,
+                            ),
                           ),
                         ),
                       ],
                     ),
-                  );
-                } else {
-                  // 검색 기록 리스트 부분
-                  return ListTile(
-                    contentPadding: EdgeInsets.symmetric(
-                        vertical: 0.0, horizontal: 18.0), // 패딩 조절
-                    dense: true,
-                    title: Row(children: [
-                      Image.asset(
-                        'assets/icons/schedule.png',
-                        width: 20,
-                        height: 20,
-                      ),
-                      SizedBox(width: 12),
-                      Text(
-                        '${item}',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      Spacer(),
-                      GestureDetector(
-                        onTap: () {
-                          ref
-                              .read(searchHistoryProvider.notifier)
-                              .clearSearchHistory(item);
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(9),
-                          child: Image.asset(
-                            'assets/icons/close.png',
-                            width: 11,
-                            height: 11,
-                          ),
-                        ),
-                      ),
-                    ]),
                     onTap: () {},
                   );
-                }
-              },
+                },
+              ),
             ),
-          ),
+          ],
         ],
       ),
+    );
+  }
+
+  Widget buildFilteredResultsView(List<FilterResult> results) {
+    return ListView.builder(
+      padding: EdgeInsets.zero,
+      itemCount: results.length,
+      itemBuilder: (context, index) {
+        final item = results[index];
+        return ListTile(
+          contentPadding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 18.0),
+          dense: true,
+          title: Row(
+            children: [
+              Image.asset(
+                'assets/icons/schedule.png',
+                width: 20,
+                height: 20,
+              ),
+              SizedBox(width: 12),
+              Text(
+                item.name,
+                style: TextStyle(fontSize: 16),
+              ),
+              Spacer(),
+              GestureDetector(
+                onTap: () {
+                  ref
+                      .read(searchHistoryProvider.notifier)
+                      .clearSearchHistory(item.name);
+                },
+                child: Container(
+                  padding: EdgeInsets.all(9),
+                  child: Image.asset(
+                    'assets/icons/close.png',
+                    width: 11,
+                    height: 11,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          onTap: () {},
+        );
+      },
     );
   }
 }
