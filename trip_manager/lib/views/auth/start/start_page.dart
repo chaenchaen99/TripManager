@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:trip_manager/service/auth/google_signIn_service.dart';
 import 'package:trip_manager/theme.dart';
+import 'package:trip_manager/views/auth/start/signin_notifier.dart';
 import 'package:trip_manager/views/auth/start/widgets/custom_button.dart';
 
 import '../../../config/router/router_names.dart';
@@ -11,7 +14,7 @@ class StartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Column(
         children: [
           StartHeaderWidget(),
@@ -28,7 +31,7 @@ class StartPage extends StatelessWidget {
 }
 
 class AccountWidgets extends StatelessWidget {
-  const AccountWidgets({
+  AccountWidgets({
     super.key,
   });
 
@@ -54,13 +57,11 @@ class AccountWidgets extends StatelessWidget {
   }
 }
 
-class SSOLoginWidgets extends StatelessWidget {
-  const SSOLoginWidgets({
-    super.key,
-  });
+class SSOLoginWidgets extends ConsumerWidget {
+  final GoogleSigninService _googleSigninService = GoogleSigninService();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 35.0),
       child: Column(
@@ -78,17 +79,6 @@ class SSOLoginWidgets extends StatelessWidget {
           const SizedBox(height: 12),
           CustomButton(
               icon: Image.asset(
-                'assets/icons/naver_logo.png',
-                width: 20,
-                height: 20,
-              ),
-              text: '네이버로 로그인',
-              backgroundColor: AppColors.naverMainColor,
-              fontColor: Colors.white,
-              onPressed: () {}),
-          const SizedBox(height: 12),
-          CustomButton(
-              icon: Image.asset(
                 'assets/icons/apple_logo.png',
                 width: 20,
                 height: 20,
@@ -97,6 +87,41 @@ class SSOLoginWidgets extends StatelessWidget {
               backgroundColor: AppColors.appleMainColor,
               fontColor: Colors.white,
               onPressed: () {}),
+          const SizedBox(height: 12),
+          CustomButton(
+              icon: Image.asset(
+                'assets/icons/naver_logo.png',
+                width: 20,
+                height: 20,
+              ),
+              text: '구글 로그인',
+              backgroundColor: Colors.white,
+              outlineColor: AppColors.emailOutlineColor,
+              fontColor: Colors.black,
+              onPressed: () async {
+                final userProfile = await _googleSigninService.signIn();
+
+                if (userProfile != null) {
+                  ref
+                      .read(signinNotifierProvider.notifier)
+                      .setUserProfile(userProfile);
+                  print(
+                      'Logged in: ${userProfile.displayName} | ${userProfile.email}');
+                  // Split the token into chunks of 800 characters and print each chunk
+                  final int chunkSize = 800;
+                  for (var i = 0;
+                      i < userProfile.idToken.length;
+                      i += chunkSize) {
+                    print(userProfile.idToken.substring(
+                        i,
+                        i + chunkSize > userProfile.idToken.length
+                            ? userProfile.idToken.length
+                            : i + chunkSize));
+                  }
+                } else {
+                  print('Login failed');
+                }
+              }),
           const SizedBox(height: 12),
           CustomButton(
               icon: Image.asset(
