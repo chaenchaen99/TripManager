@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:trip_manager/config/router/router_provider.dart';
 import 'package:trip_manager/theme.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  KakaoSdk.init(
+    nativeAppKey: '8a17eb7708374023cb0e655456f4d7ec',
+  );
   runApp(
       const ProviderScope(child: KeyboardVisibilityProvider(child: MyApp())));
 }
