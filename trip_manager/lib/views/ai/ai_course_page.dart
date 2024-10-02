@@ -193,7 +193,7 @@ class EmptyWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          '홍길동${AppStrings.ai_empty_msg_1}',
+          '홍길동${AppConstants.AI_EMPTY_MSG_1}',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontWeight: FontWeight.w400,
@@ -205,7 +205,7 @@ class EmptyWidget extends StatelessWidget {
           height: 20,
         ),
         Text(
-          AppStrings.ai_empty_msg_2,
+          AppConstants.AI_EMPTY_MSG_2,
           style: TextStyle(
             fontWeight: FontWeight.w400,
             fontSize: 12,
