@@ -83,9 +83,15 @@ class SSOLoginWidgets extends ConsumerWidget {
                   ref
                       .read(signinNotifierProvider.notifier)
                       .setUserProfile(userProfile);
+
+                  //debug 확인용
                   print(
                       'Logged in: ${userProfile.displayName} | ${userProfile.photoUrl} | ${userProfile.idToken}');
+                } else {
+                  print("Login failed");
                 }
+
+                context.goNamed(RouteNames.home);
               }),
           const SizedBox(height: 12),
           CustomButton(
@@ -101,7 +107,7 @@ class SSOLoginWidgets extends ConsumerWidget {
           const SizedBox(height: 12),
           CustomButton(
               icon: Image.asset(
-                'assets/icons/naver_logo.png',
+                'assets/icons/google_logo.png',
                 width: 20,
                 height: 20,
               ),
@@ -116,6 +122,8 @@ class SSOLoginWidgets extends ConsumerWidget {
                   ref
                       .read(signinNotifierProvider.notifier)
                       .setUserProfile(userProfile);
+
+                  //debug 확인용
                   print(
                       'Logged in: ${userProfile.displayName} | ${userProfile.email}');
                   // Split the token into chunks of 800 characters and print each chunk
@@ -132,6 +140,8 @@ class SSOLoginWidgets extends ConsumerWidget {
                 } else {
                   print('Login failed');
                 }
+
+                context.goNamed(RouteNames.home);
               }),
           const SizedBox(height: 12),
           CustomButton(

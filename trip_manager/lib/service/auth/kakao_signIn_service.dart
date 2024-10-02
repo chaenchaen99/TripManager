@@ -1,5 +1,5 @@
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:trip_manager/models/auth/user_profile.dart';
+import 'package:trip_manager/models/user/user_profile.dart';
 
 class KakaoSignInService {
   Future<UserProfile?> signIn() async {

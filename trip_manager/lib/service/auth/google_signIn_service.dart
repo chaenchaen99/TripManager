@@ -1,5 +1,5 @@
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:trip_manager/models/auth/user_profile.dart';
+import 'package:trip_manager/models/user/user_profile.dart';
 
 class GoogleSigninService {
   final GoogleSignIn _googleSignIn = GoogleSignIn(
