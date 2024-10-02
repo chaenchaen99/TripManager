@@ -1,8 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="trip_manager"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
 
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyB7W0mGdW4GxI4mwo4fSLeDQ6a6TYKxfVA"/>

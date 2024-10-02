@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:trip_manager/service/auth/google_signIn_service.dart';
+import 'package:trip_manager/service/auth/kakao_signIn_service.dart';
 import 'package:trip_manager/theme.dart';
 import 'package:trip_manager/views/auth/start/signin_notifier.dart';
 import 'package:trip_manager/views/auth/start/widgets/custom_button.dart';
@@ -59,6 +60,7 @@ class AccountWidgets extends StatelessWidget {
 
 class SSOLoginWidgets extends ConsumerWidget {
   final GoogleSigninService _googleSigninService = GoogleSigninService();
+  final KakaoSignInService _kakaoSigninService = KakaoSignInService();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -75,7 +77,22 @@ class SSOLoginWidgets extends ConsumerWidget {
               text: '카카오로 로그인',
               backgroundColor: AppColors.kakaoMainColor,
               fontColor: Colors.black,
-              onPressed: () {}),
+              onPressed: () async {
+                final userProfile = await _kakaoSigninService.signIn();
+                if (userProfile != null) {
+                  ref
+                      .read(signinNotifierProvider.notifier)
+                      .setUserProfile(userProfile);
+
+                  //debug 확인용
+                  print(
+                      'Logged in: ${userProfile.displayName} | ${userProfile.photoUrl} | ${userProfile.idToken}');
+                } else {
+                  print("Login failed");
+                }
+
+                context.goNamed(RouteNames.home);
+              }),
           const SizedBox(height: 12),
           CustomButton(
               icon: Image.asset(
@@ -90,7 +107,7 @@ class SSOLoginWidgets extends ConsumerWidget {
           const SizedBox(height: 12),
           CustomButton(
               icon: Image.asset(
-                'assets/icons/naver_logo.png',
+                'assets/icons/google_logo.png',
                 width: 20,
                 height: 20,
               ),
@@ -105,6 +122,8 @@ class SSOLoginWidgets extends ConsumerWidget {
                   ref
                       .read(signinNotifierProvider.notifier)
                       .setUserProfile(userProfile);
+
+                  //debug 확인용
                   print(
                       'Logged in: ${userProfile.displayName} | ${userProfile.email}');
                   // Split the token into chunks of 800 characters and print each chunk
@@ -121,6 +140,8 @@ class SSOLoginWidgets extends ConsumerWidget {
                 } else {
                   print('Login failed');
                 }
+
+                context.goNamed(RouteNames.home);
               }),
           const SizedBox(height: 12),
           CustomButton(

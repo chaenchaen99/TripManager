@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:trip_manager/models/auth/user_profile.dart';
+import 'package:trip_manager/models/user/user_profile.dart';
 
 part 'signin_notifier.g.dart';
 

@@ -3,9 +3,11 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:trip_manager/config/router/router_provider.dart';
+import 'package:trip_manager/global.dart';
 import 'package:trip_manager/theme.dart';
 
 void main() {
+  Global.init();
   runApp(
       const ProviderScope(child: KeyboardVisibilityProvider(child: MyApp())));
 }
