@@ -67,10 +67,10 @@ class _SearchPageState extends ConsumerState<SearchPage>
                 },
                 tabs: [
                   Tab(text: '전체'),
+                  Tab(text: '공간'),
                   Tab(text: '지역'),
                   Tab(text: '음식'),
                   Tab(text: '카페'),
-                  Tab(text: '공간'),
                 ],
                 // 탭 및 텍스트 색상 설정
                 labelColor: AppColors.mainColor,
@@ -94,6 +94,9 @@ class _SearchPageState extends ConsumerState<SearchPage>
                 children: [
                   buildFilteredResultsView(searchHistory.filteredResults),
                   buildFilteredResultsView(searchHistory.filteredResults
+                      .where((item) => item.spaceType == SpaceType.space)
+                      .toList()),
+                  buildFilteredResultsView(searchHistory.filteredResults
                       .where((item) => item.spaceType == SpaceType.region)
                       .toList()),
                   buildFilteredResultsView(searchHistory.filteredResults
@@ -101,9 +104,6 @@ class _SearchPageState extends ConsumerState<SearchPage>
                       .toList()),
                   buildFilteredResultsView(searchHistory.filteredResults
                       .where((item) => item.spaceType == SpaceType.cafe)
-                      .toList()),
-                  buildFilteredResultsView(searchHistory.filteredResults
-                      .where((item) => item.spaceType == SpaceType.space)
                       .toList()),
                 ],
               ),

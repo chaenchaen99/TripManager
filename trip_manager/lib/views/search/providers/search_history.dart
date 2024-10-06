@@ -100,13 +100,13 @@ class SearchHistory extends _$SearchHistory {
     List<FilterResult> data = [
       FilterResult(spaceType: SpaceType.region, name: "강남구", subInfo: "서울"),
       FilterResult(
-          spaceType: SpaceType.region, name: "한강", subInfo: "서울 영등포구 · 관광명소"),
+          spaceType: SpaceType.space, name: "한강", subInfo: "서울 영등포구 · 관광명소"),
       FilterResult(
-          spaceType: SpaceType.region,
+          spaceType: SpaceType.space,
           name: "뚝섬 한강 공원 수영장",
           subInfo: "서울 서초구 · 테마/체험"),
       FilterResult(
-          spaceType: SpaceType.region,
+          spaceType: SpaceType.space,
           name: "무신사 스탠다드 강남",
           subInfo: "서울 강남구 · 쇼핑"),
       FilterResult(
