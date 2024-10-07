@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:trip_manager/%08common/toast.dart';
 import 'package:trip_manager/config/router/router_names.dart';
 import 'package:trip_manager/views/auth/signup/providers/second_step_signup.dart';
 import 'package:trip_manager/views/auth/signup/widgets/custom_bottom_btn.dart';
-import '../../../shared/toast.dart';
+
 import 'widgets/custom_email_textformfield.dart';
 import 'widgets/custom_code_textformfield.dart';
 

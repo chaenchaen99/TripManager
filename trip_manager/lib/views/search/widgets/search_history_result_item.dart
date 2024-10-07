@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../providers/search_history.dart';
+import 'package:trip_manager/views/search/providers/search_notifier.dart';
 
 class SearchHistoryResultItem extends ConsumerWidget {
   const SearchHistoryResultItem({
@@ -35,9 +34,7 @@ class SearchHistoryResultItem extends ConsumerWidget {
             Spacer(),
             GestureDetector(
               onTap: () {
-                ref
-                    .read(searchHistoryProvider.notifier)
-                    .clearSearchHistory(item);
+                ref.read(searchNotifierProvider.notifier).clearSearch(item);
               },
               child: Container(
                 padding: EdgeInsets.all(9),
