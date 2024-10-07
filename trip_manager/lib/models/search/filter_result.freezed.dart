@@ -19,6 +19,7 @@ mixin _$FilterResult {
   dynamic get spaceType => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get subInfo => throw _privateConstructorUsedError;
+  bool get showMore => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $FilterResultCopyWith<FilterResult> get copyWith =>
@@ -31,7 +32,7 @@ abstract class $FilterResultCopyWith<$Res> {
           FilterResult value, $Res Function(FilterResult) then) =
       _$FilterResultCopyWithImpl<$Res, FilterResult>;
   @useResult
-  $Res call({dynamic spaceType, String name, String subInfo});
+  $Res call({dynamic spaceType, String name, String subInfo, bool showMore});
 }
 
 /// @nodoc
@@ -50,6 +51,7 @@ class _$FilterResultCopyWithImpl<$Res, $Val extends FilterResult>
     Object? spaceType = freezed,
     Object? name = null,
     Object? subInfo = null,
+    Object? showMore = null,
   }) {
     return _then(_value.copyWith(
       spaceType: freezed == spaceType
@@ -64,6 +66,10 @@ class _$FilterResultCopyWithImpl<$Res, $Val extends FilterResult>
           ? _value.subInfo
           : subInfo // ignore: cast_nullable_to_non_nullable
               as String,
+      showMore: null == showMore
+          ? _value.showMore
+          : showMore // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -76,7 +82,7 @@ abstract class _$$FilterResultImplCopyWith<$Res>
       __$$FilterResultImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({dynamic spaceType, String name, String subInfo});
+  $Res call({dynamic spaceType, String name, String subInfo, bool showMore});
 }
 
 /// @nodoc
@@ -93,6 +99,7 @@ class __$$FilterResultImplCopyWithImpl<$Res>
     Object? spaceType = freezed,
     Object? name = null,
     Object? subInfo = null,
+    Object? showMore = null,
   }) {
     return _then(_$FilterResultImpl(
       spaceType: freezed == spaceType ? _value.spaceType! : spaceType,
@@ -104,6 +111,10 @@ class __$$FilterResultImplCopyWithImpl<$Res>
           ? _value.subInfo
           : subInfo // ignore: cast_nullable_to_non_nullable
               as String,
+      showMore: null == showMore
+          ? _value.showMore
+          : showMore // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -114,7 +125,8 @@ class _$FilterResultImpl implements _FilterResult {
   const _$FilterResultImpl(
       {this.spaceType = SpaceType.region,
       required this.name,
-      this.subInfo = ''});
+      this.subInfo = '',
+      this.showMore = false});
 
   @override
   @JsonKey()
@@ -124,10 +136,13 @@ class _$FilterResultImpl implements _FilterResult {
   @override
   @JsonKey()
   final String subInfo;
+  @override
+  @JsonKey()
+  final bool showMore;
 
   @override
   String toString() {
-    return 'FilterResult(spaceType: $spaceType, name: $name, subInfo: $subInfo)';
+    return 'FilterResult(spaceType: $spaceType, name: $name, subInfo: $subInfo, showMore: $showMore)';
   }
 
   @override
@@ -137,12 +152,14 @@ class _$FilterResultImpl implements _FilterResult {
             other is _$FilterResultImpl &&
             const DeepCollectionEquality().equals(other.spaceType, spaceType) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.subInfo, subInfo) || other.subInfo == subInfo));
+            (identical(other.subInfo, subInfo) || other.subInfo == subInfo) &&
+            (identical(other.showMore, showMore) ||
+                other.showMore == showMore));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(spaceType), name, subInfo);
+      const DeepCollectionEquality().hash(spaceType), name, subInfo, showMore);
 
   @JsonKey(ignore: true)
   @override
@@ -155,7 +172,8 @@ abstract class _FilterResult implements FilterResult {
   const factory _FilterResult(
       {final dynamic spaceType,
       required final String name,
-      final String subInfo}) = _$FilterResultImpl;
+      final String subInfo,
+      final bool showMore}) = _$FilterResultImpl;
 
   @override
   dynamic get spaceType;
@@ -163,6 +181,8 @@ abstract class _FilterResult implements FilterResult {
   String get name;
   @override
   String get subInfo;
+  @override
+  bool get showMore;
   @override
   @JsonKey(ignore: true)
   _$$FilterResultImplCopyWith<_$FilterResultImpl> get copyWith =>

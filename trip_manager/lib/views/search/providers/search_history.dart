@@ -96,6 +96,7 @@ class SearchHistory extends _$SearchHistory {
   }
 
   // 검색어 필터링 메서드
+  //TODO: 데이터 대입 부분 분리 필요
   Future<List<FilterResult>> _getFilteredResultsFromServer(String query) async {
     List<FilterResult> data = [
       FilterResult(spaceType: SpaceType.region, name: "강남구", subInfo: "서울"),
@@ -119,6 +120,10 @@ class SearchHistory extends _$SearchHistory {
           spaceType: SpaceType.cafe, name: "강남 붕어빵4", subInfo: "서울 서초구 · 카페"),
       FilterResult(
           spaceType: SpaceType.cafe, name: "강남 붕어빵5", subInfo: "서울 서초구 · 카페"),
+      FilterResult(
+          spaceType: SpaceType.cafe, name: "강남 붕어빵6", subInfo: "서울 서초구 · 카페"),
+      FilterResult(
+          spaceType: SpaceType.cafe, name: "강남 붕어빵7", subInfo: "서울 서초구 · 카페"),
       FilterResult(
           spaceType: SpaceType.restaurant,
           name: "치&강 압구정로데오역점1",

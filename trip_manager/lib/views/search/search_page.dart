@@ -92,19 +92,33 @@ class _SearchPageState extends ConsumerState<SearchPage>
               child: TabBarView(
                 controller: tabController,
                 children: [
-                  buildFilteredResultsView(searchHistory.filteredResults),
-                  buildFilteredResultsView(searchHistory.filteredResults
-                      .where((item) => item.spaceType == SpaceType.space)
-                      .toList()),
-                  buildFilteredResultsView(searchHistory.filteredResults
-                      .where((item) => item.spaceType == SpaceType.region)
-                      .toList()),
-                  buildFilteredResultsView(searchHistory.filteredResults
-                      .where((item) => item.spaceType == SpaceType.restaurant)
-                      .toList()),
-                  buildFilteredResultsView(searchHistory.filteredResults
-                      .where((item) => item.spaceType == SpaceType.cafe)
-                      .toList()),
+                  //전체 탭
+                  buildFilteredResultsView(searchHistory.filteredResults, true),
+                  //공간 탭
+                  buildFilteredResultsView(
+                      searchHistory.filteredResults
+                          .where((item) => item.spaceType == SpaceType.space)
+                          .toList(),
+                      false),
+                  //지역 탭
+                  buildFilteredResultsView(
+                      searchHistory.filteredResults
+                          .where((item) => item.spaceType == SpaceType.region)
+                          .toList(),
+                      false),
+                  //음식 탭
+                  buildFilteredResultsView(
+                      searchHistory.filteredResults
+                          .where(
+                              (item) => item.spaceType == SpaceType.restaurant)
+                          .toList(),
+                      false),
+                  //카페 탭
+                  buildFilteredResultsView(
+                      searchHistory.filteredResults
+                          .where((item) => item.spaceType == SpaceType.cafe)
+                          .toList(),
+                      false),
                 ],
               ),
             ),
