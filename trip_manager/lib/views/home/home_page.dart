@@ -117,7 +117,7 @@ class MainPageView extends StatelessWidget {
               Row(
                 children: [
                   Image.asset(
-                    'assets/icons/location_on.png',
+                    'assets/icons/location_fill.png',
                     width: 10,
                     height: 12,
                   ),

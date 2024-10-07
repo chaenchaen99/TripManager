@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trip_manager/theme.dart';
 
-import '../../../shared/ai_resposne_header.dart';
+import '../../../common/ai_resposne_header.dart';
 
 const _shimmerGradient = LinearGradient(
   colors: [

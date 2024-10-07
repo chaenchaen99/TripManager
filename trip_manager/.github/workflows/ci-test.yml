@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main  # main 브랜치로 pull request를 생성할 때 실행
 jobs:  
   build:      
     name: Build & Test Only 

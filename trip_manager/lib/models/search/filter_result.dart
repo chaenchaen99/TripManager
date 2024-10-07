@@ -10,5 +10,6 @@ class FilterResult with _$FilterResult {
     @Default(SpaceType.region) spaceType,
     required String name,
     @Default('') String subInfo,
+    @Default(false) bool showMore,
   }) = _FilterResult;
 }

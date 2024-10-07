@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:trip_manager/const/constants.dart';
 import 'package:trip_manager/models/ai/response_model.dart';
-import 'package:trip_manager/shared/ai_resposne_header.dart';
-import 'package:trip_manager/shared/custom_divider.dart';
+import 'package:trip_manager/%08common/ai_resposne_header.dart';
+import 'package:trip_manager/%08common/custom_divider.dart';
 import 'package:trip_manager/theme.dart';
 import 'package:trip_manager/views/ai/providers/ai_chat_provider.dart';
 import 'package:trip_manager/views/ai/widgets/ai_chat_item.dart';
