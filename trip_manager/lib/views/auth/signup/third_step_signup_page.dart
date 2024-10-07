@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:trip_manager/shared/text_widgets.dart';
+import 'package:trip_manager/%08common/text_widgets.dart';
 import 'package:trip_manager/views/auth/signup/providers/second_step_signup.dart';
 import 'package:trip_manager/views/auth/signup/providers/third_step_signup.dart';
 import 'widgets/custom_bottom_btn.dart';

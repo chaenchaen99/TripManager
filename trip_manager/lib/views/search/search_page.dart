@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:trip_manager/models/search/filter_result.dart';
 import 'package:trip_manager/theme.dart';
 import 'package:trip_manager/views/search/providers/search_history.dart';
+import 'package:trip_manager/views/search/widgets/search_history_result_item.dart';
 import 'widgets/build_filter_results_view.dart';
 
 class SearchPage extends ConsumerStatefulWidget {
@@ -93,32 +94,37 @@ class _SearchPageState extends ConsumerState<SearchPage>
                 controller: tabController,
                 children: [
                   //전체 탭
-                  buildFilteredResultsView(searchHistory.filteredResults, true),
+                  buildFilteredResultsView(
+                      searchHistory.filteredResults, true, tabController),
                   //공간 탭
                   buildFilteredResultsView(
                       searchHistory.filteredResults
                           .where((item) => item.spaceType == SpaceType.space)
                           .toList(),
-                      false),
+                      false,
+                      tabController),
                   //지역 탭
                   buildFilteredResultsView(
                       searchHistory.filteredResults
                           .where((item) => item.spaceType == SpaceType.region)
                           .toList(),
-                      false),
+                      false,
+                      tabController),
                   //음식 탭
                   buildFilteredResultsView(
                       searchHistory.filteredResults
                           .where(
                               (item) => item.spaceType == SpaceType.restaurant)
                           .toList(),
-                      false),
+                      false,
+                      tabController),
                   //카페 탭
                   buildFilteredResultsView(
                       searchHistory.filteredResults
                           .where((item) => item.spaceType == SpaceType.cafe)
                           .toList(),
-                      false),
+                      false,
+                      tabController),
                 ],
               ),
             ),
@@ -163,42 +169,7 @@ class _SearchPageState extends ConsumerState<SearchPage>
                 itemCount: searchHistory.history.length,
                 itemBuilder: (context, index) {
                   final item = searchHistory.history[index];
-                  return ListTile(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 0.0, horizontal: 18.0),
-                    dense: true,
-                    title: Row(
-                      children: [
-                        Image.asset(
-                          'assets/icons/schedule.png',
-                          width: 20,
-                          height: 20,
-                        ),
-                        SizedBox(width: 12),
-                        Text(
-                          item,
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        Spacer(),
-                        GestureDetector(
-                          onTap: () {
-                            ref
-                                .read(searchHistoryProvider.notifier)
-                                .clearSearchHistory(item);
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(9),
-                            child: Image.asset(
-                              'assets/icons/close.png',
-                              width: 11,
-                              height: 11,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: () {},
-                  );
+                  return SearchHistoryResultItem(item: item, ref: ref);
                 },
               ),
             ),

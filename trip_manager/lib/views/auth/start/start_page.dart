@@ -7,8 +7,8 @@ import 'package:trip_manager/theme.dart';
 import 'package:trip_manager/views/auth/start/signin_notifier.dart';
 import 'package:trip_manager/views/auth/start/widgets/custom_button.dart';
 
+import '../../../common/text_widgets.dart';
 import '../../../config/router/router_names.dart';
-import '../../../shared/text_widgets.dart';
 
 class StartPage extends StatelessWidget {
   const StartPage({super.key});

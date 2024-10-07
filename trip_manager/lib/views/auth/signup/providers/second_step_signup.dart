@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:trip_manager/shared/utils.dart';
-
+import 'package:trip_manager/%08common/utils.dart';
 part 'second_step_signup.freezed.dart';
 part 'second_step_signup.g.dart';
 

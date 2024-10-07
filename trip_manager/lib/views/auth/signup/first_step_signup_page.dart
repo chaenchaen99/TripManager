@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:trip_manager/config/router/router_names.dart';
-import 'package:trip_manager/shared/custom_divider.dart';
-import 'package:trip_manager/shared/custom_widgets.dart';
+import 'package:trip_manager/%08common/custom_divider.dart';
+import 'package:trip_manager/%08common/custom_widgets.dart';
 import 'package:trip_manager/views/auth/signup/providers/first_step_signup.dart';
 import 'package:trip_manager/views/auth/start/widgets/custom_button.dart';
-
 import '../../../theme.dart';
 import 'widgets/custom_checkbox.dart';
 

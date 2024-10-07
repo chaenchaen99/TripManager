@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:trip_manager/shared/custom_divider.dart';
+import 'package:trip_manager/%08common/constants.dart';
+import 'package:trip_manager/%08common/custom_divider.dart';
 import 'package:trip_manager/theme.dart';
 import 'package:trip_manager/views/search/widgets/build_result_tile.dart';
 import '../../../models/search/filter_result.dart';
 
-Widget buildFilteredResultsView(List<FilterResult> results, isAllSection) {
+Widget buildFilteredResultsView(
+    List<FilterResult> results, isAllSection, tabController) {
   final Map<SpaceType, List<FilterResult>> groupedResults = {
     SpaceType.region: [],
     SpaceType.restaurant: [],
@@ -13,12 +15,8 @@ Widget buildFilteredResultsView(List<FilterResult> results, isAllSection) {
     SpaceType.space: [],
   };
 
-  // Populate the map with results, limiting each category to 5 items
   for (var item in results) {
     groupedResults[item.spaceType]!.add(item);
-    // if (groupedResults[item.spaceType]!.length < 5) {
-    //   groupedResults[item.spaceType]!.add(item);
-    // }
   }
 
   return ListView(
@@ -26,21 +24,23 @@ Widget buildFilteredResultsView(List<FilterResult> results, isAllSection) {
     children: [
       if (groupedResults[SpaceType.region]!.isNotEmpty) ...[
         buildSection(
-            '지역',
-            isAllSection
-                ? (groupedResults[SpaceType.region]!.length > 5
-                    ? groupedResults[SpaceType.region]!.sublist(0, 5)
-                    : groupedResults[SpaceType.region]!)
-                : groupedResults[SpaceType.region]!,
-            groupedResults[SpaceType.region]!.length > 5,
-            isAllSection),
+          AppConstants.CATEGORY_REGION,
+          isAllSection
+              ? (groupedResults[SpaceType.region]!.length > 5
+                  ? groupedResults[SpaceType.region]!.sublist(0, 5)
+                  : groupedResults[SpaceType.region]!)
+              : groupedResults[SpaceType.region]!,
+          groupedResults[SpaceType.region]!.length > 5,
+          isAllSection,
+          tabController,
+        ),
       ],
       isAllSection
           ? CustomDivider(color: AppColors.lightColor_2)
           : SizedBox.shrink(),
       if (groupedResults[SpaceType.space]!.isNotEmpty) ...[
         buildSection(
-          '공간',
+          AppConstants.CATEGORY_SPACE,
           isAllSection
               ? (groupedResults[SpaceType.space]!.length > 5
                   ? groupedResults[SpaceType.space]!.sublist(0, 5)
@@ -48,6 +48,7 @@ Widget buildFilteredResultsView(List<FilterResult> results, isAllSection) {
               : groupedResults[SpaceType.space]!,
           groupedResults[SpaceType.space]!.length > 5,
           isAllSection,
+          tabController,
         ),
       ],
       isAllSection
@@ -55,7 +56,7 @@ Widget buildFilteredResultsView(List<FilterResult> results, isAllSection) {
           : SizedBox.shrink(),
       if (groupedResults[SpaceType.restaurant]!.isNotEmpty) ...[
         buildSection(
-          '음식',
+          AppConstants.CATEGORY_RESTAURANT,
           isAllSection
               ? (groupedResults[SpaceType.restaurant]!.length > 5
                   ? groupedResults[SpaceType.restaurant]!.sublist(0, 5)
@@ -63,6 +64,7 @@ Widget buildFilteredResultsView(List<FilterResult> results, isAllSection) {
               : groupedResults[SpaceType.restaurant]!,
           groupedResults[SpaceType.restaurant]!.length > 5,
           isAllSection,
+          tabController,
         ),
       ],
       isAllSection
@@ -70,15 +72,15 @@ Widget buildFilteredResultsView(List<FilterResult> results, isAllSection) {
           : SizedBox.shrink(),
       if (groupedResults[SpaceType.cafe]!.isNotEmpty) ...[
         buildSection(
-          '카페',
-          isAllSection
-              ? (groupedResults[SpaceType.cafe]!.length > 5
-                  ? groupedResults[SpaceType.cafe]!.sublist(0, 5)
-                  : groupedResults[SpaceType.cafe]!)
-              : groupedResults[SpaceType.cafe]!,
-          groupedResults[SpaceType.cafe]!.length > 5,
-          isAllSection,
-        ),
+            AppConstants.CATEGORY_CAFE,
+            isAllSection
+                ? (groupedResults[SpaceType.cafe]!.length > 5
+                    ? groupedResults[SpaceType.cafe]!.sublist(0, 5)
+                    : groupedResults[SpaceType.cafe]!)
+                : groupedResults[SpaceType.cafe]!,
+            groupedResults[SpaceType.cafe]!.length > 5,
+            isAllSection,
+            tabController),
       ],
     ],
   );
@@ -89,6 +91,7 @@ Widget buildSection(
   List<FilterResult> results,
   bool showMore,
   bool isAllSection,
+  TabController tabController,
 ) {
   final displayResults = results.toList();
   return Column(
@@ -117,7 +120,17 @@ Widget buildSection(
             width: double.infinity,
             height: 48.h,
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                if (title == AppConstants.CATEGORY_SPACE) {
+                  tabController.index = 1;
+                } else if (title == AppConstants.CATEGORY_REGION) {
+                  tabController.index = 2;
+                } else if (title == AppConstants.CATEGORY_RESTAURANT) {
+                  tabController.index = 3;
+                } else if (title == AppConstants.CATEGORY_CAFE) {
+                  tabController.index = 4;
+                }
+              },
               style: OutlinedButton.styleFrom(
                 side: BorderSide(
                   color: AppColors.darkColor_1, // 테두리 색상
