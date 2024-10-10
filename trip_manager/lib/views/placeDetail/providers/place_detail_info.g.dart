@@ -1,26 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'search_notifier.dart';
+part of 'place_detail_info.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$searchNotifierHash() => r'6702aac7708b3d6d0af7c7a932c755ce8c26d203';
+String _$placeDetailInfoHash() => r'868d8f7c5af1f534f2f8d7302bc6a7d42d3cb13f';
 
-/// See also [SearchNotifier].
-@ProviderFor(SearchNotifier)
-final searchNotifierProvider =
-    AutoDisposeNotifierProvider<SearchNotifier, SearchResult>.internal(
-  SearchNotifier.new,
-  name: r'searchNotifierProvider',
+/// See also [PlaceDetailInfo].
+@ProviderFor(PlaceDetailInfo)
+final placeDetailInfoProvider =
+    AutoDisposeNotifierProvider<PlaceDetailInfo, PlaceDetailInfoState>.internal(
+  PlaceDetailInfo.new,
+  name: r'placeDetailInfoProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$searchNotifierHash,
+      : _$placeDetailInfoHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SearchNotifier = AutoDisposeNotifier<SearchResult>;
+typedef _$PlaceDetailInfo = AutoDisposeNotifier<PlaceDetailInfoState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

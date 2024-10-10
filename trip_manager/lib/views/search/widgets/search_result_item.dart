@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:trip_manager/config/router/router_names.dart';
 import 'package:trip_manager/theme.dart';
+import 'package:trip_manager/views/search/providers/selected_item.dart';
 import '../../../models/search/filter_result.dart';
 
 class SearchResultItem extends ConsumerWidget {
@@ -20,7 +21,11 @@ class SearchResultItem extends ConsumerWidget {
           ? SearchFilterRegionItem(item: item)
           : SearchFilterItem(item: item),
       onTap: () {
-        context.pushNamed(RouteNames.placeDetail);
+        if (item.spaceType == SpaceType.region) {
+        } else {
+          ref.read(selectedItemProvider.notifier).setSelectedItem(item);
+          context.pushNamed(RouteNames.placeDetail);
+        }
       },
     );
   }

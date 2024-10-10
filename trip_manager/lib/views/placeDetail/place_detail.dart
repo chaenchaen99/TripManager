@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:trip_manager/%08common/custom_divider.dart';
 import 'package:trip_manager/%08common/text_widgets.dart';
+import 'package:trip_manager/config/router/router_names.dart';
 import 'package:trip_manager/theme.dart';
 
 import '../../mockup/mockup_datas.dart';
@@ -373,7 +375,7 @@ AppBar PlaceDetailAppBar(BuildContext context) {
       children: [
         Spacer(),
         GestureDetector(
-          onTap: () {},
+          onTap: () => context.goNamed(RouteNames.home),
           child: Image.asset(
             'assets/icons/home.png',
             width: 28,
@@ -382,7 +384,7 @@ AppBar PlaceDetailAppBar(BuildContext context) {
         ),
         SizedBox(width: 8),
         GestureDetector(
-          onTap: () {},
+          onTap: () => context.goNamed(RouteNames.bookmark),
           child: Image.asset(
             'assets/icons/bookmark.png',
             width: 28,
