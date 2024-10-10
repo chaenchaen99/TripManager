@@ -24,7 +24,7 @@ class SearchResultItem extends ConsumerWidget {
         if (item.spaceType == SpaceType.region) {
         } else {
           ref.read(selectedItemProvider.notifier).setSelectedItem(item);
-          context.pushNamed(RouteNames.placeDetail);
+          context.pushNamed(RouteNames.placeDetail, extra: '123312312');
         }
       },
     );

@@ -6,14 +6,32 @@ import 'package:trip_manager/%08common/custom_divider.dart';
 import 'package:trip_manager/%08common/text_widgets.dart';
 import 'package:trip_manager/config/router/router_names.dart';
 import 'package:trip_manager/theme.dart';
+import 'package:trip_manager/views/placeDetail/providers/place_detail_info.dart';
 
 import '../../mockup/mockup_datas.dart';
 
-class PlaceDetailPage extends ConsumerWidget {
-  const PlaceDetailPage({super.key});
+class PlaceDetailPage extends ConsumerStatefulWidget {
+  final String placeId;
+
+  const PlaceDetailPage({super.key, required this.placeId});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PlaceDetailPage> createState() => _PlaceDetailPageState();
+}
+
+class _PlaceDetailPageState extends ConsumerState<PlaceDetailPage> {
+  @override
+  void initState() {
+    super.initState();
+    ref
+        .read(placeDetailInfoProvider.notifier)
+        .getPlaceDetailInfo(widget.placeId);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final placeDetailState = ref.watch(placeDetailInfoProvider);
+
     return Scaffold(
       appBar: PlaceDetailAppBar(context),
       body: SingleChildScrollView(
@@ -21,12 +39,28 @@ class PlaceDetailPage extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomDivider(),
-            TopContentsAboutPlaceDetail(),
-            PlaceDetailImages(),
-            ShowOperationTime(),
-            ShowAddress(),
-            ShowPhoneNumber(),
-            ShowSiteLink(),
+            TopContentsAboutPlaceDetail(
+              type: placeDetailState.type,
+              name: placeDetailState.name,
+              rating: placeDetailState.rating,
+            ),
+            PlaceDetailImages(
+              imagePaths: placeDetailState.imagePath,
+            ),
+            ShowOperationTime(
+              isOpen: placeDetailState.isOpen,
+              isBusinessTimeVisible: placeDetailState.isBusinessTimeVisible,
+              businessTimes: placeDetailState.businessTimeInfos,
+            ),
+            ShowAddress(
+              address: placeDetailState.address,
+            ),
+            ShowPhoneNumber(
+              phoneNumber: placeDetailState.phoneNumber,
+            ),
+            ShowSiteLink(
+              siteUrl: placeDetailState.siteUrl,
+            ),
             FindRouteButton(),
           ],
         ),
@@ -64,11 +98,11 @@ class FindRouteButton extends StatelessWidget {
           ],
         ),
         style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
           backgroundColor: Colors.white,
           side: BorderSide(
             color: AppColors.darkColor_1,
           ),
+          elevation: 0,
         ),
       ),
     );
@@ -76,8 +110,10 @@ class FindRouteButton extends StatelessWidget {
 }
 
 class ShowSiteLink extends StatelessWidget {
+  final String siteUrl;
   const ShowSiteLink({
     super.key,
+    required this.siteUrl,
   });
 
   @override
@@ -96,7 +132,7 @@ class ShowSiteLink extends StatelessWidget {
               ),
               SizedBox(width: 8),
               text14Normal(
-                text: "http://hangang.seoul.go.kr",
+                text: siteUrl,
               ),
             ],
           ),
@@ -107,8 +143,10 @@ class ShowSiteLink extends StatelessWidget {
 }
 
 class ShowAddress extends StatelessWidget {
+  final String address;
   const ShowAddress({
     super.key,
+    required this.address,
   });
 
   @override
@@ -127,7 +165,7 @@ class ShowAddress extends StatelessWidget {
               ),
               SizedBox(width: 8),
               text14Normal(
-                text: "서울 광진구 강변북로 139",
+                text: address,
               ),
             ],
           ),
@@ -138,8 +176,10 @@ class ShowAddress extends StatelessWidget {
 }
 
 class ShowPhoneNumber extends StatelessWidget {
+  final String phoneNumber;
   const ShowPhoneNumber({
     super.key,
+    required this.phoneNumber,
   });
 
   @override
@@ -158,7 +198,7 @@ class ShowPhoneNumber extends StatelessWidget {
               ),
               SizedBox(width: 8),
               text14Normal(
-                text: "010-9645-1697",
+                text: phoneNumber,
               ),
             ],
           ),
@@ -168,98 +208,75 @@ class ShowPhoneNumber extends StatelessWidget {
   }
 }
 
-class ShowOperationTime extends StatelessWidget {
+class ShowOperationTime extends ConsumerWidget {
+  final Map<String, String> businessTimes;
+  final bool isOpen;
+  final bool isBusinessTimeVisible;
   const ShowOperationTime({
     super.key,
+    required this.businessTimes,
+    required this.isOpen,
+    required this.isBusinessTimeVisible,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          padding: EdgeInsets.only(left: 18, top: 16),
-          child: Row(
-            children: [
-              Image.asset(
-                "assets/icons/alarm.png",
-                width: 24,
-                height: 24,
-              ),
-              SizedBox(width: 8),
-              text14Normal(
-                text: "영업 전",
-                weight: FontWeight.w600,
-              ),
-              text14Normal(
-                text: " " + "10:00 오픈" + "  ",
-              ),
-              Image.asset(
-                "assets/icons/arrow_bottom.png",
-                width: 14,
-                height: 14,
-                alignment: Alignment.bottomCenter,
-              ),
-            ],
+        GestureDetector(
+          onTap: () {
+            print("터치됨");
+            ref.read(placeDetailInfoProvider.notifier).toggleBusinessTimeBtn();
+          },
+          child: Container(
+            padding: EdgeInsets.only(left: 18, top: 16),
+            child: Row(
+              children: [
+                Image.asset(
+                  "assets/icons/alarm.png",
+                  width: 24,
+                  height: 24,
+                ),
+                SizedBox(width: 8),
+                text14Normal(
+                  text: isOpen ? "영업 중" : "영업 전",
+                  weight: FontWeight.w600,
+                ),
+                text14Normal(
+                  text: " " + "10:00 오픈" + "  ",
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 1),
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    isBusinessTimeVisible
+                        ? "assets/icons/arrow_top.png"
+                        : "assets/icons/arrow_bottom.png",
+                    width: 14,
+                    height: 14,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         Visibility(
-          visible: false, // _isExpanded가 true일 때만 보임
+          visible: isBusinessTimeVisible, // _isExpanded가 true일 때만 보임
           child: Container(
             padding: EdgeInsets.only(left: 50.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    text14Normal(text: "월", weight: FontWeight.w600),
-                    SizedBox(width: 8),
-                    text14Normal(text: "10:00 - 22:00"),
-                  ],
-                ),
-                Row(
-                  children: [
-                    text14Normal(text: "화", weight: FontWeight.w600),
-                    SizedBox(width: 8),
-                    text14Normal(text: "10:00 - 22:00"),
-                  ],
-                ),
-                Row(
-                  children: [
-                    text14Normal(text: "수", weight: FontWeight.w600),
-                    SizedBox(width: 8),
-                    text14Normal(text: "10:00 - 22:00"),
-                  ],
-                ),
-                Row(
-                  children: [
-                    text14Normal(text: "목", weight: FontWeight.w600),
-                    SizedBox(width: 8),
-                    text14Normal(text: "10:00 - 22:00"),
-                  ],
-                ),
-                Row(
-                  children: [
-                    text14Normal(text: "금", weight: FontWeight.w600),
-                    SizedBox(width: 8),
-                    text14Normal(text: "10:00 - 22:00"),
-                  ],
-                ),
-                Row(
-                  children: [
-                    text14Normal(text: "토", weight: FontWeight.w600),
-                    SizedBox(width: 8),
-                    text14Normal(text: "10:00 - 22:00"),
-                  ],
-                ),
-                Row(
-                  children: [
-                    text14Normal(text: "일", weight: FontWeight.w600),
-                    SizedBox(width: 8),
-                    text14Normal(text: "10:00 - 22:00"),
-                  ],
-                ),
+                for (var time in businessTimes.entries) // Map의 각 항목에 대해 반복
+                  Row(
+                    children: [
+                      text14Normal(
+                          text: time.key, weight: FontWeight.w600), // 요일
+                      SizedBox(width: 8),
+                      text14Normal(text: time.value), // 시간
+                    ],
+                  ),
               ],
             ),
           ),
@@ -270,8 +287,10 @@ class ShowOperationTime extends StatelessWidget {
 }
 
 class PlaceDetailImages extends StatelessWidget {
+  final List<String> imagePaths;
   const PlaceDetailImages({
     super.key,
+    required this.imagePaths,
   });
   @override
   Widget build(BuildContext context) {
@@ -285,22 +304,22 @@ class PlaceDetailImages extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: displayList.length,
+              itemCount: imagePaths.length,
               itemBuilder: (context, index) {
-                final displayItem = displayList[index];
+                final _image = imagePaths[index];
 
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: Image.asset(
-                        displayItem['imageUrl'] ?? '',
-                        height: 309,
-                        width: 236,
-                      ),
+                return Padding(
+                  padding:
+                      const EdgeInsets.only(right: 8.0), // 이미지 간의 간격을 8으로 설정
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0), // 8 픽셀의 radius 적용
+                    child: Image.asset(
+                      _image,
+                      height: 309, // 세로 309 픽셀
+                      width: 236, // 가로 236 픽셀
+                      fit: BoxFit.cover, // 이미지가 잘리거나 왜곡되지 않도록 설정
                     ),
-                  ],
+                  ),
                 );
               },
             ),
@@ -312,8 +331,14 @@ class PlaceDetailImages extends StatelessWidget {
 }
 
 class TopContentsAboutPlaceDetail extends StatelessWidget {
+  final String type;
+  final String name;
+  final double rating;
   const TopContentsAboutPlaceDetail({
     super.key,
+    required this.type,
+    required this.name,
+    required this.rating,
   });
 
   @override
@@ -327,9 +352,9 @@ class TopContentsAboutPlaceDetail extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          text12Normal(text: "공원", color: AppColors.darkColor_3),
+          text12Normal(text: type, color: AppColors.darkColor_3),
           SizedBox(height: 4.h),
-          text20Bold(text: "뚝섬 한강공원"),
+          text20Bold(text: name),
           SizedBox(height: 8.h),
           Row(
             children: [
@@ -340,7 +365,7 @@ class TopContentsAboutPlaceDetail extends StatelessWidget {
               ),
               SizedBox(width: 4.w),
               text12Normal(
-                text: "4.9",
+                text: rating.toString(),
                 color: AppColors.darkColor_1,
               ),
               SizedBox(width: 12.w),

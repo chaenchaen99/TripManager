@@ -3,10 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:trip_manager/views/search/providers/search_notifier.dart';
 
 class SearchHistoryResultItem extends ConsumerWidget {
+  final TextEditingController searchInputController;
   const SearchHistoryResultItem({
     super.key,
     required this.item,
     required this.ref,
+    required this.searchInputController,
   });
 
   final String item;
@@ -48,7 +50,12 @@ class SearchHistoryResultItem extends ConsumerWidget {
           ],
         ),
       ),
-      onTap: () {},
+      onTap: () {
+        searchInputController.text = item;
+        final _searchNofier = ref.read(searchNotifierProvider.notifier);
+        _searchNofier.addSearchTerm(item);
+        _searchNofier.updateQuery(item);
+      },
     );
   }
 }

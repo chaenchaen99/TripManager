@@ -24,6 +24,7 @@ mixin _$PlaceDetailInfoState {
   bool get isOpen => throw _privateConstructorUsedError;
   Map<String, String> get businessTimeInfos =>
       throw _privateConstructorUsedError;
+  bool get isBusinessTimeVisible => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
   String get siteUrl => throw _privateConstructorUsedError;
@@ -47,6 +48,7 @@ abstract class $PlaceDetailInfoStateCopyWith<$Res> {
       List<String> imagePath,
       bool isOpen,
       Map<String, String> businessTimeInfos,
+      bool isBusinessTimeVisible,
       String address,
       String phoneNumber,
       String siteUrl});
@@ -73,6 +75,7 @@ class _$PlaceDetailInfoStateCopyWithImpl<$Res,
     Object? imagePath = null,
     Object? isOpen = null,
     Object? businessTimeInfos = null,
+    Object? isBusinessTimeVisible = null,
     Object? address = null,
     Object? phoneNumber = null,
     Object? siteUrl = null,
@@ -106,6 +109,10 @@ class _$PlaceDetailInfoStateCopyWithImpl<$Res,
           ? _value.businessTimeInfos
           : businessTimeInfos // ignore: cast_nullable_to_non_nullable
               as Map<String, String>,
+      isBusinessTimeVisible: null == isBusinessTimeVisible
+          ? _value.isBusinessTimeVisible
+          : isBusinessTimeVisible // ignore: cast_nullable_to_non_nullable
+              as bool,
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -138,6 +145,7 @@ abstract class _$$PlaceDetailInfoStateImplCopyWith<$Res>
       List<String> imagePath,
       bool isOpen,
       Map<String, String> businessTimeInfos,
+      bool isBusinessTimeVisible,
       String address,
       String phoneNumber,
       String siteUrl});
@@ -161,6 +169,7 @@ class __$$PlaceDetailInfoStateImplCopyWithImpl<$Res>
     Object? imagePath = null,
     Object? isOpen = null,
     Object? businessTimeInfos = null,
+    Object? isBusinessTimeVisible = null,
     Object? address = null,
     Object? phoneNumber = null,
     Object? siteUrl = null,
@@ -194,6 +203,10 @@ class __$$PlaceDetailInfoStateImplCopyWithImpl<$Res>
           ? _value._businessTimeInfos
           : businessTimeInfos // ignore: cast_nullable_to_non_nullable
               as Map<String, String>,
+      isBusinessTimeVisible: null == isBusinessTimeVisible
+          ? _value.isBusinessTimeVisible
+          : isBusinessTimeVisible // ignore: cast_nullable_to_non_nullable
+              as bool,
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -221,6 +234,7 @@ class _$PlaceDetailInfoStateImpl implements _PlaceDetailInfoState {
       final List<String> imagePath = const [],
       this.isOpen = false,
       final Map<String, String> businessTimeInfos = const {},
+      this.isBusinessTimeVisible = false,
       this.address = '',
       this.phoneNumber = '',
       this.siteUrl = ''})
@@ -263,6 +277,9 @@ class _$PlaceDetailInfoStateImpl implements _PlaceDetailInfoState {
 
   @override
   @JsonKey()
+  final bool isBusinessTimeVisible;
+  @override
+  @JsonKey()
   final String address;
   @override
   @JsonKey()
@@ -273,7 +290,7 @@ class _$PlaceDetailInfoStateImpl implements _PlaceDetailInfoState {
 
   @override
   String toString() {
-    return 'PlaceDetailInfoState(id: $id, type: $type, name: $name, rating: $rating, imagePath: $imagePath, isOpen: $isOpen, businessTimeInfos: $businessTimeInfos, address: $address, phoneNumber: $phoneNumber, siteUrl: $siteUrl)';
+    return 'PlaceDetailInfoState(id: $id, type: $type, name: $name, rating: $rating, imagePath: $imagePath, isOpen: $isOpen, businessTimeInfos: $businessTimeInfos, isBusinessTimeVisible: $isBusinessTimeVisible, address: $address, phoneNumber: $phoneNumber, siteUrl: $siteUrl)';
   }
 
   @override
@@ -290,6 +307,8 @@ class _$PlaceDetailInfoStateImpl implements _PlaceDetailInfoState {
             (identical(other.isOpen, isOpen) || other.isOpen == isOpen) &&
             const DeepCollectionEquality()
                 .equals(other._businessTimeInfos, _businessTimeInfos) &&
+            (identical(other.isBusinessTimeVisible, isBusinessTimeVisible) ||
+                other.isBusinessTimeVisible == isBusinessTimeVisible) &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
@@ -306,6 +325,7 @@ class _$PlaceDetailInfoStateImpl implements _PlaceDetailInfoState {
       const DeepCollectionEquality().hash(_imagePath),
       isOpen,
       const DeepCollectionEquality().hash(_businessTimeInfos),
+      isBusinessTimeVisible,
       address,
       phoneNumber,
       siteUrl);
@@ -328,6 +348,7 @@ abstract class _PlaceDetailInfoState implements PlaceDetailInfoState {
       final List<String> imagePath,
       final bool isOpen,
       final Map<String, String> businessTimeInfos,
+      final bool isBusinessTimeVisible,
       final String address,
       final String phoneNumber,
       final String siteUrl}) = _$PlaceDetailInfoStateImpl;
@@ -346,6 +367,8 @@ abstract class _PlaceDetailInfoState implements PlaceDetailInfoState {
   bool get isOpen;
   @override
   Map<String, String> get businessTimeInfos;
+  @override
+  bool get isBusinessTimeVisible;
   @override
   String get address;
   @override

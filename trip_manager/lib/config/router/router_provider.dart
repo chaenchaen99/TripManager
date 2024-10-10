@@ -87,10 +87,12 @@ GoRouter route(RouteRef ref) {
                     builder: (context, state) => const SearchPage(),
                   ),
                   GoRoute(
-                    path: 'placeDetail',
-                    name: RouteNames.placeDetail,
-                    builder: (context, state) => const PlaceDetailPage(),
-                  ),
+                      path: 'placeDetail',
+                      name: RouteNames.placeDetail,
+                      builder: (context, state) {
+                        final placeId = state.extra as String;
+                        return PlaceDetailPage(placeId: placeId);
+                      }),
                 ])
           ]),
           StatefulShellBranch(routes: [

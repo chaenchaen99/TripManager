@@ -1,8 +1,5 @@
-import 'dart:ffi';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
 part 'place_detail_info.freezed.dart';
 part 'place_detail_info.g.dart';
 
@@ -16,6 +13,7 @@ class PlaceDetailInfoState with _$PlaceDetailInfoState {
     @Default([]) List<String> imagePath,
     @Default(false) bool isOpen,
     @Default({}) Map<String, String> businessTimeInfos,
+    @Default(false) bool isBusinessTimeVisible,
     @Default('') String address,
     @Default('') String phoneNumber,
     @Default('') String siteUrl,
@@ -37,7 +35,11 @@ class PlaceDetailInfo extends _$PlaceDetailInfo {
       type: '공원',
       name: '뚝섬 한강공원',
       rating: 4.9,
-      imagePath: ['assets/images/test_1_img.png'],
+      imagePath: [
+        'assets/images/test/test_img_1.png',
+        'assets/images/test/test_img_1.png',
+        'assets/images/test/test_img_1.png'
+      ],
       isOpen: true,
       businessTimeInfos: {
         "월": "10:00-24:00",
@@ -52,5 +54,9 @@ class PlaceDetailInfo extends _$PlaceDetailInfo {
       phoneNumber: '02-2468-3942',
       siteUrl: 'https://hangang.seoul.go.kr',
     );
+  }
+
+  toggleBusinessTimeBtn() {
+    state = state.copyWith(isBusinessTimeVisible: !state.isBusinessTimeVisible);
   }
 }
