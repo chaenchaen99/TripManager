@@ -81,6 +81,7 @@ class _SearchPageState extends ConsumerState<SearchPage>
               child: SearchHistoryList(
                 ref: ref,
                 searchResult: searchResult,
+                searchInputController: searchInputController,
               ),
             ),
           ],
@@ -247,11 +248,13 @@ class SearchTabBarView extends ConsumerWidget {
 class SearchHistoryList extends StatelessWidget {
   final WidgetRef ref;
   final SearchResult searchResult;
+  final TextEditingController searchInputController;
 
   const SearchHistoryList({
     super.key,
     required this.ref,
     required this.searchResult,
+    required this.searchInputController,
   });
 
   @override
@@ -296,7 +299,10 @@ class SearchHistoryList extends StatelessWidget {
             itemCount: searchResult.history.length,
             itemBuilder: (context, index) {
               final item = searchResult.history[index];
-              return SearchHistoryResultItem(item: item, ref: ref);
+              return SearchHistoryResultItem(
+                  item: item,
+                  ref: ref,
+                  searchInputController: searchInputController);
             },
           ),
         ),
