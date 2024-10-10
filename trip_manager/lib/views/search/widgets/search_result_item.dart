@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:trip_manager/config/router/router_names.dart';
 import 'package:trip_manager/theme.dart';
 import '../../../models/search/filter_result.dart';
 
@@ -17,7 +19,9 @@ class SearchResultItem extends ConsumerWidget {
       title: item.spaceType == SpaceType.region
           ? SearchFilterRegionItem(item: item)
           : SearchFilterItem(item: item),
-      onTap: () {},
+      onTap: () {
+        context.pushNamed(RouteNames.placeDetail);
+      },
     );
   }
 }

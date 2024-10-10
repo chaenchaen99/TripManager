@@ -41,9 +41,7 @@ class SearchResultTabPage extends ConsumerWidget {
             tabController,
           ),
         ],
-        isAllTab
-            ? CustomDivider(color: AppColors.lightColor_2)
-            : SizedBox.shrink(),
+        isAllTab ? CustomDivider() : SizedBox.shrink(),
         if (groupedResults[SpaceType.space]!.isNotEmpty) ...[
           buildSection(
             AppConstants.CATEGORY_SPACE,
@@ -56,9 +54,7 @@ class SearchResultTabPage extends ConsumerWidget {
             tabController,
           ),
         ],
-        isAllTab
-            ? CustomDivider(color: AppColors.lightColor_2)
-            : SizedBox.shrink(),
+        isAllTab ? CustomDivider() : SizedBox.shrink(),
         if (groupedResults[SpaceType.restaurant]!.isNotEmpty) ...[
           buildSection(
             AppConstants.CATEGORY_RESTAURANT,
@@ -71,9 +67,7 @@ class SearchResultTabPage extends ConsumerWidget {
             tabController,
           ),
         ],
-        isAllTab
-            ? CustomDivider(color: AppColors.lightColor_2)
-            : SizedBox.shrink(),
+        isAllTab ? CustomDivider() : SizedBox.shrink(),
         if (groupedResults[SpaceType.cafe]!.isNotEmpty) ...[
           buildSection(
               AppConstants.CATEGORY_CAFE,

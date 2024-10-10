@@ -45,7 +45,7 @@ class _AiCoursePageState extends ConsumerState<AiCoursePage> {
       body: Stack(children: [
         Column(
           children: [
-            const CustomDivider(color: AppColors.lightColor_2),
+            const CustomDivider(),
             Expanded(
               child: ref.watch(aiChatProvider).chatState.when(
                     data: (messages) {

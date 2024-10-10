@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:trip_manager/theme.dart';
 
-Widget text14Normal({
+Widget text12Normal({
   String text = "",
+  FontWeight weight = FontWeight.w400,
   Color color = AppColors.darkColor_1,
 }) {
   return Text(
@@ -10,8 +11,24 @@ Widget text14Normal({
     textAlign: TextAlign.center,
     style: TextStyle(
       color: color,
+      fontSize: 12,
+      fontWeight: weight,
+    ),
+  );
+}
+
+Widget text14Normal({
+  String text = "",
+  Color color = AppColors.darkColor_1,
+  FontWeight weight = FontWeight.w400,
+}) {
+  return Text(
+    text,
+    textAlign: TextAlign.center,
+    style: TextStyle(
+      color: color,
       fontSize: 14,
-      fontWeight: FontWeight.w400,
+      fontWeight: weight,
     ),
   );
 }
@@ -26,6 +43,22 @@ Widget text16Normal(
     style: TextStyle(
       color: color,
       fontSize: 16,
+      fontWeight: weight,
+    ),
+  );
+}
+
+Widget text20Bold({
+  String text = "",
+  Color color = AppColors.darkColor_1,
+  FontWeight weight = FontWeight.w600,
+}) {
+  return Text(
+    text,
+    textAlign: TextAlign.center,
+    style: TextStyle(
+      color: color,
+      fontSize: 20,
       fontWeight: weight,
     ),
   );

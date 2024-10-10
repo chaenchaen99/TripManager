@@ -14,6 +14,7 @@ import 'package:trip_manager/views/feed/feed_page.dart';
 import 'package:trip_manager/views/home/home_page.dart';
 import 'package:trip_manager/views/my/my_page.dart';
 import 'package:trip_manager/views/page_not_found.dart';
+import 'package:trip_manager/views/placeDetail/place_detail.dart';
 import 'package:trip_manager/views/search/search_page.dart';
 import '../../views/auth/signup/third_step_signup_page.dart';
 import '../../views/auth/signup/first_step_signup_page.dart';
@@ -84,6 +85,11 @@ GoRouter route(RouteRef ref) {
                     path: 'search',
                     name: RouteNames.search,
                     builder: (context, state) => const SearchPage(),
+                  ),
+                  GoRoute(
+                    path: 'placeDetail',
+                    name: RouteNames.placeDetail,
+                    builder: (context, state) => const PlaceDetailPage(),
                   ),
                 ])
           ]),
