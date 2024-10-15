@@ -48,12 +48,12 @@
 
 ## 📚 프로젝트를 통해 배운 점
 
-1. 효율적인 상태 관리: Riverpod을 활용한 애플리케이션 상태 관리 및 의존성 주입
-2. 위젯 시스템 활용: StatelessWidget과 StatefulWidget의 적절한 사용
-3. 자동화된 데이터 변환: `build_runner`와 `json_serializable`을 통한 JSON 데이터 모델 변환
-4. 디자인 통일성: Flutter 테마 시스템을 통한 애플리케이션 전반의 디자인 일관성 유지
-5. RESTful API 통신: `http` 패키지를 활용한 GET, POST, PUT, DELETE 요청 및 UI 데이터 표시
-6. 내비게이션 기술: Flutter 내비게이션 시스템을 통한 페이지 간 전환 및 데이터 전달
+- Riverpod을 통해 애플리케이션 상태를 효율적으로 관리하고, 의존성 주입을 통해 코드 재사용성과 테스트 용이성을 높여 유지보수성을 향상
+- Flutter 위젯 시스템을 활용하여 복잡한 UI를 구성하고, StatelessWidget과 StatefulWidget의 차이를 이해하며 적절히 활용하는 법 습득
+- Dart의 build_runner와 json_serializable을 사용하여 JSON 데이터를 모델 클래스로 자동 변환하고, 반복 코드를 줄여 가독성 향상
+- Flutter 테마 시스템을 통해 애플리케이션 디자인 일관성을 유지하는 방법 습득
+- http 패키지를 사용하여 RESTful API와 통신하며 GET, POST, PUT, DELETE 요청 구현 능력 향상
+- Flutter 네비게이션 시스템을 활용하여 페이지 간 전환 및 데이터 전달 관리 능력 습득
 
 ## 📦 설치 및 실행 방법
 
