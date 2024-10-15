@@ -46,15 +46,6 @@
 - 피드 업로드: 사용자 경험 공유를 위한 피드 업로드 기능 구현
 - 출시 예정: 앱스토어(iOS) 및 플레이스토어(Android) 배포 준비 중
 
-## 📚 프로젝트를 통해 배운 점
-
-- Riverpod을 통해 애플리케이션 상태를 효율적으로 관리하고, 의존성 주입을 통해 코드 재사용성과 테스트 용이성을 높여 유지보수성을 향상
-- Flutter 위젯 시스템을 활용하여 복잡한 UI를 구성하고, StatelessWidget과 StatefulWidget의 차이를 이해하며 적절히 활용하는 법 습득
-- Dart의 build_runner와 json_serializable을 사용하여 JSON 데이터를 모델 클래스로 자동 변환하고, 반복 코드를 줄여 가독성 향상
-- Flutter 테마 시스템을 통해 애플리케이션 디자인 일관성을 유지하는 방법 습득
-- http 패키지를 사용하여 RESTful API와 통신하며 GET, POST, PUT, DELETE 요청 구현 능력 향상
-- Flutter 네비게이션 시스템을 활용하여 페이지 간 전환 및 데이터 전달 관리 능력 습득
-
 ## 📦 설치 및 실행 방법
 
 ```bash
