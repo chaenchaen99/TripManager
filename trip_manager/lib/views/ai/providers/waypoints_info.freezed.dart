@@ -15,6 +15,154 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
+mixin _$WaypointState {
+  List<Waypoint> get waypoints => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $WaypointStateCopyWith<WaypointState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $WaypointStateCopyWith<$Res> {
+  factory $WaypointStateCopyWith(
+          WaypointState value, $Res Function(WaypointState) then) =
+      _$WaypointStateCopyWithImpl<$Res, WaypointState>;
+  @useResult
+  $Res call({List<Waypoint> waypoints, bool isLoading});
+}
+
+/// @nodoc
+class _$WaypointStateCopyWithImpl<$Res, $Val extends WaypointState>
+    implements $WaypointStateCopyWith<$Res> {
+  _$WaypointStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? waypoints = null,
+    Object? isLoading = null,
+  }) {
+    return _then(_value.copyWith(
+      waypoints: null == waypoints
+          ? _value.waypoints
+          : waypoints // ignore: cast_nullable_to_non_nullable
+              as List<Waypoint>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$WaypointStateImplCopyWith<$Res>
+    implements $WaypointStateCopyWith<$Res> {
+  factory _$$WaypointStateImplCopyWith(
+          _$WaypointStateImpl value, $Res Function(_$WaypointStateImpl) then) =
+      __$$WaypointStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({List<Waypoint> waypoints, bool isLoading});
+}
+
+/// @nodoc
+class __$$WaypointStateImplCopyWithImpl<$Res>
+    extends _$WaypointStateCopyWithImpl<$Res, _$WaypointStateImpl>
+    implements _$$WaypointStateImplCopyWith<$Res> {
+  __$$WaypointStateImplCopyWithImpl(
+      _$WaypointStateImpl _value, $Res Function(_$WaypointStateImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? waypoints = null,
+    Object? isLoading = null,
+  }) {
+    return _then(_$WaypointStateImpl(
+      waypoints: null == waypoints
+          ? _value._waypoints
+          : waypoints // ignore: cast_nullable_to_non_nullable
+              as List<Waypoint>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$WaypointStateImpl implements _WaypointState {
+  const _$WaypointStateImpl(
+      {final List<Waypoint> waypoints = const [], this.isLoading = false})
+      : _waypoints = waypoints;
+
+  final List<Waypoint> _waypoints;
+  @override
+  @JsonKey()
+  List<Waypoint> get waypoints {
+    if (_waypoints is EqualUnmodifiableListView) return _waypoints;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_waypoints);
+  }
+
+  @override
+  @JsonKey()
+  final bool isLoading;
+
+  @override
+  String toString() {
+    return 'WaypointState(waypoints: $waypoints, isLoading: $isLoading)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$WaypointStateImpl &&
+            const DeepCollectionEquality()
+                .equals(other._waypoints, _waypoints) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_waypoints), isLoading);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$WaypointStateImplCopyWith<_$WaypointStateImpl> get copyWith =>
+      __$$WaypointStateImplCopyWithImpl<_$WaypointStateImpl>(this, _$identity);
+}
+
+abstract class _WaypointState implements WaypointState {
+  const factory _WaypointState(
+      {final List<Waypoint> waypoints,
+      final bool isLoading}) = _$WaypointStateImpl;
+
+  @override
+  List<Waypoint> get waypoints;
+  @override
+  bool get isLoading;
+  @override
+  @JsonKey(ignore: true)
+  _$$WaypointStateImplCopyWith<_$WaypointStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$Waypoint {
   String get title => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;

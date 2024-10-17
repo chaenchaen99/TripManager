@@ -6,6 +6,14 @@ part 'waypoints_info.freezed.dart';
 part 'waypoints_info.g.dart';
 
 @freezed
+class WaypointState with _$WaypointState {
+  const factory WaypointState({
+    @Default([]) List<Waypoint> waypoints,
+    @Default(false) bool isLoading,
+  }) = _WaypointState;
+}
+
+@freezed
 class Waypoint with _$Waypoint {
   const factory Waypoint({
     required String title,
@@ -18,8 +26,11 @@ class Waypoint with _$Waypoint {
 @riverpod
 class WaypointsInfo extends _$WaypointsInfo {
   @override
-  List<Waypoint> build() {
-    return [];
+  WaypointState build() {
+    return WaypointState(
+      waypoints: [],
+      isLoading: false,
+    );
   }
 
   //to be deleted!! because these are mock up datas.
@@ -31,9 +42,12 @@ class WaypointsInfo extends _$WaypointsInfo {
     Waypoint(title: '홍대', type: '관광지', latlng: LatLng(37.557945, 126.925128)),
   ];
 
-  Future getWaypoints() async {
-    Future.delayed(Duration(seconds: 2), () {
-      state = _waypoints;
+  Future<void> getWaypoints() async {
+    state = state.copyWith(isLoading: true);
+
+    // 상태 수정 지연
+    await Future.delayed(Duration(seconds: 2), () {
+      state = state.copyWith(waypoints: _waypoints, isLoading: false);
     });
   }
 }

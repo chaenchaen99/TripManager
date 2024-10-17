@@ -17,6 +17,7 @@ class AiCourseDetailController {
 
     List<LatLng> _latlngs = ref
         .watch(waypointsInfoProvider)
+        .waypoints
         .map((waypoint) => waypoint.latlng)
         .toList();
 
@@ -70,16 +71,16 @@ class AiCourseDetailController {
     return BitmapDescriptor.fromBytes(pngBytes);
   }
 
-  Future<void> loadWaypoints() async {
+  Future<void> loadWaypointState() async {
     await ref.read(waypointsInfoProvider.notifier).getWaypoints();
   }
 
-  List<Waypoint> getWaypoints() {
+  WaypointState getWaypointState() {
     return ref.watch(waypointsInfoProvider); // Provider 상태를 반환
   }
 
   Future<Set<Marker>> createMarkers() async {
-    final _waypoints = ref.watch(waypointsInfoProvider);
+    final _waypoints = ref.watch(waypointsInfoProvider).waypoints;
     return {
       for (int i = 0; i < _waypoints.length; i++)
         Marker(
@@ -96,6 +97,7 @@ class AiCourseDetailController {
         polylineId: PolylineId('route'),
         points: ref
             .watch(waypointsInfoProvider)
+            .waypoints
             .map((waypoint) => waypoint.latlng)
             .toList(),
         color: AppColors.darkColor_2.withOpacity(0.6),

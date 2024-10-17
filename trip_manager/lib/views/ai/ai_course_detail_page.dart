@@ -31,60 +31,62 @@ class _AiCourseDetailPageState extends ConsumerState<AiCourseDetailPage> {
   void initState() {
     super.initState();
     _controller = AiCourseDetailController(ref: ref);
-    _controller.loadWaypoints();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _controller.loadWaypointState();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: appBar(context),
-        body: Stack(
-          children: [
-            Positioned(
-              top: 0, // 화면 하단에 고정
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 300.h,
-                child: FutureBuilder<Set<Marker>>(
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
-                    }
+        body: _controller.getWaypointState().isLoading
+            ? Center(child: CircularProgressIndicator())
+            : Stack(
+                children: [
+                  Positioned(
+                    top: 0, // 화면 하단에 고정
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 300.h,
+                      child: FutureBuilder<Set<Marker>>(
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Center(
+                                child: Text('Error: ${snapshot.error}'));
+                          }
 
-                    if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    }
-
-                    return GoogleMap(
-                      onMapCreated: _onMapCreated,
-                      initialCameraPosition: CameraPosition(
-                        target: _controller.calculateWaypointsCenter(),
-                        zoom: 12.0,
+                          return GoogleMap(
+                            onMapCreated: _onMapCreated,
+                            initialCameraPosition: CameraPosition(
+                              target: _controller.calculateWaypointsCenter(),
+                              zoom: 12.0,
+                            ),
+                            markers: snapshot.data ?? {},
+                            polylines: _controller.createPolylines(),
+                            myLocationEnabled: true,
+                            myLocationButtonEnabled: true,
+                          );
+                        },
+                        future: _controller.createMarkers(),
                       ),
-                      markers: snapshot.data ?? {},
-                      polylines: _controller.createPolylines(),
-                      myLocationEnabled: true,
-                      myLocationButtonEnabled: true,
-                    );
-                  },
-                  future: _controller.createMarkers(),
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 0, // 화면 하단에 고정
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 680.h, // BottomCourseTimeline의 높이
-                child: BottomCourseTimeline(
-                  controller: _controller,
-                ),
-              ),
-            ),
-          ],
-        ));
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0, // 화면 하단에 고정
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 680.h, // BottomCourseTimeline의 높이
+                      child: BottomCourseTimeline(
+                        controller: _controller,
+                      ),
+                    ),
+                  ),
+                ],
+              ));
   }
 }
 
@@ -148,9 +150,11 @@ class BottomCourseTimeline extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 40.0),
                     child: ListView.builder(
-                        itemCount: controller.getWaypoints().length,
+                        itemCount:
+                            controller.getWaypointState().waypoints.length,
                         itemBuilder: (context, index) {
-                          final _waypoint = controller.getWaypoints()[index];
+                          final _waypoint =
+                              controller.getWaypointState().waypoints[index];
                           return Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 18.0),
