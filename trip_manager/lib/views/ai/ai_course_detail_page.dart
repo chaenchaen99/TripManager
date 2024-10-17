@@ -5,7 +5,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:trip_manager/models/ai/response_model.dart';
 import 'package:trip_manager/theme.dart';
 import 'package:trip_manager/views/ai/controller/ai_course_detail_controller.dart';
-import 'package:trip_manager/views/ai/providers/position_info.dart';
 import 'package:trip_manager/views/ai/widgets/ai_timeline_item.dart';
 import 'package:trip_manager/views/ai/widgets/timeline_widget.dart';
 
@@ -21,16 +20,22 @@ class AiCourseDetailPage extends ConsumerStatefulWidget {
 }
 
 class _AiCourseDetailPageState extends ConsumerState<AiCourseDetailPage> {
-  late GoogleMapController mapController;
+  late GoogleMapController _mapController;
+  late AiCourseDetailController _controller;
 
   void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
+    _mapController = controller;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AiCourseDetailController(ref: ref);
+    _controller.loadWaypoints();
   }
 
   @override
   Widget build(BuildContext context) {
-    final _controller = AiCourseDetailController(ref: ref);
-
     return Scaffold(
         appBar: appBar(context),
         body: Stack(
@@ -73,7 +78,9 @@ class _AiCourseDetailPageState extends ConsumerState<AiCourseDetailPage> {
               right: 0,
               child: Container(
                 height: 680.h, // BottomCourseTimeline의 높이
-                child: const BottomCourseTimeline(),
+                child: BottomCourseTimeline(
+                  controller: _controller,
+                ),
               ),
             ),
           ],
@@ -110,8 +117,10 @@ PreferredSizeWidget appBar(BuildContext context) {
 }
 
 class BottomCourseTimeline extends StatelessWidget {
+  final AiCourseDetailController controller;
   const BottomCourseTimeline({
     super.key,
+    required this.controller,
   });
 
   @override
@@ -139,8 +148,9 @@ class BottomCourseTimeline extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 40.0),
                     child: ListView.builder(
-                        itemCount: 4,
+                        itemCount: controller.getWaypoints().length,
                         itemBuilder: (context, index) {
+                          final _waypoint = controller.getWaypoints()[index];
                           return Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 18.0),
@@ -150,14 +160,13 @@ class BottomCourseTimeline extends StatelessWidget {
                                 children: [
                                   TimelineWidget(number: index + 1),
                                   const SizedBox(width: 8),
-                                  const Padding(
+                                  Padding(
                                     padding: EdgeInsets.only(top: 4.0),
                                     child: AiTimelineItem(
                                         courseItem: AiResponse(
-                                            imageUrl:
-                                                'assets/images/test/test_img_1.png',
-                                            title: '코스 1',
-                                            subTitle: '1번코스 | 2번코스| 3번 코스')),
+                                            imageUrl: _waypoint.imageUrl,
+                                            title: _waypoint.title,
+                                            subTitle: _waypoint.type ?? '')),
                                   ),
                                 ]),
                           );

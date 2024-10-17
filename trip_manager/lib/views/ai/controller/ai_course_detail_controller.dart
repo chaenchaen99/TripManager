@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:trip_manager/theme.dart';
+import 'package:trip_manager/views/ai/providers/waypoints_info.dart';
 import 'dart:ui' as ui;
-import '../../../common/custom_marker_painter.dart';
 import '../providers/position_info.dart';
 
 class AiCourseDetailController {
@@ -12,24 +11,21 @@ class AiCourseDetailController {
 
   AiCourseDetailController({required this.ref});
 
-  //to be deleted!! because these are mock up datas.
-  final List<LatLng> _waypoints = [
-    LatLng(37.579617, 126.977041),
-    LatLng(37.551169, 126.988227),
-    LatLng(37.578062, 126.989224),
-    LatLng(37.557945, 126.925128),
-  ];
-
   LatLng calculateWaypointsCenter() {
     double totalLatitude = 0;
     double totalLongitude = 0;
 
-    for (var waypoint in _waypoints) {
+    List<LatLng> _latlngs = ref
+        .watch(waypointsInfoProvider)
+        .map((waypoint) => waypoint.latlng)
+        .toList();
+
+    for (var waypoint in _latlngs) {
       totalLatitude += waypoint.latitude;
       totalLongitude += waypoint.longitude;
     }
 
-    int count = _waypoints.length;
+    int count = _latlngs.length;
     return LatLng(totalLatitude / count, totalLongitude / count);
   }
 
@@ -74,12 +70,21 @@ class AiCourseDetailController {
     return BitmapDescriptor.fromBytes(pngBytes);
   }
 
+  Future<void> loadWaypoints() async {
+    await ref.read(waypointsInfoProvider.notifier).getWaypoints();
+  }
+
+  List<Waypoint> getWaypoints() {
+    return ref.watch(waypointsInfoProvider); // Provider 상태를 반환
+  }
+
   Future<Set<Marker>> createMarkers() async {
+    final _waypoints = ref.watch(waypointsInfoProvider);
     return {
       for (int i = 0; i < _waypoints.length; i++)
         Marker(
           markerId: MarkerId('waypoint_$i'),
-          position: _waypoints[i],
+          position: _waypoints[i].latlng,
           icon: await createCustomMarker(i + 1),
         ),
     };
@@ -89,7 +94,10 @@ class AiCourseDetailController {
     return {
       Polyline(
         polylineId: PolylineId('route'),
-        points: _waypoints,
+        points: ref
+            .watch(waypointsInfoProvider)
+            .map((waypoint) => waypoint.latlng)
+            .toList(),
         color: AppColors.darkColor_2.withOpacity(0.6),
         width: 2,
         patterns: [

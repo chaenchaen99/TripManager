@@ -21,7 +21,7 @@ class AiTimelineItem extends StatelessWidget {
               courseItem.imageUrl, // Replace with your image path
               width: 44,
               height: 44,
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
           ),
           const SizedBox(width: 12),
