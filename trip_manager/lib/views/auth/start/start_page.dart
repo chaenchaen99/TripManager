@@ -86,7 +86,7 @@ class SSOLoginWidgets extends ConsumerWidget {
 
                   //debug 확인용
                   print(
-                      'Logged in: ${userProfile.displayName} | ${userProfile.photoUrl} | ${userProfile.idToken}');
+                      'Logged in: ${userProfile.displayName} | ${userProfile.photoUrl} | ${userProfile.accessToken}');
                 } else {
                   print("Login failed");
                 }

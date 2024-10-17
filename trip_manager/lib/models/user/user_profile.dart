@@ -6,6 +6,7 @@ class UserProfile {
   final String photoUrl;
   final String id;
   final String idToken;
+  final String accessToken;
 
   UserProfile({
     required this.displayName,
@@ -13,6 +14,7 @@ class UserProfile {
     required this.photoUrl,
     required this.id,
     required this.idToken,
+    required this.accessToken,
   });
 
   factory UserProfile.fromGoogleSignInAccount(googleUser, idToken) {
@@ -22,6 +24,7 @@ class UserProfile {
       photoUrl: googleUser.photoUrl ?? '',
       id: googleUser.id,
       idToken: idToken ?? '',
+      accessToken: '',
     );
   }
 
@@ -31,7 +34,8 @@ class UserProfile {
       email: user.kakaoAccount?.email ?? 'Unknown',
       photoUrl: user.kakaoAccount?.profile?.profileImageUrl ?? '',
       id: '',
-      idToken: accessToken,
+      idToken: '',
+      accessToken: accessToken,
     );
   }
 }

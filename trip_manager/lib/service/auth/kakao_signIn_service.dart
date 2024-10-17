@@ -14,7 +14,7 @@ class KakaoSignInService {
       // 사용자 정보 요청
       User user = await UserApi.instance.me();
 
-      return UserProfile.fromKakaoAccount(user, token.idToken!);
+      return UserProfile.fromKakaoAccount(user, token.accessToken);
     } catch (error) {
       print('Kakao Sign-In Error: $error');
       return null;

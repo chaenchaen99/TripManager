@@ -1,15 +1,15 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:timeline_tile_nic/timeline_tile.dart';
-import 'package:trip_manager/models/ai/chat_model.dart';
 import 'package:trip_manager/models/ai/response_model.dart';
 import 'package:trip_manager/theme.dart';
+import 'package:trip_manager/views/ai/controller/ai_course_detail_controller.dart';
+import 'package:trip_manager/views/ai/providers/position_info.dart';
 import 'package:trip_manager/views/ai/widgets/ai_timeline_item.dart';
 import 'package:trip_manager/views/ai/widgets/timeline_widget.dart';
 
-class AiCourseDetailPage extends StatefulWidget {
+class AiCourseDetailPage extends ConsumerStatefulWidget {
   final AiResponse courseItem;
   const AiCourseDetailPage({
     super.key,
@@ -17,13 +17,11 @@ class AiCourseDetailPage extends StatefulWidget {
   });
 
   @override
-  State<AiCourseDetailPage> createState() => _AiCourseDetailPageState();
+  ConsumerState<AiCourseDetailPage> createState() => _AiCourseDetailPageState();
 }
 
-class _AiCourseDetailPageState extends State<AiCourseDetailPage> {
+class _AiCourseDetailPageState extends ConsumerState<AiCourseDetailPage> {
   late GoogleMapController mapController;
-
-  final LatLng center = const LatLng(45.521563, -122.677433);
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -31,46 +29,84 @@ class _AiCourseDetailPageState extends State<AiCourseDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _controller = AiCourseDetailController(ref: ref);
+
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.of(context).pop(); // 뒤로가기 버튼 클릭 시 이전 페이지로 돌아갑니다.
-            },
-          ),
-          title: const Center(
-            child: Text(
-              '코스 1', // 동적으로 변경하려면 chatModel?.response.first.title로 변경할 수 있습니다.
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.bookmark),
-              onPressed: () {
-                print('저장 버튼 클릭됨');
-              },
-            ),
-          ],
-        ),
+        appBar: appBar(context),
         body: Stack(
           children: [
-            Expanded(
-              child: GoogleMap(
-                  onMapCreated: _onMapCreated,
-                  initialCameraPosition: CameraPosition(
-                    target: center,
-                    zoom: 11.0,
-                  )),
+            Positioned(
+              top: 0, // 화면 하단에 고정
+              left: 0,
+              right: 0,
+              child: Container(
+                height: 300.h,
+                child: FutureBuilder<Set<Marker>>(
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+
+                    if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    }
+
+                    return GoogleMap(
+                      onMapCreated: _onMapCreated,
+                      initialCameraPosition: CameraPosition(
+                        target: _controller.calculateWaypointsCenter(),
+                        zoom: 12.0,
+                      ),
+                      markers: snapshot.data ?? {},
+                      polylines: _controller.createPolylines(),
+                      myLocationEnabled: true,
+                      myLocationButtonEnabled: true,
+                    );
+                  },
+                  future: _controller.createMarkers(),
+                ),
+              ),
             ),
-            const BottomCourseTimeline(),
+            Positioned(
+              bottom: 0, // 화면 하단에 고정
+              left: 0,
+              right: 0,
+              child: Container(
+                height: 680.h, // BottomCourseTimeline의 높이
+                child: const BottomCourseTimeline(),
+              ),
+            ),
           ],
         ));
   }
+}
+
+PreferredSizeWidget appBar(BuildContext context) {
+  return AppBar(
+    leading: IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    ),
+    title: const Center(
+      child: Text(
+        '코스 1',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+    ),
+    actions: [
+      IconButton(
+        icon: const Icon(Icons.bookmark),
+        onPressed: () {
+          print('저장 버튼 클릭됨');
+        },
+      ),
+    ],
+  );
 }
 
 class BottomCourseTimeline extends StatelessWidget {
