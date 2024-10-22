@@ -15,6 +15,7 @@ import 'package:trip_manager/views/home/home_page.dart';
 import 'package:trip_manager/views/my/my_page.dart';
 import 'package:trip_manager/views/page_not_found.dart';
 import 'package:trip_manager/views/placeDetail/place_detail.dart';
+import 'package:trip_manager/views/review/review_page.dart';
 import 'package:trip_manager/views/search/search_page.dart';
 import '../../views/auth/signup/third_step_signup_page.dart';
 import '../../views/auth/signup/first_step_signup_page.dart';
@@ -31,7 +32,7 @@ final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 GoRouter route(RouteRef ref) {
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: '/home',
+    initialLocation: '/review',
     routes: [
       GoRoute(
         path: '/start',
@@ -43,6 +44,16 @@ GoRouter route(RouteRef ref) {
         name: RouteNames.signin,
         builder: (context, state) => const SigninPage(),
       ),
+      GoRoute(
+        path: '/review',
+        name: RouteNames.review,
+        builder: (context, state) => const ReviewPage(),
+      ),
+      // GoRoute(
+      //   path: '/addReview',
+      //   name: RouteNames.addReview,
+      //   builder: (context, state) => const (),
+      // ),
       GoRoute(
         path: '/signup',
         name: RouteNames.signup,

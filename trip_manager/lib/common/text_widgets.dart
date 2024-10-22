@@ -63,3 +63,19 @@ Widget text20Bold({
     ),
   );
 }
+
+Widget text24Bold({
+  String text = "",
+  FontWeight weight = FontWeight.w600,
+  Color color = AppColors.darkColor_1,
+}) {
+  return Text(
+    text,
+    textAlign: TextAlign.center,
+    style: TextStyle(
+      color: color,
+      fontSize: 24,
+      fontWeight: weight,
+    ),
+  );
+}

@@ -4,6 +4,8 @@ class RouteNames {
   static const signin = 'signin';
   static const signup = 'signup';
   static const home = 'home';
+  static const review = 'review';
+  static const addReview = 'addReview';
   static const search = 'search';
   static const ai = 'ai';
   static const feed = 'feed';
